@@ -17,3 +17,10 @@ class Driver(models.Model):
     bank_branch_name = models.CharField(max_length=30)
     bank_account_number = models.CharField(max_length=30)
     bank_account_name = models.CharField(max_length=50)
+
+    class Meta:
+        verbose_name = "Driver"
+        verbose_name_plural = "Drivers"
+    
+    def __str__(self):
+        return self.name

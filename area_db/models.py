@@ -3,18 +3,32 @@ from django.db import models
 class Province(models.Model):
     name = models.CharField(db_index=True, max_length=100)
 
+    class Meta:
+        verbose_name = "Province"
+        verbose_name_plural = "Provinces"
+
     def __str__(self):
         return self.name
 
 class City(models.Model):
     name = models.CharField(db_index=True, max_length=100)
     provinsi = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='kota_provinsi')
+
+    class Meta:
+        verbose_name = "City"
+        verbose_name_plural = "Cities"
+
     def __str__(self):
         return self.name
 
 class Kecamatan(models.Model):
     name = models.CharField(db_index=True, max_length=100)
     kota = models.ForeignKey(City, on_delete=models.CASCADE, related_name='kecamatan_kota')
+
+    class Meta:
+        verbose_name = "Kecamatan"
+        verbose_name_plural = "Kecamatan"
+    
     def __str__(self):
         return self.name
 

@@ -6,9 +6,23 @@ from vehicle_mgt.models import VehicleModel, VehicleColor, Vehicle
 class StickerType(models.Model):
     name = models.CharField(max_length=15)
 
+    class Meta:
+        verbose_name = "Sticker Type"
+        verbose_name_plural = "Sticker Types"
+    
+    def __str__(self):
+        return self.name
+
 class GpsType(models.Model):
     name = models.CharField(max_length=15)
     
+    class Meta:
+        verbose_name = "GPS Type"
+        verbose_name_plural = "GPS Types"
+    
+    def __str__(self):
+        return self.name
+
 class Campaign(models.Model):
     name = models.CharField(max_length=50)
     gps_type = models.ForeignKey(GpsType, on_delete=models.SET_NULL, null=True)
@@ -35,9 +49,23 @@ class Campaign(models.Model):
     vehicle_models = models.ForeignKey(VehicleModel, on_delete=models.SET_NULL, null=True)
     vehicle_color = models.ForeignKey(VehicleColor, on_delete=models.SET_NULL, null=True)
 
+    class Meta:
+        verbose_name = "Campaign"
+        verbose_name_plural = "Campaigns"
+    
+    def __str__(self):
+        return self.name
+
 class VehicleOnCampaign(models.Model):
     campaign = models.ForeignKey(Campaign, on_delete=models.SET_NULL, null=True)
     vehicle = models.ForeignKey(Vehicle, on_delete=models.SET_NULL, null=True)
     gps_installation_schedule = models.DateTimeField(blank=True)
     sticker_installation_schedule = models.DateTimeField(blank=True)
     status = models.CharField(max_length=15)
+
+    class Meta:
+        verbose_name = "Vehicle Campaign"
+        verbose_name_plural = "Vehicles on Campaign"
+    
+    def __str__(self):
+        return self.vehicle.license_no

@@ -4,10 +4,6 @@ from django.shortcuts import render, reverse
 from django.views import View
 from .forms import UserLoginForm
 
-# Create your views here.
-def profile_page():
-    pass
-
 class Login(View):    
     form = UserLoginForm()
     form_messages = ''

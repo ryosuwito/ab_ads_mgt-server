@@ -1,7 +1,7 @@
 from django.db import models
 
-from driver_mgt.models import Driver
 from area_db.models import Province, City, Kecamatan, Kelurahan
+from driver_mgt.models import Driver
 
 class VehicleColor(models.Model):
     name = models.CharField(max_length=15)
@@ -65,4 +65,4 @@ class Vehicle(models.Model):
         verbose_name_plural = "Vehicles"
     
     def __str__(self):
-        return self.name
+        return self.license_no

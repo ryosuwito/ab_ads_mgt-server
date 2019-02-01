@@ -1,0 +1,134 @@
+        <!-- footer content -->
+        <footer>
+          <div class="pull-right">
+            <a>Copyright 2019 ABPluss Car</a>
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+      </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="/static/assets/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="/static/assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="/static/assets/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="/static/assets/vendors/nprogress/nprogress.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="/static/assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="/static/assets/vendors/iCheck/icheck.min.js"></script>
+    <!-- Skycons -->
+    <script src="/static/assets/vendors/skycons/skycons.js"></script>
+    <!-- jQuery custom content scroller -->
+    <script src="/static/assets/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+    <!-- Datatables -->
+    <script src="/static/assets/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/static/assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="/static/assets/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/static/assets/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="/static/assets/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/static/assets/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/static/assets/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/static/assets/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="/static/assets/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="/static/assets/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/static/assets/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="/static/assets/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="/static/assets/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="/static/assets/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/static/assets/vendors/pdfmake/build/vfs_fonts.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="/static/assets/vendors/moment/min/moment.min.js"></script>
+    <script src="/static/assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- bootstrap-datetimepicker -->    
+    <script src="/static/assets/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <!-- Date Time Picker Master -->
+    <script src="/static/assets/vendors/datepicker/datetimepicker.js"></script>
+    <!-- validator -->
+    <script src="/static/assets/vendors/validator/validator.js"></script>
+    <!-- Parsley -->
+    <script src="/static/assets/vendors/parsleyjs/dist/parsley.min.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="/static/assets/build/js/custom.min.js"></script>
+    <!-- <script src="/static/assets/admin/jquery/jquery-3.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script> -->
+
+    <!-- table role management -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+                var t = $('#myTable').DataTable( {
+                "searching" : false,
+                "columnDefs": [ {
+                "searchable": false,
+                "orderable": true,
+                "targets": 0,
+                "scrollX": true
+            } ],
+            "order": [[ 1, 'asc' ]]
+        } );
+                
+                t.on( 'order.dt search.dt', function () {
+                    t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                        cell.innerHTML = i+1;
+                    } );
+                } ).draw();
+            } );
+    </script>
+<!--     <script type="text/javascript">
+      $('#chk1').click(function(){
+        $(".chk1").each(function(){
+          $(this).attr("checked",true);
+        });
+      });
+    </script> -->
+<script type='text/javascript'>
+  $(document).ready(function() {
+    $("#selectall_payment").click(function() {
+    $(".first").prop("checked", $("#selectall_payment").prop("checked"))
+    });
+
+    $("#selectall_loyality").click(function() {
+    $(".second").prop("checked", $("#selectall_loyality").prop("checked"))
+    });
+
+    $("#selectall_md").click(function() {
+    $(".third").prop("checked", $("#selectall_md").prop("checked"))
+    });
+
+    $("#selectall_regis").click(function() {
+    $(".four").prop("checked", $("#selectall_regis").prop("checked"))
+    });
+  });
+</script>
+
+    <!-- <script type="text/javascript">
+      $(document).ready(function() { 
+      // ketika checkbox dengan id semua diklik,  
+      // maka semua checkbox akan tercentang. 
+      $('#allpayment').click(function(){ 
+         $(this).parents('#pay:eq(0)').
+         find(':checkbox').attr('checked', this.checked); 
+      });
+
+      $('#loyality_manage').click(function(){ 
+         $(this).parents('#loyality:eq(0)').
+         find(':checkbox').attr('checked', this.checked); 
+      });
+
+      $('#master_data').click(function(){ 
+         $(this).parents('#master_d:eq(0)').
+         find(':checkbox').attr('checked', this.checked); 
+      });
+
+      $('#registration').click(function(){ 
+         $(this).parents('#reg:eq(0)').
+         find(':checkbox').attr('checked', this.checked); 
+      });
+    });   
+    </script> -->
+  </body>
+</html>

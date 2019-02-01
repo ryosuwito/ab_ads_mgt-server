@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, reverse
 from django.views import View
@@ -81,4 +82,4 @@ class Login(View):
 class Logout(View):
     def get(self, request, *args, **kwargs):
         logout(request)
-        return HttpResponseRedirect(reverse('membership:login'))   
+        return HttpResponseRedirect('/login')   

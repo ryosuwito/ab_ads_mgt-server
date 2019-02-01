@@ -25,7 +25,7 @@ SECRET_KEY = 'wh_54_ysnn9q*!^6c8rk$$#7x1e6_rfhkcu(84%xr*!1gk)^+^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '117.53.44.90']
+ALLOWED_HOSTS = ['localhost', '117.53.44.90', '*']
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'backend',
     'ads_mgt',
     'area_db',
     'campaign_mgt',
@@ -89,9 +90,17 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'db_ab_test',                      
+        'USER': 'db_ab_user',
+        'PASSWORD': 'abpluss88',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
@@ -133,3 +142,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+#STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static")
+]

@@ -15,8 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from driver_mgt.views import DriverRegistrationView, DriverBankView
+from vehicle_mgt.views import AddCarView
+from django.conf import settings
+from django.conf.urls.static import static
+from user_mgt import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('user/', include('user_mgt.urls'))
-]
+    path('driver/regis/', DriverRegistrationView.as_view()),
+    path('driver/bank/', DriverBankView.as_view()),
+    path('vehicle/add', AddCarView.as_view()),
+    path('user/', include('user_mgt.urls')),
+    path('dashboard/', views.DashboardView.as_view(), name='dashboard')
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

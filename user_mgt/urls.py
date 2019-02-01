@@ -5,8 +5,9 @@ from . import views
 app_name = 'membership'
 
 urlpatterns = [
+    path('addbo/', views.AddBackOfficeView.as_view()),
     path('login/', views.Login.as_view(), name='login'),
-    path('logout/', views.Logout.as_view(), name='logout'),
+    path('logout/', views.Logout.as_view(), name='logout')
 ]
 """
     path('register/<str:referal_code>/', views.register_page, name='register'),

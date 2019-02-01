@@ -1,12 +1,17 @@
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 class GpsData(models.Model):
+    license_no = models.CharField(max_length=15, db_index=True)
+    crated_date = models.DateTimeField(auto_now=False, db_index=True, blank=True, null=True)
+    timestamp = models.CharField(max_length=60, db_index=True)
+    data = JSONField()
+    """ 
     gps_state = models.CharField(max_length=30, null=True, blank=True)
     gps = models.IntegerField()
     time = models.IntegerField()
     username = models.CharField(max_length=30)
     time_format = models.CharField(max_length=30)
-    license_no = models.CharField(max_length=15)
     terminal = models.CharField(max_length=15)
     owner_telp = models.CharField(max_length=20, null=True, blank=True)
     owner_name = models.CharField(max_length=50, null=True, blank=True)
@@ -34,3 +39,7 @@ class GpsData(models.Model):
     user_login = models.CharField(max_length=15)
     password = models.CharField(max_length=15)
     column = models.IntegerField()
+    """
+    
+    def __str__(self):
+        return self.license_no

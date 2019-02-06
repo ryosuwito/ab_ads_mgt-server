@@ -1,9 +1,10 @@
 import requests
 import json
 from datetime import datetime, timedelta
+from tracking_mgt.models import GpsData
 
-base_url="http://api.gps.id/"
 class GPSHandler():
+    base_url="http://api.gps.id/"
     address = ''
     apikey = ''
     birthday = ''
@@ -27,13 +28,17 @@ class GPSHandler():
         #print(url)
         response = requests.post(url, data=data).text
         #print(response)
-        data = json.loads(response)['data']
-        print(json.dumps(data, indent=4, sort_keys=True))
+        try:
+            data = json.loads(response)['data']
+        except Exception as e:
+            print(e)
+            data={'response':'NO'}
+        #print(json.dumps(data, indent=4, sort_keys=True))
         return data
 
     def login(self):
         path = 'login'
-        url = base_url + path
+        url = self.base_url + path
         data= {
             'domain': self.domain,
             'username': self.username,
@@ -49,9 +54,28 @@ class GPSHandler():
             print(e)
         return {'response':'NO'}
 
+    def logout(self):
+        path = 'logout'
+        url = self.base_url + path
+        data= {
+            'domain': self.domain,
+            'username': self.username,
+            'sessionkey': self.sessionKey,
+            'apikey': self.apikey
+        }
+        data = self.get_data(url, data)
+        try:
+            if data['response'] == 'OK':
+                self.sessionKey = ''
+                self.apikey = ''
+                return {'response':'OK'}
+        except Exception as e:
+            print(e)
+        return {'response':'NO'}
+
     def get_profile_user(self):
         path = 'profile'
-        url = base_url + path
+        url = self.base_url + path
         data= {
             'domain': self.domain,
             'username': self.username,
@@ -80,7 +104,7 @@ class GPSHandler():
 
     def get_all_vehicle(self):
         path = 'getvehicle'
-        url = base_url + path
+        url = self.base_url + path
         data= {
             'domain': self.domain,
             'username': self.username,
@@ -98,7 +122,7 @@ class GPSHandler():
 
     def get_locate_vehicle(self, terminal):
         path = 'locatevehicle'
-        url = base_url + path
+        url = self.base_url + path
         data= {
             'domain': self.domain,
             'username': self.username,
@@ -117,7 +141,7 @@ class GPSHandler():
 
     def get_history_vehicle(self, terminal, date_start, date_end):
         path = 'track'
-        url = base_url + path
+        url = self.base_url + path
         data= {
             'domain': self.domain,
             'username': self.username,
@@ -159,14 +183,44 @@ else:
     exit()
 
 now = datetime.now()
-date_start = now - timedelta(hours = 1)
+date_start = now - timedelta(hours = 30*24)
 date_start = date_start.strftime('%Y-%m-%d %H:%M:%S')
 date_end = now.strftime('%Y-%m-%d %H:%M:%S')
 
 for vehicle in gps_handler.vehicles:
-    print('Get location of {}'.format(vehicle['license']))
-    print(gps_handler.get_locate_vehicle(vehicle['terminal']))
+    history = {}
+    license_no = vehicle['license']
+    print('Get location of {}'.format(license_no))
+    #print(gps_handler.get_locate_vehicle(vehicle['terminal']))
 
-    print('Get history of {}'.format(vehicle['license']))
-    print(gps_handler.get_history_vehicle(vehicle['terminal'], date_start, date_end))
+    print('Get history of {}'.format(license_no))
+    history = gps_handler.get_history_vehicle(vehicle['terminal'], date_start, date_end)
+    try:
+        track_data = history['track']['track_data']
+        #print(json.dumps(track_data, indent=4, sort_keys=True))
+    except Exception as e:
+        print(e)
+        print(history)
+        continue
+    if track_data:
+        for data in track_data:
+            timestamp = data['time_second']
+            timeformat = datetime.strptime(data['time_format'], '%d %b %Y %H:%M:%S')
+            batch_size = 100
+            gps, stat = GpsData.objects.get_or_create(
+                    license_no = license_no,
+                    timestamp = timestamp
+                )
+            if stat:
+                gps.data = data
+                gps.created_date = timeformat
+                gps.save()
+                print(stat)
 
+is_logged_out = gps_handler.logout()
+if is_logged_out['response'] == 'OK':
+    print('DONE')
+    del(gps_handler)
+else :
+    print('LOGOUT ERROR')
+    del(gps_handler)

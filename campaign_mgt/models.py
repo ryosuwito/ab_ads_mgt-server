@@ -43,7 +43,7 @@ class Campaign(models.Model):
     province = models.ForeignKey(Province, on_delete=models.SET_NULL, null=True)
     city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True)
     status = models.CharField(max_length=15)
-    no_of_vehicle = models.IntegerField()
+    amount_of_vehicle = models.IntegerField()
     installation_address = models.CharField(max_length=255)
     campaign_picture = models.ImageField(upload_to = 'campaign/campaign_picture', blank=True)
     vehicle_models = models.ForeignKey(VehicleModel, on_delete=models.SET_NULL, null=True)

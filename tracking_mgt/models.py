@@ -3,9 +3,9 @@ from django.db import models
 
 class GpsData(models.Model):
     license_no = models.CharField(max_length=15, db_index=True)
-    crated_date = models.DateTimeField(auto_now=False, db_index=True, blank=True, null=True)
+    created_date = models.DateTimeField(auto_now=False, db_index=True, blank=True, null=True)
     timestamp = models.CharField(max_length=60, db_index=True)
-    data = JSONField()
+    data = JSONField(null=True)
     """ 
     gps_state = models.CharField(max_length=30, null=True, blank=True)
     gps = models.IntegerField()

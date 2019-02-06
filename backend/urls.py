@@ -16,8 +16,6 @@ Including another URLconf
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.urls import include, path, re_path
-from driver_mgt.views import DriverRegistrationView, DriverBankView
-from vehicle_mgt.views import AddCarView
 from django.conf import settings
 from django.conf.urls.static import static
 from user_mgt import views as user_view
@@ -25,10 +23,10 @@ from user_mgt import views as user_view
 urlpatterns = [
     re_path('^$', login_required(user_view.DashboardView.as_view()), name='dashboard'),
     path('admin/', admin.site.urls),
-    path('driver/regis/', DriverRegistrationView.as_view()),
-    path('driver/bank/', DriverBankView.as_view()),
-    path('vehicle/add', AddCarView.as_view()),
+    path('driver/', include('driver_mgt.urls')),
+    path('vehicle/', include('vehicle_mgt.urls')),
     path('user/', include('user_mgt.urls')),
     path('login/', user_view.Login.as_view(), name='login'),
-    path('logout/', user_view.Logout.as_view(), name='logout')
+    path('logout/', user_view.Logout.as_view(), name='logout'),  
+    path('gps/', include('tracking_mgt.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

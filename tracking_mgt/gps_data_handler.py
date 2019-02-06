@@ -183,7 +183,7 @@ else:
     exit()
 
 now = datetime.now()
-date_start = now - timedelta(hours = 365*24)
+date_start = now - timedelta(hours = 60*24)
 date_start = date_start.strftime('%Y-%m-%d %H:%M:%S')
 date_end = now.strftime('%Y-%m-%d %H:%M:%S')
 

@@ -28,5 +28,8 @@ urlpatterns = [
     path('user/', include('user_mgt.urls')),
     path('login/', user_view.Login.as_view(), name='login'),
     path('logout/', user_view.Logout.as_view(), name='logout'),  
+    path('role/', user_view.RoleView.as_view(), name='role_management'),  
+    path('role/remove/', user_view.RoleRemoveView.as_view(), name='role_remove'),  
+    path('role/edit/', user_view.RoleEditView.as_view(), name='role_edit'),  
     path('gps/', include('tracking_mgt.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

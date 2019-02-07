@@ -94,6 +94,8 @@
         <div class="nk-block toggled" id="l-login">
             <div class="nk-form">
             	<form method="post">
+            		{% csrf_token %}
+            		<p>{{ form_messages }}</p>
 	            	<div class="col-md-12">
 						<div class="text-center">
 							<img src="/static/assets/build/images/logoAB.png" width="100px" height="auto" alt="logo.png">
@@ -102,13 +104,13 @@
 	                <div class="input-group">
 	                    <span class="input-group-addon nk-ic-st-pro"><i class="fa fa-user"></i></span>
 	                    <div class="nk-int-st">
-	                        <input type="text" class="form-control" placeholder="Username">
+	                        {{form.username}}
 	                    </div>
 	                </div>
 	                <div class="input-group mg-t-15">
 	                    <span class="input-group-addon nk-ic-st-pro"><i class="fa fa-lock"></i></span>
 	                    <div class="nk-int-st">
-	                        <input type="password" class="form-control" placeholder="Password">
+	                        {{form.password}}
 	                    </div>
 	                </div>
 	                <br>

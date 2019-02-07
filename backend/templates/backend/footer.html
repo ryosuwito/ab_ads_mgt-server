@@ -1,6 +1,6 @@
-
     <!-- jQuery -->
     <script src="/static/assets/vendors/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <!-- Bootstrap -->
     <script src="/static/assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- FastClick -->
@@ -44,8 +44,6 @@
     <script src="/static/assets/vendors/parsleyjs/dist/parsley.min.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="/static/assets/build/js/custom.min.js"></script>
-    <!-- <script src="/static/assets/admin/jquery/jquery-3.min.js"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script> -->
 
     <!-- table role management -->
     <script type="text/javascript">
@@ -68,13 +66,16 @@
                 } ).draw();
             } );
     </script>
-<!--     <script type="text/javascript">
-      $('#chk1').click(function(){
-        $(".chk1").each(function(){
-          $(this).attr("checked",true);
-        });
+    <script type="text/javascript">
+      $("#addmodal").on("shown", function(event){
+          modalBox.modal('show');
+          $(this).find('.modal-body').css({
+             width: 'auto',
+             height: 'auto',
+             maxheight: '100%'
+          }); 
       });
-    </script> -->
+    </script>
 <script type='text/javascript'>
   $(document).ready(function() {
     $("#selectall_payment").click(function() {
@@ -94,31 +95,3 @@
     });
   });
 </script>
-
-    <!-- <script type="text/javascript">
-      $(document).ready(function() { 
-      // ketika checkbox dengan id semua diklik,  
-      // maka semua checkbox akan tercentang. 
-      $('#allpayment').click(function(){ 
-         $(this).parents('#pay:eq(0)').
-         find(':checkbox').attr('checked', this.checked); 
-      });
-
-      $('#loyality_manage').click(function(){ 
-         $(this).parents('#loyality:eq(0)').
-         find(':checkbox').attr('checked', this.checked); 
-      });
-
-      $('#master_data').click(function(){ 
-         $(this).parents('#master_d:eq(0)').
-         find(':checkbox').attr('checked', this.checked); 
-      });
-
-      $('#registration').click(function(){ 
-         $(this).parents('#reg:eq(0)').
-         find(':checkbox').attr('checked', this.checked); 
-      });
-    });   
-    </script> -->
-  </body>
-</html>

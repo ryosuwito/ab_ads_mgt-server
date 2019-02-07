@@ -23,3 +23,18 @@ class AddBackOfficeForm(forms.Form):
     password = forms.CharField(label='Password :', widget=forms.PasswordInput())
     role = forms.ChoiceField(choices=OPTIONS)
     active = forms.BooleanField(initial=True)
+
+
+class AddUserRoleForm(forms.Form):
+    role_name = forms.CharField(label='Nama')
+    description =  forms.CharField()
+    is_active = forms.BooleanField()
+    def __init__(self, *args, **kwargs):
+        super(AddUserRoleForm, self).__init__(*args, **kwargs)
+        self.fields['role_name'].widget.attrs['class'] = 'form-control'
+        self.fields['role_name'].widget.attrs['style'] = 'width:100%'
+        self.fields['role_name'].widget.attrs['placeholder'] = 'Role Name'
+        self.fields['description'].widget.attrs['class'] = 'form-control'
+        self.fields['description'].widget.attrs['style'] = 'width:100%'
+        self.fields['description'].widget.attrs['placeholder'] = 'Description'
+        self.fields['is_active'].widget.attrs['class'] = 'flat'

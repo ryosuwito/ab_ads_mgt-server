@@ -5,7 +5,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, reverse
 from django.utils.crypto import get_random_string
 from django.views import View
-from .forms import UserLoginForm, AddBackOfficeForm
+from user_mgt.models import Privilege, UserRole
+from .forms import UserLoginForm, AddBackOfficeForm, AddUserRoleForm
 
 class AddBackOfficeView(View):
     form =  AddBackOfficeForm()
@@ -20,6 +21,79 @@ class AddBackOfficeView(View):
             return HttpResponse('OK GAN')
         return render(request, 'driver_mgt/regis.html',
             {'form': self.form,
+            'form_messages': self.form_messages})
+
+class RoleRemoveView(View):
+    def get(self, request, *args, **kwargs):
+        pk = request.GET.get('pk')
+        if pk:
+            try:
+                user_role = UserRole.objects.get(pk=pk)
+                user_role.is_archived = True
+                user_role.save()
+            except:
+                pass
+        return HttpResponseRedirect(reverse('role_management'))
+
+class RoleEditView(View):
+    def get(self, request, *args, **kwargs):
+        pk = request.GET.get('pk')
+        if pk:
+            try:
+                user_role = UserRole.objects.get(pk=pk)
+                if user_role.is_active:
+                    user_role.is_active = False
+                else:
+                    user_role.is_active = True
+                user_role.save()
+            except:
+                pass
+        return HttpResponseRedirect(reverse('role_management'))
+
+class RoleView(View):
+    form =  AddUserRoleForm()
+    form_messages = ''
+    user_role = ''
+    def get(self, request, *args, **kwargs):
+        query =  request.GET.get('query')
+        if not query:
+            self.user_role = UserRole.objects.filter(is_archived=False)
+        else:
+            self.user_role = UserRole.objects.filter(is_archived=False, 
+                name__contains=query)
+        return render(request, 'backend/role.html',
+            {'user_role':self.user_role,
+            'form': self.form,
+            'form_messages': self.form_messages})            
+    def post(self, request, *args, **kwargs):
+
+        self.user_role = UserRole.objects.filter(is_archived=False)
+        self.form = AddUserRoleForm(request.POST)
+        if self.form.is_valid():
+            data = self.form.cleaned_data
+            user_role = UserRole.objects.create(
+                    name= data.get('role_name'),
+                    description= data.get('description'),
+                    is_active= data.get('is_active')
+                )
+            privileges = []
+            post_data =[p for p in request.POST]
+            for key in post_data:
+                if not key == 'csrfmiddlewaretoken'\
+                    and not key == 'role_name'\
+                    and not key == 'description'\
+                    and not key == 'is_active':
+                    data = request.POST.get(key)
+                    if data == 'on':
+                        obj, stat = Privilege.objects.get_or_create(name=key)
+                        privileges.append(obj)
+            if privileges:
+                for p in privileges:
+                    user_role.privilege.add(p)
+
+        return render(request, 'backend/role.html',
+            {'user_role':self.user_role,
+            'form': self.form,
             'form_messages': self.form_messages})
 
 class DashboardView(View):

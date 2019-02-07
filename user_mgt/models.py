@@ -29,6 +29,7 @@ class UserRole(models.Model):
     description = models.CharField(max_length=255, blank=True)
     is_active = models.BooleanField(default=True)
     privilege = models.ManyToManyField(Privilege)
+    is_archived = models.BooleanField(default=False)
     class Meta:
         verbose_name = "User Role"
         verbose_name_plural = "User Roles"

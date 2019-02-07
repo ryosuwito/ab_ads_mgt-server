@@ -5,6 +5,7 @@ from driver_mgt.models import Driver
 
 class VehicleColor(models.Model):
     name = models.CharField(max_length=15)
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = "Vehicle Color"
@@ -15,6 +16,7 @@ class VehicleColor(models.Model):
 
 class VehicleType(models.Model):
     name = models.CharField(max_length=15)
+    is_active = models.BooleanField(default=True)
     
     class Meta:
         verbose_name = "Vehicle Type"
@@ -25,6 +27,7 @@ class VehicleType(models.Model):
 
 class VehicleBrand(models.Model):
     name = models.CharField(max_length=30)
+    is_active = models.BooleanField(default=True)
     
     class Meta:
         verbose_name = "Vehicle Brand"
@@ -35,8 +38,9 @@ class VehicleBrand(models.Model):
 
 class VehicleModel(models.Model):
     name = models.CharField(max_length=30)
-    vehicle_brand = models.ForeignKey(VehicleBrand, on_delete=models.SET_NULL, null=True)
-    vehicle_type = models.ForeignKey(VehicleType, on_delete=models.SET_NULL, null=True)
+    is_active = models.BooleanField(default=True)
+    #vehicle_brand = models.ForeignKey(VehicleBrand, on_delete=models.SET_NULL, null=True)
+    #vehicle_type = models.ForeignKey(VehicleType, on_delete=models.SET_NULL, null=True)
     
     class Meta:
         verbose_name = "Vehicle Model"
@@ -48,6 +52,8 @@ class VehicleModel(models.Model):
 class Vehicle(models.Model):
     driver = models.ForeignKey(Driver, on_delete=models.SET_NULL, null=True)
     vehicle_model = models.ForeignKey(VehicleModel, on_delete=models.SET_NULL, null=True)
+    vehicle_type = models.ForeignKey(VehicleType, on_delete=models.SET_NULL, null=True)
+    vehicle_brand = models.ForeignKey(VehicleBrand, on_delete=models.SET_NULL, null=True)
     license_no = models.CharField(max_length=15)
     vehicle_year = models.CharField(max_length=4)
     vehicle_color = models.ForeignKey(VehicleColor, on_delete=models.SET_NULL, null=True)
@@ -55,10 +61,11 @@ class Vehicle(models.Model):
     vehicle_city = models.ForeignKey(City, on_delete=models.SET_NULL, db_index=True, null=True)
     vehicle_kecamatan = models.ForeignKey(Kecamatan, on_delete=models.SET_NULL, db_index=True, null=True)
     vehicle_used_for = models.CharField(max_length=30)
-    daily_main_route = models.CharField(max_length=255)
+    daily_main_route = models.TextField()
     stnk_photo = models.ImageField(upload_to = 'vehicle/stnk_photo', blank=True)
     front_side_photo = models.ImageField(upload_to = 'vehicle/front_side_photo', blank=True)
     status = models.CharField(max_length=15)
+    is_active = models.BooleanField(default=True)
     
     class Meta:
         verbose_name = "Vehicle"

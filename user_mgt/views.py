@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, reverse
-#from django.utils.crypto import get_random_strings
+from django.utils.crypto import get_random_string
 from django.views import View
 from .forms import UserLoginForm, AddBackOfficeForm
 
@@ -103,8 +103,8 @@ class ForgotPasswordView(View):
         if user:
             amount = 50
             random_number = ''
-            #random_number = get_random_string(amount, 
-            #    allowed_chars='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_')
-            return render(request, 'backend/reset_success.html', {random_number:random_number})
+            random_number = get_random_string(amount, 
+                allowed_chars='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_')
+            return render(request, 'backend/reset_success.html', {'random_number':random_number})
         else:
             return render(request, 'backend/reset_failed.html')

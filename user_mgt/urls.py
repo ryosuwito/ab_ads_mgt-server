@@ -6,6 +6,7 @@ app_name = 'membership'
 
 urlpatterns = [
     path('addbo/', views.AddBackOfficeView.as_view()),
+    path('forgot/', views.ForgotPasswordView.as_view()),
 ]
 """
     path('register/<str:referal_code>/', views.register_page, name='register'),

@@ -1,0 +1,15 @@
+{% extends 'backend/base.html' %}
+{% block 'main_content' %}
+  <div class="container">
+    <div class="page-title">
+      <div class="title_left">
+        <h3>Reset Password</h3>
+      </div>
+    </div>
+    <form method="post">
+    	{% csrf_token %}
+    	<input class="form-control" name="email" type="email" placeholder="Alamat Email">
+    	<button class="btn btn-success" type="submit">Submit</button>
+    </form>
+  </div>
+{% endblock %}

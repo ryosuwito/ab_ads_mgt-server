@@ -1,7 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, reverse
+from django.utils.crypto import get_random_strings
 from django.views import View
 from .forms import UserLoginForm, AddBackOfficeForm
 
@@ -83,3 +85,25 @@ class Logout(View):
     def get(self, request, *args, **kwargs):
         logout(request)
         return HttpResponseRedirect('/login')   
+
+class ForgotPasswordView(View):
+    """docstring for ForgotPasswordView"""
+    def get(self, request, *args, **kwargs):
+        return render(request, 'backend/forgot.html')
+    def post(self, request, *args, **kwargs):
+        email = request.POST.get('email')
+        if not email:
+            return render(request, 'backend/forgot.html')
+        try:
+            user = User.objects.get(email=email)
+        except Exception as e:
+            print(e)
+            user = ''
+
+        if user:
+            amount = 50
+            random_number = get_random_string(amount, 
+                allowed_chars='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_')
+            return render(request, 'backend/reset_success.html', {random_number:random_number})
+        else:
+            return render(request, 'backend/reset_failed.html')

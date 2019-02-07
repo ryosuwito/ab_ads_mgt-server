@@ -3570,7 +3570,7 @@ textarea.auto-size {
 /*  38.  Login Register CSS
 /*----------------------------------------*/
 .login-content, .error-page-area{
-    min-height:100vh;
+    min-height:30vh;
     text-align:center;
 }
 .login-content:before, .error-page-area:before{

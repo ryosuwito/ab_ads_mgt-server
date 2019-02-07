@@ -28,7 +28,7 @@ class UserManagement(models.Model):
     type_user = models.ForeignKey(UserType, on_delete=models.SET_NULL, db_index=True, null=True)
     privilege_user = models.ForeignKey(Privilege, on_delete=models.SET_NULL, db_index=True, null=True)
     status = models.CharField(max_length=15, blank=True)
-
+    forgot_token = models.CharField(max_length=20, blank=True, null=True)
     class Meta:
         verbose_name = "User Management"
         verbose_name_plural = "Users Management"

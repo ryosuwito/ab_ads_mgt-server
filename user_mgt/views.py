@@ -104,7 +104,7 @@ class ForgotPasswordView(View):
             amount = 50
             random_number = ''
             #random_number = get_random_string(amount, 
-                allowed_chars='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_')
+            #    allowed_chars='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_')
             return render(request, 'backend/reset_success.html', {random_number:random_number})
         else:
             return render(request, 'backend/reset_failed.html')

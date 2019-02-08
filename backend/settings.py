@@ -25,7 +25,7 @@ SECRET_KEY = 'wh_54_ysnn9q*!^6c8rk$$#7x1e6_rfhkcu(84%xr*!1gk)^+^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '117.53.44.90', '*']
+ALLOWED_HOSTS = ['localhost', '117.53.44.90', 'dev.abplusscar.com']
 
 
 # Application definition

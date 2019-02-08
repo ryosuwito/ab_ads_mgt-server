@@ -28,7 +28,7 @@ urlpatterns = [
     path('user/', include('user_mgt.urls')),
     path('login/', user_view.Login.as_view(), name='login'),
     path('logout/', user_view.Logout.as_view(), name='logout'),    
-    path('bo/', user_view.BackOfficeIndexView.as_view(), name='regis_bo'),
+    path('bo/regis/', user_view.BackOfficeIndexView.as_view(), name='regis_bo'),
     path('bo/edit/', user_view.BackOfficeIndexView.as_view(), name='bo_edit'),
     path('role/', user_view.RoleView.as_view(), name='role_management'),  
     path('role/remove/', user_view.RoleRemoveView.as_view(), name='role_remove'),  

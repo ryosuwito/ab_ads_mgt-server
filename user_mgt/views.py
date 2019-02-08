@@ -27,7 +27,7 @@ class BackOfficeIndexView(View):
             email = data.get('email')
             password = data.get('password')
             username = full_name.replace(' ','_').lower()
-            user = User.objects.create(username=username,
+            user = User.objects.create_user(username=username,
                 email=email,
                 password=password)
             if user:

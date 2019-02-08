@@ -6,6 +6,6 @@ app_name = 'driver'
 
 urlpatterns = [
     re_path(r'^$', views.DriverBankView.as_view(), name='driver_profile'),
-    path('regis/', views.DriverRegistrationView.as_view()),
+    path('regis/', views.DriverRegistrationView.as_view(), name='regis_driver'),
     path('bank/', views.DriverBankView.as_view()),
 ]

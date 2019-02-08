@@ -5,23 +5,58 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, reverse
 from django.utils.crypto import get_random_string
 from django.views import View
-from user_mgt.models import Privilege, UserRole
+from user_mgt.models import Privilege, UserRole, UserManagement
 from .forms import UserLoginForm, AddBackOfficeForm, AddUserRoleForm
 
-class AddBackOfficeView(View):
+
+class BackOfficeIndexView(View):
     form =  AddBackOfficeForm()
     form_messages = ''
     def get(self, request, *args, **kwargs):
-        return render(request, 'driver_mgt/regis.html',
+        user_managements = UserManagement.objects.filter(is_archived=False)
+        return render(request, 'backend/registration/back_office_index.html',
             {'form': self.form,
-            'form_messages': self.form_messages})            
+            'form_messages': self.form_messages,
+            'user_managements':user_managements})            
     def post(self, request, *args, **kwargs):
-        self.form = AddBackOfficeForm(request.POST)
+        user_managements = UserManagement.objects.filter(is_archived=False)
+        self.form = AddBackOfficeForm(request.POST, request.FILES)
         if self.form.is_valid():
-            return HttpResponse('OK GAN')
-        return render(request, 'driver_mgt/regis.html',
+            data = self.form.cleaned_data
+            full_name = data.get('full_name')
+            email = data.get('email')
+            password = data.get('password')
+            username = full_name.replace(' ','_').lower()
+            user = User.objects.create(username=username,
+                email=email,
+                password=password)
+            if user:
+                user_management = UserManagement.objects.create(
+                    user=user,
+                    full_name=full_name,
+                    is_active=data.get('is_active'),
+                    profile_picture=data.get('profile_picture'),
+                    mobile_phone=data.get('mobile_phone'))
+            else:
+                self.form_messages = 'Gagal Membuat akun back office'
+            if user_management:
+                for role in data.get('role'):
+                    try:
+                        user_management.role.add(UserRole.objects.get(name=role))
+                    except Exception as e:
+                        print(e)
+                        print('Tidak ada role dengan nama {}'.format(role))
+                user_management.save()
+                self.form_messages = 'Sukses membuat akun back office'
+            else:
+                self.form_messages = 'Gagal Membuat user management back office'
+
+        else:
+            self.form_messages = 'Field error, periksa ulang form back office'
+        return render(request, 'backend/registration/back_office_index.html',
             {'form': self.form,
-            'form_messages': self.form_messages})
+            'form_messages': self.form_messages,
+            'user_managements':user_managements}) 
 
 class RoleRemoveView(View):
     def get(self, request, *args, **kwargs):

@@ -5,7 +5,6 @@ from . import views
 app_name = 'membership'
 
 urlpatterns = [
-    path('addbo/', views.AddBackOfficeView.as_view()),
     path('forgot/', views.ForgotPasswordView.as_view()),
 ]
 """

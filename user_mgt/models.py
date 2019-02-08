@@ -39,12 +39,14 @@ class UserRole(models.Model):
 
 class UserManagement(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    #type_user = models.ForeignKey(UserType, on_delete=models.SET_NULL, db_index=True, null=True)
-    user_role = models.ForeignKey(UserRole, on_delete=models.SET_NULL, db_index=True, null=True)
-    #privilege_user = models.ForeignKey(Privilege, on_delete=models.SET_NULL, db_index=True, null=True)
-    status = models.BooleanField(default=True)
+    full_name = models.CharField(max_length=255, default='')
+    mobile_phone = models.CharField(max_length=20, default='')
+    role = models.ManyToManyField(UserRole, db_index=True)
+    profile_picture = models.ImageField(upload_to = 'bo/profile_picture', blank=True)
+    status = models.CharField(max_length=255, default='')
     forgot_token = models.CharField(max_length=20, blank=True, null=True)
     is_active = models.BooleanField(default=True)
+    is_archived = models.BooleanField(default=False)
     class Meta:
         verbose_name = "User Management"
         verbose_name_plural = "Users Management"

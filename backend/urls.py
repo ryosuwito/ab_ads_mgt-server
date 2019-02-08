@@ -27,9 +27,12 @@ urlpatterns = [
     path('vehicle/', include('vehicle_mgt.urls')),
     path('user/', include('user_mgt.urls')),
     path('login/', user_view.Login.as_view(), name='login'),
-    path('logout/', user_view.Logout.as_view(), name='logout'),  
+    path('logout/', user_view.Logout.as_view(), name='logout'),    
+    path('bo/', user_view.BackOfficeIndexView.as_view(), name='regis_bo'),
+    path('bo/edit/', user_view.BackOfficeIndexView.as_view(), name='bo_edit'),
     path('role/', user_view.RoleView.as_view(), name='role_management'),  
     path('role/remove/', user_view.RoleRemoveView.as_view(), name='role_remove'),  
     path('role/edit/', user_view.RoleEditView.as_view(), name='role_edit'),  
     path('gps/', include('tracking_mgt.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

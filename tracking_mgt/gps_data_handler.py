@@ -206,22 +206,27 @@ for vehicle in gps_handler.vehicles:
         print(history)
         continue
     print(track_data)
+
+    idx=0
     if track_data:
-        for data in track_data:
-            timestamp = data['time_second']
-            timeformat = datetime.strptime(data['time_format'], '%d %b %Y %H:%M:%S')
-            batch_size = 100
-            gps, stat = GpsData.objects.get_or_create(
-                    license_no = license_no,
-                    timestamp = timestamp
-                )
-            print(gps.timestamp)
-            if stat:
-                gps.data = data
-                gps.created_date = timeformat
-                gps.save()
-                print(stat)
-            time.sleep(0.3)
+        while GpsData.objects.all().count() < 40000:
+            print(GpsData.objects.all().count())
+            for data in track_data:
+                idx += 1
+                timestamp = data['time_second']
+                timeformat = datetime.strptime(data['time_format'], '%d %b %Y %H:%M:%S')
+                batch_size = 100
+                gps = GpsData.objects.create(
+                        license_no = license_no,
+                        timestamp = timestamp
+                    )
+                #print(gps.timestamp)
+                print(idx)
+                if gps:
+                    gps.data = data
+                    gps.created_date = timeformat
+                    gps.save()
+
 
 is_logged_out = gps_handler.logout()
 if is_logged_out['response'] == 'OK':

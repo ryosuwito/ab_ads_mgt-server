@@ -7,7 +7,7 @@ class DriverRegistrationForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput())
     confirm_password = forms.CharField(widget=forms.PasswordInput())
     full_name = forms.CharField()
-    address = forms.CharField()
+    address = forms.CharField(widget=forms.Textarea)
     email =  forms.EmailField()
     mobile_phone = forms.CharField()
     ktp_photo = forms.ImageField(allow_empty_file=False)
@@ -37,7 +37,6 @@ class DriverRegistrationForm(forms.Form):
         self.fields['email'].widget.attrs['style'] = 'width:100%'
         self.fields['email'].widget.attrs['type'] = 'email'
         self.fields['email'].widget.attrs['required'] = 'required'
-        self.fields['email'].widget.attrs['data-parsley-trigger'] = 'change'
         self.fields['mobile_phone'].widget.attrs['class'] = 'form-control'
         self.fields['mobile_phone'].widget.attrs['style'] = 'width:100%'
         self.fields['mobile_phone'].widget.attrs['type'] = 'number'

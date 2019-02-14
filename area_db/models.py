@@ -11,6 +11,17 @@ class Province(models.Model):
     def __str__(self):
         return self.name
 
+class MainRoute(models.Model):
+    name = models.CharField(db_index=True, max_length=100)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = "MainRoute"
+        verbose_name_plural = "MainRoutes"
+
+    def __str__(self):
+        return self.name
+
 class City(models.Model):
     name = models.CharField(db_index=True, max_length=100)
     provinsi = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='kota_provinsi')

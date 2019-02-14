@@ -1,0 +1,17 @@
+{% extends 'backend/base_dashboard.html' %}
+{% block sidebar %}
+  {% include 'backend/sidebar.html' %}
+{% endblock %} 
+{% block content %}
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>{{title}}</h3>
+                <p class="alert alert-{{alert}}">
+                	{{messages}}
+                </p>
+                <a href="{{link}}"><button class="btn btn-{{alert}}">Go Back</button></a>
+              </div>
+            </div>
+          </div>
+{% endblock %}

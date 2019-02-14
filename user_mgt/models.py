@@ -53,3 +53,6 @@ class UserManagement(models.Model):
     
     def __str__(self):
         return self.user.username
+
+    def get_profile_picture_url(self):
+        return '/media/%s'%(self.profile_picture)

@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import MainRoute
 
-# Register your models here.
+class MainRouteAdmin(admin.ModelAdmin):
+    model = MainRoute
+
+admin.site.register(MainRoute, MainRouteAdmin)

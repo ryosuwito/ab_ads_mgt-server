@@ -2,6 +2,7 @@ import requests
 import json
 from datetime import datetime, timedelta
 from tracking_mgt.models import GpsData
+import time
 
 class GPSHandler():
     base_url="http://api.gps.id/"
@@ -33,7 +34,7 @@ class GPSHandler():
         except Exception as e:
             print(e)
             data={'response':'NO'}
-        #print(json.dumps(data, indent=4, sort_keys=True))
+        print(json.dumps(data, indent=4, sort_keys=True))
         return data
 
     def login(self):
@@ -152,6 +153,7 @@ class GPSHandler():
             'gpsend': date_end
         }
         data = self.get_data(url, data)
+        print(data)
         try:
             if data['response'] == 'OK':
                 track = data['track']
@@ -183,7 +185,7 @@ else:
     exit()
 
 now = datetime.now()
-date_start = now - timedelta(hours = 60*24)
+date_start = now - timedelta(days = 73)
 date_start = date_start.strftime('%Y-%m-%d %H:%M:%S')
 date_end = now.strftime('%Y-%m-%d %H:%M:%S')
 
@@ -199,9 +201,11 @@ for vehicle in gps_handler.vehicles:
         track_data = history['track']['track_data']
         #print(json.dumps(track_data, indent=4, sort_keys=True))
     except Exception as e:
+        track_data = 'NONE'
         print(e)
         print(history)
         continue
+    print(track_data)
     if track_data:
         for data in track_data:
             timestamp = data['time_second']
@@ -211,11 +215,13 @@ for vehicle in gps_handler.vehicles:
                     license_no = license_no,
                     timestamp = timestamp
                 )
+            print(gps.timestamp)
             if stat:
                 gps.data = data
                 gps.created_date = timeformat
                 gps.save()
                 print(stat)
+            time.sleep(0.3)
 
 is_logged_out = gps_handler.logout()
 if is_logged_out['response'] == 'OK':

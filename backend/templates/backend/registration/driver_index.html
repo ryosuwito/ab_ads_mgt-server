@@ -54,32 +54,6 @@
                 {{form.email}}
                 <div class="clearfix"></div>
                 </div>    
-                <br>
-
-                <div class="form-group">
-                <label for="province">Province :</label>
-                  <select class="form-control">
-                    <option>Choose option</option>
-                    <option>Option one</option>
-                    <option>Option two</option>
-                    <option>Option three</option>
-                    <option>Option four</option>
-                  </select>
-                  <div class="clearfix"></div>
-                </div>
-                <br>
-
-                <div class="form-group">
-                <label for="district">District :</label>
-                  <select class="form-control">
-                    <option>Choose option</option>
-                    <option>Option one</option>
-                    <option>Option two</option>
-                    <option>Option three</option>
-                    <option>Option four</option>
-                  </select>
-                  <div class="clearfix"></div>
-                </div>
 
                 </div> <!-- penutup div col -->
 
@@ -99,37 +73,83 @@
                 </div>
                 <br>
 
+                
                 <div class="form-group">
-                <label for="address">Address :</label>
-                {{form.address}}
+                <label for="email">Kode Pos :</label>
+                  <input id="id_postal_code" type="text" class="form-control" name="postal_code">
                 <div class="clearfix"></div>
-                </div>
+                </div>    
                 <br>
+              
+              </div> <!-- penutup div col -->
+              <div class="col-xs-12">    
 
-                <div class="form-group">
-                <label for="city">City :</label>
-                  <select class="form-control">
-                    <option>Choose option</option>
-                    <option>Option one</option>
-                    <option>Option two</option>
-                    <option>Option three</option>
-                    <option>Option four</option>
-                  </select>
+                <div class="form-group hidden" id="group_postal_list">
+                <label for="district">Postal Code List:</label>
+                  <select name="kelurahan"  style="width:100%;" class="form-control"   id="postal_list">
+                      <option value="..."> </option>         
+                    </select>
                   <div class="clearfix"></div>
                 </div>
-                <br>
+              </div> <!-- penutup div col -->
+              <div class="col-xs-6">  
+                <div class="form-group" id="group_province">
+                <label>Province :</label>
+                  <select name="provinsi" style="width:100%;" class="form-control" onClick="getKota(this.id)" id="id_provinsi">
+                      {% for province in provinces %}
+                      <option value="{{province.pk}}">{{province.name}}</option>
+                      {% endfor %}}
+                    </select>
+                  </select>
+                  <!--   <input type="text" style="width:100%;" name="province" id="id_province"class="form-control"> -->
+                  <br>
+                </div>
 
-                <label for="city">Upload Photo KTP/SIM</label>
-                {{form.ktp_photo}}
-                <br>
-                <img id="image-preview" alt="image preview"/>
-                <br>
 
-                <div align="right" class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                  <button type="submit" id="send" onclick="validasi();" class="btn btn-success"><i class="fa fa-check"> Create An Account </i></button>
+                <div class="form-group" id="group_kecamatan">
+                  <label for="city">Kecamatan :</label>
+                  <select name="kecamatan" style="width:100%;" class="form-control" onClick="getKelurahan(this.id)" id="id_kecamatan">
+                    <option value="..."> </option>
+                  </select>
+                <br>
+                </div>
+              </div> <!-- penutup div col -->
+              <div class="col-xs-6">  
+                <div class="form-group" id="group_city">
+                  <label>City :</label>
+                  <select name="kota" style="width:100%;" class="form-control" onClick="getKecamatan(this.id)" id="id_kota">
+                    <option value="..."> </option>
+                  </select>
+                <br>
+                </div>
+
+                <div class="form-group" id="group_kelurahan">
+                  <label>Kelurahan :</label>
+                  <select name="kelurahan" style="width:100%;" class="form-control" onclick="setPostalCode()" id="id_kelurahan">
+                    <option value="..."> </option>
+                  </select>
+                <br>
                 </div>
 
                 </div> <!-- penutup div col -->
+                <div class="col-xs-12">    
+                  <div class="form-group">
+                  <label for="address">Address :</label>
+                  {{form.address}}
+                  <div class="clearfix"></div>
+                  </div>
+                  <br>      
+                  <div class="form-group">
+                    <label>Upload Photo KTP/SIM</label>
+                    {{form.ktp_photo}}
+                    <br>
+                    <img id="image-preview" alt="image preview"/>
+                  </div>
+                  <div align="right" class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                    <button type="submit" id="send" onclick="validasi();" class="btn btn-success"><i class="fa fa-check"> Create An Account </i></button>
+                  </div>      
+                  <br>
+                </div>
                 </div> <!-- penutup div row -->
               </div>
               <!-- </form> -->
@@ -140,6 +160,7 @@
           <br />
         <!-- /page content -->
 
+<script src="/static/assets/select/jquery/jquery-3.3.1.min.js"></script>
 <!-- script upload image -->
 <script type="text/javascript">
   function previewImage() {
@@ -169,5 +190,194 @@
           return false;
         };
      }
+</script>
+<script>//setup before functions
+var typingTimer;                //timer identifier
+var doneTypingInterval = 500;  //time in ms, 5 second for example
+var postal_input = $('#id_postal_code');
+
+$('#postal_list').on('click', function(){
+  var kelurahan_pk = $('#postal_list').val()
+  $.ajaxSetup({
+    headers : {
+        'CSRFToken' : "{{ token }}",
+    }
+  });
+  $.ajax({url: '/wilayah/get_by_code/'+ kelurahan_pk +'/', success: function(result){
+  console.log(result)
+  document.getElementById('group_province').classList.remove('hidden');
+  document.getElementById('group_city').classList.remove('hidden');
+  document.getElementById('group_kecamatan').classList.remove('hidden');
+  document.getElementById('group_kelurahan').classList.remove('hidden');
+  getProvinsi(result['results'][0]['province_pk'])
+  setOption(result['results'][0]['city_pk'],result['results'][0]['province'], 'id_kota', 'kota')
+  setOption(result['results'][0]['kecamatan_pk'],result['results'][0]['city_pk'], 'id_kecamatan', 'kecamatan')
+  setOption(result['results'][0]['kelurahan_pk'],result['results'][0]['kecamatan_pk'], 'id_kelurahan', 'kelurahan')
+  document.getElementById('group_postal_list').classList.add('hidden');
+  }});
+})
+
+//on keyup, start the countdown
+postal_input.on('keyup', function () {
+  clearTimeout(typingTimer);
+  typingTimer = setTimeout(doneTyping, doneTypingInterval);
+});
+
+//on keydown, clear the countdown 
+postal_input.on('keydown', function () {
+  clearTimeout(typingTimer);
+});
+
+function doneTyping(){
+    var provinsi= document.getElementById("id_provinsi");
+    var kota = document.getElementById('id_kota');
+    var kecamatan = document.getElementById("id_kecamatan ");
+    var kelurahan = document.getElementById('id_kelurahan');
+    document.getElementById('group_postal_list').classList.remove('hidden');
+    var postal_code = $('#id_postal_code').val()
+
+    $.ajaxSetup({
+    headers : {
+        'CSRFToken' : "{{ token }}",
+    }
+    });
+    $.ajax({url: '/wilayah/postal_code/'+ postal_code +'/', success: function(result){
+    console.log(result)
+    var options = '';
+    options += "<option value='0'>--pilih kelurahan--</option>";
+    for(i=0; i<result['results'].length; i++){
+        options += "<option value='"+result['results'][i]['value']+"'>"+postal_code + ' / ' + result['results'][i]['nama']+"</option>";
+        console.log(result['results'][i]['nama']);
+    }
+    $('#postal_list').html(options);
+    }});
+}
+</script>
+<script>
+function getProvinsi(selected_pk){
+    var provinsi = document.getElementById("id_provinsi");
+    $.ajaxSetup({
+    headers : {
+        'CSRFToken' : "{{ token }}",
+    }
+    });
+    $.ajax({url: '/wilayah/provinsi/', success: function(result){
+    var options = '';
+    // options += "<option value='0'>--pilih kota--</option>";
+    for(i=0; i<result['results'].length; i++){
+        if(result['results'][i]['value']==selected_pk){
+          options += "<option value='"+result['results'][i]['value']+"' selected='selected'>"+result['results'][i]['nama']+"</option>";
+        }else{
+          options += "<option value='"+result['results'][i]['value']+"'>"+result['results'][i]['nama']+"</option>";
+        }
+        console.log(result['results'][i]['nama']);
+    }
+    provinsi.innerHTML=options;
+    }});
+}
+</script>
+<script>
+function setOption(selected_pk, selected_name, target_id, target_url){
+    var selects = document.getElementById(target_id);
+    $.ajaxSetup({
+    headers : {
+        'CSRFToken' : "{{ token }}",
+    }
+    });
+    $.ajax({url: '/wilayah/'+ target_url +'/'+ selected_name +'/', success: function(result){
+    var options = '';
+    // options += "<option value='0'>--pilih kota--</option>";
+    for(i=0; i<result['results'].length; i++){
+        if(result['results'][i]['value']==selected_pk){
+          options += "<option value='"+result['results'][i]['value']+"' selected='selected'>"+result['results'][i]['nama']+"</option>";
+        }else{
+          options += "<option value='"+result['results'][i]['value']+"'>"+result['results'][i]['nama']+"</option>";
+        }
+        console.log(result['results'][i]['nama']);
+    }
+    selects.innerHTML=options;
+    }});
+}
+</script>
+<script>
+function getKota(id){
+    var selected_provinsi='';
+    var myselect = document.getElementById("id_provinsi");
+    var kota = document.getElementById('id_kota');
+    selected_provinsi=myselect.options[myselect.selectedIndex].text;
+    $.ajaxSetup({
+    headers : {
+        'CSRFToken' : "{{ token }}",
+    }
+    });
+    $.ajax({url: '/wilayah/kota/'+ selected_provinsi +'/', success: function(result){
+    var options = '';
+    options += "<option value='0'>--pilih kota--</option>";
+    for(i=0; i<result['results'].length; i++){
+        options += "<option value='"+result['results'][i]['value']+"'>"+result['results'][i]['nama']+"</option>";
+        console.log(result['results'][i]['nama']);
+    }
+    kota.innerHTML=options;
+    }});
+}
+</script>
+<script>
+function getKecamatan(id){
+    var selected_kota='';
+    var myselect = document.getElementById("id_kota");
+    var kecamatan = document.getElementById('id_kecamatan');
+    selected_kota=myselect.options[myselect.selectedIndex].value;
+    $.ajaxSetup({
+    headers : {
+        'CSRFToken' : "{{ token }}",
+    }
+    });
+    $.ajax({url: '/wilayah/kecamatan/'+ selected_kota +'/', success: function(result){
+    var options = '';
+    options += "<option value='0'>--pilih kecamatan--</option>";
+    for(i=0; i<result['results'].length; i++){
+        options += "<option value='"+result['results'][i]['value']+"'>"+result['results'][i]['nama']+"</option>";
+        console.log(result['results'][i]['nama']);
+    }
+    kecamatan.innerHTML=options;
+    }});
+}
+</script>
+<script>
+function getKelurahan(id){
+    var selected_kecamatan='';
+    var myselect = document.getElementById("id_kecamatan");
+    var kelurahan = document.getElementById('id_kelurahan');
+    selected_kecamatan=myselect.options[myselect.selectedIndex].value;
+    $.ajaxSetup({
+    headers : {
+        'CSRFToken' : "{{ token }}",
+    }
+    });
+    $.ajax({url: '/wilayah/kelurahan/'+ selected_kecamatan +'/', success: function(result){
+    var options = '';
+    options += "<option value='0'>--pilih kelurahan--</option>";
+    for(i=0; i<result['results'].length; i++){
+        options += "<option value='"+result['results'][i]['value']+"'>"+result['results'][i]['nama']+"</option>";
+        console.log(result['results'][i]['nama']);
+    }
+    kelurahan.innerHTML=options;
+    }});
+}
+</script>
+<script type="text/javascript">
+  function setPostalCode(){   
+    var kelurahan = document.getElementById('id_kelurahan');
+    var selected_kelurahan=kelurahan.options[kelurahan.selectedIndex].value;
+    
+    $.ajaxSetup({
+    headers : {
+        'CSRFToken' : "{{ token }}",
+    }
+    });
+    $.ajax({url: '/wilayah/get_postal_code/'+ selected_kelurahan +'/', success: function(result){
+    $('#id_postal_code').val(result['results'][0]['postal_code'])
+    }});
+  }
 </script>
 {% endblock %}

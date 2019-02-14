@@ -1,7 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect, HttpResponse
+from django.forms.models import model_to_dict
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
+from django.middleware.csrf import get_token
 from django.shortcuts import render, reverse
 from django.utils.crypto import get_random_string
 from django.views import View
@@ -16,6 +18,7 @@ class BackOfficeIndexView(View):
         user_managements = UserManagement.objects.filter(is_archived=False)
         return render(request, 'backend/registration/back_office_index.html',
             {'form': self.form,
+            'token': get_token(request),
             'form_messages': self.form_messages,
             'user_managements':user_managements})            
     def post(self, request, *args, **kwargs):
@@ -55,8 +58,108 @@ class BackOfficeIndexView(View):
             self.form_messages = 'Field error, periksa ulang form back office'
         return render(request, 'backend/registration/back_office_index.html',
             {'form': self.form,
+            'token': get_token(request),
             'form_messages': self.form_messages,
             'user_managements':user_managements}) 
+
+class BackOfficeProfileView(View):
+    def get(self, request, *args, **kwargs):
+        pk = request.GET.get('pk')
+        if pk:
+            try:
+                user_management = UserManagement.objects.get(pk=pk)
+                
+            except Exception as e:
+                print(e)
+                return HttpResponseRedirect(reverse('regis_bo'))
+        if user_management:
+            roles = UserRole.objects.filter(is_archived=False, is_active=True)
+            role_list = []
+            for role in roles:
+                role_list.append(
+                    {
+                        'value': role.pk,
+                        'name': role.name
+                    })
+            result = {'results':{
+                'full_name': user_management.full_name,
+                'mobile_phone': user_management.mobile_phone,
+                'role': [role.name for role in user_management.role.all()],
+                'profile_picture': user_management.get_profile_picture_url(),
+                'status': user_management.status,
+                'is_active': user_management.is_active,
+                'email': user_management.user.email,
+                'role': role_list,
+                'bo_pk': user_management.pk
+            }}
+        else:
+            result = {}
+        return JsonResponse(result)
+class BackOfficeChangePasswordView(View):
+    def post(self, request, *args, **kwargs):
+        pk = request.POST.get('bo_pk')
+        if pk:
+            try:
+                user_management = UserManagement.objects.get(pk=pk)
+                
+            except Exception as e:
+                print(e)
+                return HttpResponseRedirect(reverse('regis_bo'))
+        if user_management:
+            new_password = request.POST.get('password_edit')
+            if new_password:
+                user_management.user.set_password(new_password)
+                user_management.user.save()
+                return HttpResponse(render(request, 'backend/registration/messages.html',
+                    {'messages': 'Change BO Password Success',
+                    'title': 'Back Office Change Password',
+                    'alert' : 'success',
+                    'link': reverse('regis_bo')}))
+        return HttpResponse(render(request, 'backend/registration/messages.html',
+                    {'messages': 'Change BO Password Failed',
+                    'title': 'Back Office Change Password',
+                    'alert' : 'danger',
+                    'link': reverse('regis_bo')}))
+
+class BackOfficeEditView(View):
+    def post(self, request, *args, **kwargs):
+        pk = request.POST.get('bo_pk')
+        if pk:
+            try:
+                user_management = UserManagement.objects.get(pk=pk)
+                
+            except Exception as e:
+                print(e)
+                return HttpResponseRedirect(reverse('regis_bo'))
+        if user_management:
+            full_name = request.POST.get('nama_bo_edit')
+            email = request.POST.get('email_bo_edit')
+            mobile_phone = request.POST.get('mp_bo_edit')
+            profile_picture = request.FILES.get('pic')
+            role = request.POST.get('role_edit')
+            is_active = request.POST.get('is_active_edit')
+            print(is_active)
+            if is_active:
+                user_management.is_active = True
+            else:
+                user_management.is_active = False
+            user_management.full_name = full_name
+            user_management.user.email = email
+            user_management.user.save()
+            user_management.mobile_phone = mobile_phone
+            if profile_picture:
+                user_management.profile_picture = profile_picture
+            user_management.save()
+            return HttpResponse(render(request, 'backend/registration/messages.html',
+                {'messages': 'Edit BO Profile Success',
+                'title': 'Back Office Edit Profile',
+                'alert' : 'success',
+                'link': reverse('regis_bo')}))
+        return HttpResponse(render(request, 'backend/registration/messages.html',
+                    {'messages': 'Edit BO Profile Failed',
+                    'title': 'Back Office Edit Profile',
+                    'alert' : 'danger',
+                    'link': reverse('regis_bo')}))
 
 class RoleRemoveView(View):
     def get(self, request, *args, **kwargs):

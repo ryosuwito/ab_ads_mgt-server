@@ -152,3 +152,13 @@ LOGIN_URL = '/login/'
 LOGOUT_REDIRECT_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 USE_TZ = False
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ORIGIN_WHITELIST = (
+    'localhost',
+)
+
+CORS_ALLOW_METHODS = (
+    'GET',
+)

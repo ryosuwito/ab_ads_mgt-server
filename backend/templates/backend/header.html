@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- <link rel="icon" href="images/favicon.ico" type="image/ico" /> -->
+    <link rel="icon" href="/static/assets/build/images/logoAB.png" type="image/ico" />
 
     <title>ABPluss Car</title>
     <!-- Bootstrap -->
@@ -23,29 +23,31 @@
     <!-- bootstrap-progressbar -->
     <link href="/static/assets/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
     <!-- Datatables -->
+    <link href="/static/assets/pagination/uikit.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.uikit.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="/static/assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-    <link href="/static/assets/vendorss/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
     <link href="/static/assets/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
     <link href="/static/assets/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
     <link href="/static/assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
     <!-- bootstrap-datetimepicker -->
     <link href="/static/assets/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
-    <!-- datepicker -->
-    <link href="/static/assets/vendors/bootstrap-datepicker/datepicker.css" rel="stylesheet">
     <!-- bootstrap-daterangepicker -->
     <link href="/static/assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-    <!-- Notification.css -->
-    <link href="/static/assets/vendors/animate.css/notification.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="/static/assets/build/css/custom.min.css" rel="stylesheet">
-
+    <!-- pagination -->
     <link href="/static/assets/pagination/pagination.css" rel="stylesheet">
-
     <style type="text/css">
         #image-preview{
             display:none;
             width : 100%;
             height : auto;
+        }
+        #image-preview-picture{
+            display:none;
+            width : 300px;
+            height : 300px;
         }
     </style>
     <style type="text/css">
@@ -68,5 +70,16 @@
             width : 150px;
             height : 150px;
         }
+    </style>
+    <style type="text/css">
+        th {
+      border-top: 1px solid #dddddd;
+      border-bottom: 1px solid #dddddd;
+      border-right: 1px solid #dddddd;
+    }
+    .dataTableLayout {
+    table-layout:fixed;
+    width:100%;
+    }
     </style>
   </head>

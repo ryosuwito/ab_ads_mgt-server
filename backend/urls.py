@@ -24,6 +24,7 @@ import area_db.urls as wilayah
 urlpatterns = [
     re_path('^$', login_required(user_view.DashboardView.as_view()), name='dashboard'),
     path('admin/', admin.site.urls),
+    path('campaign/', include('campaign_mgt.urls')),
     path('driver/', include('driver_mgt.urls')),
     path('vehicle/', include('vehicle_mgt.urls')),
     path('wilayah/', include(wilayah, namespace='wilayah_backend')),

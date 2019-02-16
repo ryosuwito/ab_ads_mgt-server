@@ -3,11 +3,222 @@
   {% include 'backend/sidebar.html' %}
 {% endblock %} 
 {% block content %}
-          <div class="">
-            <div class="page-title">
-              <div class="title_left">
-                <h3>Welcome To Dashboard</h3>
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel tile fixed">
+
+	    <div class="x_title">
+	    <h2>Daashboard</h2>
+	    <ul class="nav navbar-right panel_toolbox">
+	      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+	      <li class="dropdown">
+	        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+	        <ul class="dropdown-menu" role="menu">
+	          <li><a href="#">Settings 1</a>
+	          </li>
+	          <li><a href="#">Settings 2</a>
+	          </li>
+	        </ul>
+	      </li>
+	      <li><a class="close-link"><i class="fa fa-close"></i></a>
+	      </li>
+	    </ul>
+	    <div class="clearfix"></div>
+	  	</div>
+	    <br>
+
+	    <div class="x_content">
+	    	<div class="row top_tiles">
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                  <div class="left icon"><i class="fa fa-tachometer"></i></div>
+                  <div class="count"><h3>124.136 KM</h3></div>
+                  <h2> Total Jarak Tempuh </h2>
+                  <p></p>
+                </div>
               </div>
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                  <div class="icon"><i class="fa fa-eye"></i></div>
+                  <div class="count"><h3>179,456</h3></div>
+                  <h2>Total Viewer</h2>
+                  <p></p>
+                </div>
+              </div>
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                  <div class="icon"><i class="fa fa-automobile"></i></div>
+                  <div class="count"><h3>179</h3></div>
+                  <h2>Total Unit</h2>
+                  <p></p>
+                </div>
+              </div>
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                  <div class="icon"><i class="fa fa-check-square-o"></i></div>
+                  <div class="count"><h3>1 Month</h3></div>
+                  <h2>Durasi Campaign</h2>
+                  <p></p>
+                </div>
+              </div>
+              <div class="clearfix"></div>
             </div>
-          </div>
+            <br>
+
+            <div class="col-md-6 col-sm-6 col-xs-12">
+            	<table id="drive" class="table table-striped table-bordered" style="width:100%">
+				    <thead>
+				        <tr>
+				            <th>Area</th>
+				            <th>Jumlah Unit</th>
+				        </tr>
+				    </thead>
+				    <tbody>
+				        <tr>
+				            <td>Medan</td>
+				            <td>50</td>
+				        </tr>
+				        <tr>
+				            <td>Bekasi</td>
+				            <td>1</td>
+				        </tr>
+				    </tbody>
+				</table>
+            </div>
+
+            <div class="col-md-6 col-sm-6 col-xs-12">
+            	<table id="drive2" class="table table-striped table-bordered" style="width:100%">
+				    <thead>
+				        <tr>
+				            <th>Driver</th>
+				            <th>Unit</th>
+				            <th>Status</th>
+				            <th>Detail</th>
+				        </tr>
+				    </thead>
+				    <tbody>
+				        <tr>
+				            <td>Abd Rojib</td>
+				            <td>Honda Scoopy</td>
+				            <td><p align="center"><button disabled="disabled" type="button" class="btn btn-success"><i class="fa fa-motorcycle"></i></button></p></td>
+				            <td><p align="center"><button type="button" class="btn btn-info">Detail</button></p></td>
+				        </tr>
+				        <tr>
+				            <td>Ade Isnanadar</td>
+				            <td>Yamaha Mio</td>
+				            <td><p align="center"><button disabled="disabled" type="button" class="btn btn-success"><i class="fa fa-motorcycle"></i></button></p></td>
+				            <td><p align="center"><button type="button" class="btn btn-info">Detail</button></p></td>
+				        </tr>
+				        <tr>
+				            <td>Adi Budaya</td>
+				            <td>Honda Scoopy</td>
+				            <td><p align="center"><button disabled="disabled" type="button" class="btn btn-success"><i class="fa fa-motorcycle"></i></button></p></td>
+				            <td><p align="center"><button type="button" class="btn btn-info">Detail</button></p></td>
+				        </tr>
+				        <tr>
+				            <td>Adi Fahdrurozi</td>
+				            <td>Yamaha Mio</td>
+				            <td><p align="center"><button disabled="disabled" type="button" class="btn btn-success"><i class="fa fa-motorcycle"></i></button></p></td>
+				            <td><p align="center"><button type="button" class="btn btn-info">Detail</button></p></td>
+				        </tr>
+				        <tr>
+				            <td>Adi Prianto</td>
+				            <td>Yamaha Mio</td>
+				            <td><p align="center"><button disabled="disabled" type="button" class="btn btn-success"><i class="fa fa-motorcycle"></i></button></p></td>
+				            <td><p align="center"><button type="button" class="btn btn-info">Detail</button></p></td>
+				        </tr>
+				    </tbody>
+				</table>
+            </div>
+
+
+	    </div> <!-- close x content -->
+
+
+      </div> <!-- closse xpanel -->
+    </div> <!-- close col -->
+</div> <!-- close row -->
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel tile fixed">
+
+	    <div class="x_content">
+	    	<div class="form-group">
+                <label for="province">Province :</label>
+                  <select class="form-control" onchange="initMap()" name="province" id="province">
+                    <option selected='selected' value="31">DKI Jakarta</option>
+                    <option value="36">Banten</option>
+                    <option value="32">Jawa Barat</option>
+                    <option value="12">Sumatra Utara</option>
+                  </select>
+                  <div class="clearfix"></div>
+                </div>
+                <div id="googleMap" style="width:100%;height:700px;"></div>
+                <br>
+	    </div> <!-- close x content -->
+	    
+
+      </div> <!-- closse xpanel -->
+    </div> <!-- close col -->
+</div> <!-- close row -->
+          <br />
+        <!-- /page content -->
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAj7tSdjukVN4virXCXLUnKLJ4UR_gXVG0&callback=initMap" async defer></script>
+<script type="text/javascript">
+var SITE_URL = "http://dev.abplusscar.com/";
+
+
+function setMarkers(map) {
+	var beaches = [
+		  ['test1', -6.11259, 106.7375],
+		  ['test2', -6.112938, 106.738],
+		  ['test3', -6.113492, 106.7384],
+		  ['test4', -6.114809, 106.7376]
+		];
+    for (var i = 0; i < beaches.length; i++) {
+      var beach = beaches[i];
+      var marker = new google.maps.Marker({
+        position: {lat: beach[1], lng: beach[2]},
+        map: map,
+        icon: "/static/assets/build/images/mobil.png",
+      });
+    }
+  }
+	lat 	= -6.11259//parseFloat(result['results'][0]['data'][0]['lat']);
+	lng 	= 106.7375//parseFloat(result['results'][0]['data'][0]['lng']);
+	map = new google.maps.Map(document.getElementById('googleMap'), {
+		zoom 				: 15,
+		center 				: {lat: lat, lng: lng},
+		mapTypeId 			: google.maps.MapTypeId.ROADMAP,
+	});
+	setMarkers(map);
+function initMap() {
+	var map = '' 
+	var province = document.getElementById('province').value;
+	var lat;
+	var lng;
+	// $.ajax({
+	// 	url 		: SITE_URL + 'gps/',
+	// 	method		: 'get',
+	// 	dataType	: 'json',
+	// 	async : false,
+ //      	cache : false,
+	// 	success		: function(result) {
+	// 		console.log(result['results'][0]['data'][10])
+	// 		lat 	= -6.11259//parseFloat(result['results'][0]['data'][0]['lat']);
+	// 		lng 	= 106.7375//parseFloat(result['results'][0]['data'][0]['lng']);
+	// 		map = new google.maps.Map(document.getElementById('googleMap'), {
+	// 			zoom 				: 12,
+	// 			center 				: {lat: lat, lng: lng},
+	// 			mapTypeId 			: google.maps.MapTypeId.ROADMAP,
+	// 		});
+	// 		setMarkers(map);
+	// 	},
+
+	// });
+}
+    
+
+</script>
 {% endblock %}

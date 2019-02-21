@@ -34,25 +34,32 @@ class DriverRegistrationView(View):
             mobile_phone = data.get('mobile_phone')
             address = data.get('address')
             username = full_name.replace(' ','_').lower()
+            old_user = User.objects.filter(username=username)
+            if old_user:
+                username = '%s%s'%(username,len(old_user)+1)
             user = User.objects.create_user(username=username,
-                email=email,
                 password=password)
             if user:
-                try:
-                    driver = Driver.objects.create(
-                          full_name = full_name,
-                          user = user,
-                          ktp_photo = ktp_photo,
-                          mobile_phone=mobile_phone,
-                          address=address,
-                          province = Province.objects.get(pk=provinsi),
-                          city = City.objects.get(pk=kota),
-                          kecamatan = Kecamatan.objects.get(pk=kecamatan),
-                          kelurahan = Kelurahan.objects.get(pk=kelurahan)
-                        )
-                except Exception as e:
-                    print(e)
-                    return HttpResponse('NOT OK GAN')
+                driver = Driver.objects.create(
+                      full_name = full_name,
+                      user = user,
+                      ktp_photo = ktp_photo,
+                      mobile_phone=mobile_phone,
+                      address=address,
+                      province = Province.objects.get(pk=provinsi),
+                    )
+                if kota and not kota == '...' and kota != '0':
+                    city = City.objects.get(pk=kota)
+                    driver.city = city
+                if kecamatan and not kecamatan == '...' and kecamatan != '0':
+                    kecamatan = Kecamatan.objects.get(pk=kecamatan)
+                    driver.kecamatan = kecamatan
+                if kelurahan and not kelurahan == '...' and kelurahan != '0':
+                    kelurahan = Kelurahan.objects.get(pk=kelurahan)
+                    driver.kelurahan = kelurahan
+                driver.user.email = email
+                driver.save()
+                driver.user.save()
                 return HttpResponseRedirect(reverse('vehicle:add_new'))
             else:
                 return HttpResponse('NOT OK GAN')

@@ -26,6 +26,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('campaign/', include('campaign_mgt.urls')),
     path('driver/', include('driver_mgt.urls')),
+    path('payment/', include('payment.urls')),
     path('vehicle/', include('vehicle_mgt.urls')),
     path('wilayah/', include(wilayah, namespace='wilayah_backend')),
     path('user/', include('user_mgt.urls')),

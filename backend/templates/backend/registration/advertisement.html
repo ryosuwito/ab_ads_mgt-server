@@ -1,11 +1,8 @@
-<div class="">
-  <div class="page-title">
-    <div class="title_left">
-    </div>
-  </div>
-</div>
-<div class="clearfix"></div>
-
+{% extends 'backend/base_dashboard.html' %}
+{% block sidebar %}
+  {% include 'backend/sidebar.html' %}
+{% endblock %}
+{% block content %}
   <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
       <div class="x_panel">
@@ -594,3 +591,4 @@ $(document).ready(function () {
     });
 });
 </script>
+{% endblock %}

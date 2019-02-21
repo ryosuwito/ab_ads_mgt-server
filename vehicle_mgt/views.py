@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.views import View
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.middleware.csrf import get_token
+from django.shortcuts import render, reverse
 from area_db.models import Province, City, MainRoute
 from driver_mgt.models import Driver
 
@@ -31,15 +32,14 @@ class AddCarView(View):
 			data = self.form.cleaned_data
 			driver_pk = request.POST.get('driver')
 			vehicle_type_name = request.POST.get('vehicle_type')
+			kota = request.POST.get('kota')
 			try:
 				driver = Driver.objects.get(pk=driver_pk)
 				vehicle_province = Province.objects.get(pk=request.POST.get('provinsi'))
-				vehicle_city = City.objects.get(pk=request.POST.get('kota'))
 				vehicle_type = VehicleType.objects.get(name=vehicle_type_name.title())
 			except Exception as e:
 				print(e)
 				return HttpResponse(driver_pk)
-
 			if driver:
 				try:
 					vehicles = Vehicle.objects.filter(driver=driver)
@@ -51,15 +51,23 @@ class AddCarView(View):
 						vehicle.is_active=False
 						vehicle.save()
 
+			vehicle_brand, stat =  VehicleBrand.objects.get_or_create(
+				name= data.get('vehicle_brand').lower(),
+				vehicle_type = vehicle_type
+				)
+
+			vehicle_model, stat =  VehicleModel.objects.get_or_create(
+				name= data.get('vehicle_model').lower(),
+				vehicle_brand = vehicle_brand
+				)
 
 			vehicle = Vehicle.objects.create(
 					driver=driver,
-					vehicle_model=data.get('vehicle_model'),
+					vehicle_model=vehicle_model.name.upper(),
 					vehicle_type=vehicle_type,
 					vehicle_year=data.get('vehicle_year'),
-					vehicle_brand=data.get('vehicle_brand'),
+					vehicle_brand=vehicle_brand.name.upper(),
 					vehicle_color=data.get('vehicle_color'),
-					vehicle_city=vehicle_city,
 					vehicle_province=vehicle_province,
 					vehicle_used_for=data.get('vehicle_used_for'),
 					daily_main_route=request.POST.get('daily_main_route'),
@@ -69,10 +77,29 @@ class AddCarView(View):
 
 				)
 			if vehicle:
-				return HttpResponse(vehicle)
+				if kota and not kota == '...' and kota != '0':
+					vehicle_city = City.objects.get(pk=kota)
+					vehicle.vehicle_city = vehicle_city
+					vehicle.save()
+				return HttpResponseRedirect('%s?driver_pk=%s'%(reverse('payment:add_new'), driver_pk))
 
-			return JsonResponse(request.POST)
-		return JsonResponse(request.POST)
+		return render(request, 'backend/registration/add_vehicle.html',
+		{'form': self.form,
+		'colors': colors,
+		'drivers': drivers,
+		'main_routes': main_routes,
+		'provinces': provinces,
+		'token': get_token(request),
+		'form_messages': self.form_messages})
+
+class GetAllCar(View):
+	def get(self, request, vehicle_type, **kwargs):
+		vehicle_brands = VehicleBrand.objects.filter(
+		is_active=True,
+		vehicle_type__name=vehicle_type.title()
+		)
+		return JsonResponse([brand.name for brand in vehicle_brands], safe=False)
+
 
 class GetBrandsView(View):
     def get(self, request, vehicle_type, **kwargs):

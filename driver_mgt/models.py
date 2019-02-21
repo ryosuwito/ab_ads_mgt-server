@@ -8,12 +8,12 @@ class Driver(models.Model):
     full_name = models.CharField(max_length=255, default='')
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bank_account = models.ForeignKey(BankAccount, on_delete=models.SET_NULL, null=True)
-    mobile_phone = models.CharField(max_length=20, default='')
-    address = models.CharField(max_length=255)
+    mobile_phone = models.CharField(max_length=20, default='', blank=True)
+    address = models.CharField(max_length=255, blank=True)
     province = models.ForeignKey(Province, on_delete=models.SET_NULL, db_index=True, null=True)
-    city = models.ForeignKey(City, on_delete=models.SET_NULL, db_index=True, null=True)
-    kecamatan = models.ForeignKey(Kecamatan, on_delete=models.SET_NULL, db_index=True, null=True)
-    kelurahan = models.ForeignKey(Kelurahan, on_delete=models.SET_NULL, db_index=True, null=True)
+    city = models.ForeignKey(City, blank=True, on_delete=models.SET_NULL, db_index=True, null=True)
+    kecamatan = models.ForeignKey(Kecamatan, blank=True, on_delete=models.SET_NULL, db_index=True, null=True)
+    kelurahan = models.ForeignKey(Kelurahan, blank=True, on_delete=models.SET_NULL, db_index=True, null=True)
     ktp_photo = models.ImageField(upload_to = 'driver/ktp_photo', blank=True)
     profile_picture = models.ImageField(upload_to = 'driver/profile_picture', blank=True)
     is_approved = models.BooleanField(default=False)
@@ -27,4 +27,4 @@ class Driver(models.Model):
         verbose_name_plural = "Drivers"
     
     def __str__(self):
-        return self.full_name.title()
+        return '%s - %s'%(self.full_name.title(), self.province.name.upper())

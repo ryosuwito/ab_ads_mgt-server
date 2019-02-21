@@ -7,9 +7,9 @@ class AddCarForm(forms.Form):
 	vehicle_color = forms.CharField()
 	vehicle_model = forms.CharField()
 	vehicle_year = forms.ModelChoiceField(YEAR_OPTIONS, initial='Choose Option')
-	vehicle_used_for = forms.CharField()
-	stnk_photo = forms.ImageField()#allow_empty_file=False)
-	front_side_photo = forms.ImageField()#allow_empty_file=False)
+	vehicle_used_for = forms.CharField(required=False)
+	stnk_photo = forms.ImageField(required=False)#allow_empty_file=False)
+	front_side_photo = forms.ImageField(required=False)#allow_empty_file=False)
     
 	def __init__(self, *args, **kwargs):
 		super(AddCarForm, self).__init__(*args, **kwargs)
@@ -27,7 +27,6 @@ class AddCarForm(forms.Form):
 		self.fields['vehicle_model'].widget.attrs['required'] = 'required'
 		self.fields['vehicle_used_for'].widget.attrs['class'] = 'form-control'
 		self.fields['vehicle_used_for'].widget.attrs['style'] = 'width:100%'
-		self.fields['vehicle_used_for'].widget.attrs['required'] = 'required'
 		self.fields['stnk_photo'].widget.attrs['class'] = 'form-control'
 		self.fields['stnk_photo'].widget.attrs['style'] = 'width:100%'
 		#self.fields['stnk_photo'].widget.attrs['required'] = 'required'

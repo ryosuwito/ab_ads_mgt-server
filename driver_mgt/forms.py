@@ -7,10 +7,10 @@ class DriverRegistrationForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput())
     confirm_password = forms.CharField(widget=forms.PasswordInput())
     full_name = forms.CharField()
-    address = forms.CharField(widget=forms.Textarea)
-    email =  forms.EmailField()
+    address = forms.CharField(required=False, widget=forms.Textarea)
+    email =  forms.EmailField(required=False)
     mobile_phone = forms.CharField()
-    ktp_photo = forms.ImageField(allow_empty_file=False)
+    ktp_photo = forms.ImageField(required=False, allow_empty_file=True)
 
     def __init__(self, *args, **kwargs):
         super(DriverRegistrationForm, self).__init__(*args, **kwargs)
@@ -32,18 +32,15 @@ class DriverRegistrationForm(forms.Form):
         self.fields['address'].widget.attrs['class'] = 'form-control'
         self.fields['address'].widget.attrs['style'] = 'width:100%'
         self.fields['address'].widget.attrs['type'] = 'text'
-        self.fields['address'].widget.attrs['required'] = 'required'
         self.fields['email'].widget.attrs['class'] = 'form-control'
         self.fields['email'].widget.attrs['style'] = 'width:100%'
         self.fields['email'].widget.attrs['type'] = 'email'
-        self.fields['email'].widget.attrs['required'] = 'required'
         self.fields['mobile_phone'].widget.attrs['class'] = 'form-control'
         self.fields['mobile_phone'].widget.attrs['style'] = 'width:100%'
         self.fields['mobile_phone'].widget.attrs['type'] = 'number'
         self.fields['mobile_phone'].widget.attrs['required'] = 'required'
         self.fields['ktp_photo'].widget.attrs['class'] = 'form-control'
         self.fields['ktp_photo'].widget.attrs['style'] = 'width:100%'
-        self.fields['ktp_photo'].widget.attrs['required'] = 'required'
         self.fields['ktp_photo'].widget.attrs['onchange'] = 'previewImage();'
 
 

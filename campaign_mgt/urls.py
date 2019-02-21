@@ -5,6 +5,7 @@ from . import views
 app_name = 'campaign'
 
 urlpatterns = [
+    re_path(r'^$', views.AdvertisementIndexView.as_view(), name='show_all'),
     path('report/', views.ReportIndexView.as_view(), name="report"),
 ]
 """

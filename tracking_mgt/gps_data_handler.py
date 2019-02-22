@@ -177,7 +177,7 @@ else:
     exit()
 max_day = 0
 day = 30
-last_day = 6
+last_day = day - 1
 now = datetime.now()
 while day > max_day:
     res = gps_handler.get_all_vehicle()

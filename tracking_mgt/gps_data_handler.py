@@ -175,16 +175,16 @@ if res['response'] == 'OK':
 else:
     print("Get Profile User Failed")
     exit()
-res = gps_handler.get_all_vehicle()
-if res['response'] == 'OK':
-    print("Get all vehicles of {} Success".format(gps_handler.username))
-else:
-    print("Get all vehicles Failed")
-    exit()
 max_day = 3
 day = 0
 last_day = 0
 while day <= max_day:
+    res = gps_handler.get_all_vehicle()
+    if res['response'] == 'OK':
+        print("Get all vehicles of {} Success".format(gps_handler.username))
+    else:
+        print("Get all vehicles Failed")
+        exit()
     day += 1
     last_day = day - 1
     now = datetime.now()

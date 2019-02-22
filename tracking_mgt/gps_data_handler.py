@@ -176,7 +176,7 @@ else:
     print("Get Profile User Failed")
     exit()
 max_day = 0
-day = 30
+day = 45
 last_day = day - 1
 now = datetime.now()
 while day > max_day:

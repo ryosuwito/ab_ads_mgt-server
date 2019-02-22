@@ -175,24 +175,24 @@ if res['response'] == 'OK':
 else:
     print("Get Profile User Failed")
     exit()
-max_day = 3
-day = 0
-last_day = 0
-while day <= max_day:
+max_day = 0
+day = 7
+last_day = 6
+while day > max_day:
     res = gps_handler.get_all_vehicle()
     if res['response'] == 'OK':
         print("Get all vehicles of {} Success".format(gps_handler.username))
     else:
         print("Get all vehicles Failed")
         exit()
-    day += 1
-    last_day = day - 1
     now = datetime.now()
     date_start = now - timedelta(days = day)
     date_now = now - timedelta(days = last_day)
     date_start = date_start.strftime('%Y-%m-%d %H:%M:%S')
     date_end = now.strftime('%Y-%m-%d %H:%M:%S')
 
+    day -= 1
+    last_day = day - 1
     for vehicle in gps_handler.vehicles:
         history = {}
         license_no = vehicle['license']

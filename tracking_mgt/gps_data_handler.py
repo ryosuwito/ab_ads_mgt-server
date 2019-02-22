@@ -178,6 +178,7 @@ else:
 max_day = 0
 day = 30
 last_day = day - 1
+now = datetime.now()
 while day > max_day:
     res = gps_handler.get_all_vehicle()
     if res['response'] == 'OK':
@@ -185,11 +186,10 @@ while day > max_day:
     else:
         print("Get all vehicles Failed")
         exit()
-    now = datetime.now()
     date_start = now - timedelta(days = day)
     date_now = now - timedelta(days = last_day)
     date_start = date_start.strftime('%Y-%m-%d %H:%M:%S')
-    date_end = now.strftime('%Y-%m-%d %H:%M:%S')
+    date_end = date_now.strftime('%Y-%m-%d %H:%M:%S')
 
     day -= 1
     last_day = day - 1

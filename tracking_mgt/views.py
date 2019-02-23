@@ -54,8 +54,7 @@ def get_by_license(license_no, **kwargs):
 		gps = GpsData.objects.filter(license_no=license_no.upper()).iterator()
 
 	data = [{'lat':g.data['latitude'],
-			'lng':g.data['longitude'],
-			'mileage':g.data['mileage']} for g in gps]
+			'lng':g.data['longitude']} for g in gps]
 			
 	return {
 			'license_no':license_no,

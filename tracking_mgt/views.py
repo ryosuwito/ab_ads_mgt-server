@@ -53,11 +53,13 @@ def get_by_license(license_no, **kwargs):
 	else:
 		gps = GpsData.objects.filter(license_no=license_no.upper())
 
+	data = []
 	if gps:
-		data = [{'lat':gps[0].data['latitude'],
-				'lng':gps[0].data['longitude']}]
-	else:
-		data = []
+		for i, g in enumerate(gps):
+			if 1%20:
+				data.append({'lat':gps[i].data['latitude'],
+						'lng':gps[i].data['longitude']})
+
 	return {
 			'license_no':license_no,
 			# 'created_date':g.created_date,

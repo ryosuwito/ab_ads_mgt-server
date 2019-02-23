@@ -1,4 +1,3 @@
-from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.forms import model_to_dict
@@ -46,19 +45,16 @@ def get_by_license(license_no, **kwargs):
 
 	if end_date:
 		if not start_date:
-			gps = GpsData.objects.filter(license_no=license_no.upper(), created_date__lte=end_date).order_by('-timestamp')
+			gps = GpsData.objects.filter(license_no=license_no.upper(), created_date__lte=end_date).order_by('timestamp').iterator()
 		else:
-			gps = GpsData.objects.filter(license_no=license_no.upper(), created_date__gte=start_date, created_date__lte=end_date).order_by('-timestamp')
+			gps = GpsData.objects.filter(license_no=license_no.upper(), created_date__gte=start_date, created_date__lte=end_date).order_by('timestamp').iterator()
 	elif start_date:
-		gps = GpsData.objects.filter(license_no=license_no.upper(), created_date__gte=start_date).order_by('-timestamp')
+		gps = GpsData.objects.filter(license_no=license_no.upper(), created_date__gte=start_date).order_by('timestamp').iterator()
 	else:
-		gps = GpsData.objects.filter(license_no=license_no.upper()).order_by('-timestamp')
+		gps = GpsData.objects.filter(license_no=license_no.upper()).order_by('timestamp').iterator()
 
-	paginator = Paginator(gps, 20)
-	for p in paginator.page_range:
-		gps = paginator.get_page(p).object_list
-		data = [{'lat':gps[0].data['latitude'],
-				'lng':gps[0].data['longitude']}]
+	data = [{'lat':g.data['latitude'],
+			'lng':g.data['longitude']} for g in gps]
 			
 	return {
 			'license_no':license_no,

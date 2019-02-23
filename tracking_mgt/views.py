@@ -56,7 +56,7 @@ def get_by_license(license_no, **kwargs):
 
 	paginator = Paginator(gps, 20)
 	for p in paginator.page_range:
-		gps = iter(paginator.get_page(i))
+		gps = iter(paginator.get_page(p))
 		data = [{'lat':g.data['latitude'],
 				'lng':g.data['longitude']} for g in gps[0]]
 			

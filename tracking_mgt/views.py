@@ -6,7 +6,8 @@ from .models import GpsData, LastLocation
 import json
 
 def get_all_licences():
-	return list(set([l['license_no'] for l in LastLocation.objects.all().values('license_no').iterator()]))
+	return [l['license_no'] for l in LastLocation.objects.all().values('license_no').iterator()]
+
 
 def get_by_range(license_no, start_date, **kwargs):
 	now = datetime.now()
@@ -130,6 +131,19 @@ def gps_show_all_license(request, *args, **kwargs):
 	results['results'] = licenses
 	return HttpResponse(json.dumps(results), status=200)
 
+def gps_get_all_last_locations():
+	licenses = LastLocation.objects.all()
+	results = set_results_status(licenses)
+	results['data'] = [
+		[l.license_no, 
+		 l.latitude, 
+		 l.longitude,
+		 l.status_vehicle,
+		 l.status_engine,
+		 l.mileage,
+		 l.created_date] 
+			for l in licenses]
+	return HttpResponse(json.dumps(results), status=200)
 # def gps_show_by_license(request, license_no, *args, **kwargs):
 # 	results = set_results_status(license_no)
 # 	results['results'].append(get_by_license(license_no))

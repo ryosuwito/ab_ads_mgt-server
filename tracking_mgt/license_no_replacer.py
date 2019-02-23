@@ -9,7 +9,7 @@ def replace():
 		idx+=1
 		l = location.license_no.replace(" ","").upper()
 		location.license_no = l
-		location.save
+		location.save()
 		print("Loc : %s of %s : %s"%(idx, data_len, l))
 
 	idx = 0
@@ -20,5 +20,5 @@ def replace():
 		idx+=1
 		l = location.license_no.replace(" ","").upper()
 		location.license_no = l
-		location.save
+		location.save()
 		print("Gps : %s of %s : %s"%(idx, data_len, l))

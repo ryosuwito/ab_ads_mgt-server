@@ -2,11 +2,11 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.forms import model_to_dict
 from datetime import datetime, timedelta
-from .models import GpsData
+from .models import GpsData, LastLocation
 import json
 
 def get_all_licences():
-	return list(set([l['license_no'] for l in GpsData.objects.all().values('license_no').iterator()]))
+	return list(set([l['license_no'] for l in LastLocation.objects.all().values('license_no').iterator()]))
 
 def get_by_range(license_no, start_date, **kwargs):
 	now = datetime.now()
@@ -45,13 +45,13 @@ def get_by_license(license_no, **kwargs):
 
 	if end_date:
 		if not start_date:
-			gps = GpsData.objects.filter(license_no=license_no, created_date__lte=end_date).iterator()
+			gps = GpsData.objects.filter(license_no=license_no.upper(), created_date__lte=end_date).iterator()
 		else:
-			gps = GpsData.objects.filter(license_no=license_no, created_date__gte=start_date, created_date__lte=end_date).iterator()
+			gps = GpsData.objects.filter(license_no=license_no.upper(), created_date__gte=start_date, created_date__lte=end_date).iterator()
 	elif start_date:
-		gps = GpsData.objects.filter(license_no=license_no, created_date__gte=start_date).iterator()
+		gps = GpsData.objects.filter(license_no=license_no.upper(), created_date__gte=start_date).iterator()
 	else:
-		gps = GpsData.objects.filter(license_no=license_no).iterator()
+		gps = GpsData.objects.filter(license_no=license_no.upper()).iterator()
 
 	data = [{'lat':g.data['latitude'],
 			'lng':g.data['longitude'],

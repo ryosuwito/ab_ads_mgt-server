@@ -63,9 +63,12 @@ def get_by_license(license_no, **kwargs):
 
 	if gps:
 		for i, g in enumerate(gps):
-			if i%partition == 0:
-				data.append({'lat':gps[i].data['latitude'],
-						'lng':gps[i].data['longitude']})
+			if i%partition == 0 or i==0:
+				data.append({
+						'partition':partition,
+						'idx':i,
+						'lat':g.data['latitude'],
+						'lng':g.data['longitude']})
 
 	return {
 			'license_no':license_no,

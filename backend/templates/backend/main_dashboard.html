@@ -191,7 +191,7 @@ var SITE_URL = "http://dev.abplusscar.com/";
 lat 	= -6.11259//parseFloat(result['results'][0]['data'][0]['lat']);
 lng 	= 106.7375//parseFloat(result['results'][0]['data'][0]['lng']);
 map = new google.maps.Map(document.getElementById('googleMap'), {
-	zoom 				: 15,
+	zoom 				: 5,
 	center 				: {lat: lat, lng: lng},
 	mapTypeId 			: google.maps.MapTypeId.ROADMAP,
 });
@@ -208,7 +208,10 @@ function placeMarkers(map){
 			var data = result['results'][0]['data']
 	        for (var i = 0; i < data.length; i++) {
 	          var beach = data[i];
-	          var marker = new google.maps.Marker({
+	          var marker = new google.maps.MarkerWithLabel({
+    			labelContent: beach[0]+":"+beach[3],    
+    			labelClass: "labels", // the CSS class for the label
+    			labelInBackground: false,
 	            position: {lat: parseFloat(beach[1]), lng: parseFloat(beach[2])},
 	            map: map,
 	            icon: "/static/assets/build/images/mobil.png",

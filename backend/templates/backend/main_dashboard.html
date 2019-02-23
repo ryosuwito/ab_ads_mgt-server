@@ -193,7 +193,7 @@ map = new google.maps.Map(document.getElementById('googleMap'), {
 	mapTypeId 			: google.maps.MapTypeId.ROADMAP,
 });
 
-function placeMarkers(map)
+function placeMarkers(map){
 	$.ajax({
 		url 		: SITE_URL + 'gps/lastlocations/',
 		method		: 'get',
@@ -217,6 +217,8 @@ function placeMarkers(map)
 		},
 
 	});
+}
+
 placeMarkers(map);
 
 function initMap() {

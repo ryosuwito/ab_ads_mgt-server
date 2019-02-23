@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.forms import model_to_dict
@@ -53,8 +54,11 @@ def get_by_license(license_no, **kwargs):
 	else:
 		gps = GpsData.objects.filter(license_no=license_no.upper()).iterator()
 
-	data = [{'lat':g.data['latitude'],
-			'lng':g.data['longitude']} for g in gps]
+	paginator = Paginator(gps, 20)
+	for p in paginator.page_range():
+		gps = iter(paginator.get_page(i))
+		data = [{'lat':g.data['latitude'],
+				'lng':g.data['longitude']} for g in gps[0]]
 			
 	return {
 			'license_no':license_no,

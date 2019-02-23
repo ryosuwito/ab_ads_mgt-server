@@ -38,6 +38,12 @@ def get_by_license(license_no, **kwargs):
 		start_date = ''
 
 	try:
+		start_date = kwargs['partition']
+	except Exception as e:
+		print(e)
+		partition = 60
+
+	try:
 		end_date = kwargs['end_date']
 	except Exception as e:
 		print(e)
@@ -54,9 +60,10 @@ def get_by_license(license_no, **kwargs):
 		gps = GpsData.objects.filter(license_no=license_no.upper())
 
 	data = []
+
 	if gps:
 		for i, g in enumerate(gps):
-			if 1%20:
+			if 1%partition:
 				data.append({'lat':gps[i].data['latitude'],
 						'lng':gps[i].data['longitude']})
 

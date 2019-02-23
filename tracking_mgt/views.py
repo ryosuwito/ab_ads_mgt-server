@@ -6,7 +6,7 @@ from .models import GpsData
 import json
 
 def get_all_licences():
-	return list(set([l['license_no'] for l in GpsData.objects.all().values('license_no')]))
+	return list(set([l['license_no'] for l in GpsData.objects.all().values('license_no').iterator()]))
 
 def get_by_range(license_no, start_date, **kwargs):
 	now = datetime.now()

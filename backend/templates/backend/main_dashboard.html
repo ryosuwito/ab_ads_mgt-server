@@ -207,7 +207,7 @@ function placeMarkers(map){
 	        for (var i = 0; i < data.length; i++) {
 	          var beach = data[i];
 	          var marker = new google.maps.Marker({
-	            position: {lat: beach[1], lng: beach[2]},
+	            position: {lat: parseFloat(beach[1]), lng: parseFloat(beach[2])},
 	            map: map,
 	            icon: "/static/assets/build/images/mobil.png",
 	          });

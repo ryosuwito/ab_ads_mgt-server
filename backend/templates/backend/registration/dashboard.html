@@ -3,7 +3,7 @@
       <div class="x_panel tile fixed">
 
 	    <div class="x_title">
-	    <h2>Daashboard</h2>
+	    <h2>Dashboard</h2>
 	    <ul class="nav navbar-right panel_toolbox">
 	      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
 	      <li class="dropdown">
@@ -191,25 +191,36 @@ function initMap() {
 		mapTypeId 			: google.maps.MapTypeId.ROADMAP,
 	});
 	setMarkers(map);
-}
+	}
+	$.ajax({
+		url 		: SITE_URL + 'assets/provinces.json',
+		method		: 'get',
+		dataType	: 'json',
+		async : false,
+      	cache : false,
+		success		: function(result) {
+			var data = result['results'][0]['data']
 
-	var beaches = [
-		  ['test1', -6.11259, 106.7375],
-		  ['test2', -6.112938, 106.738],
-		  ['test3', -6.113492, 106.7384],
-		  ['test4', -6.114809, 106.7376]
-		];
 
-	function setMarkers(map) {
-        for (var i = 0; i < beaches.length; i++) {
-          var beach = beaches[i];
-          var marker = new google.maps.Marker({
-            position: {lat: beach[1], lng: beach[2]},
-            map: map,
-            icon: "<?php echo base_url() ?>assets/build/images/mobil.png",
-          });
-        }
-      }
+			function setMarkers(map) {
+		        for (var i = 0; i < data.length; i++) {
+		          var beach = data[i];
+		          var marker = new google.maps.Marker({
+		            position: {lat: beach[1], lng: beach[2]},
+		            map: map,
+		            icon: "/assets/build/images/mobil.png",
+		          });
+		        }
+		      }
+		},
+
+	});
     
 
 </script>
+<!-- 			[
+				  ['test1', -6.11259, 106.7375],
+				  ['test2', -6.112938, 106.738],
+				  ['test3', -6.113492, 106.7384],
+				  ['test4', -6.114809, 106.7376]
+				]; -->

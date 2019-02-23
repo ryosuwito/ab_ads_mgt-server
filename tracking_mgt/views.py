@@ -134,7 +134,7 @@ def gps_show_all_license(request, *args, **kwargs):
 def gps_get_all_last_locations(request, *args, **kwargs):
 	licenses = LastLocation.objects.all()
 	results = set_results_status(licenses)
-	results['data'] = [
+	results['results'].append({'data' : [
 		[l.license_no, 
 		 l.latitude, 
 		 l.longitude,
@@ -142,7 +142,7 @@ def gps_get_all_last_locations(request, *args, **kwargs):
 		 l.status_engine,
 		 l.mileage,
 		 l.created_date.strftime("%Y-%m-%d %H:%M:%S")] 
-			for l in licenses]
+			for l in licenses]})
 	return HttpResponse(json.dumps(results), status=200)
 # def gps_show_by_license(request, license_no, *args, **kwargs):
 # 	results = set_results_status(license_no)

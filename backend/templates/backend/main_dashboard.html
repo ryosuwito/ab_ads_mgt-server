@@ -169,30 +169,56 @@
 var SITE_URL = "http://dev.abplusscar.com/";
 
 
-function setMarkers(map) {
-	var beaches = [
-		  ['test1', -6.11259, 106.7375],
-		  ['test2', -6.112938, 106.738],
-		  ['test3', -6.113492, 106.7384],
-		  ['test4', -6.114809, 106.7376]
-		];
-    for (var i = 0; i < beaches.length; i++) {
-      var beach = beaches[i];
-      var marker = new google.maps.Marker({
-        position: {lat: beach[1], lng: beach[2]},
-        map: map,
-        icon: "/static/assets/build/images/mobil.png",
-      });
-    }
-  }
-	lat 	= -6.11259//parseFloat(result['results'][0]['data'][0]['lat']);
-	lng 	= 106.7375//parseFloat(result['results'][0]['data'][0]['lng']);
-	map = new google.maps.Map(document.getElementById('googleMap'), {
-		zoom 				: 15,
-		center 				: {lat: lat, lng: lng},
-		mapTypeId 			: google.maps.MapTypeId.ROADMAP,
+// function setMarkers(map) {
+// 	var beaches = [
+// 		  ['test1', -6.11259, 106.7375],
+// 		  ['test2', -6.112938, 106.738],
+// 		  ['test3', -6.113492, 106.7384],
+// 		  ['test4', -6.114809, 106.7376]
+// 		];
+//     for (var i = 0; i < beaches.length; i++) {
+//       var beach = beaches[i];
+//       var marker = new google.maps.Marker({
+//         position: {lat: beach[1], lng: beach[2]},
+//         map: map,
+//         icon: "/static/assets/build/images/mobil.png",
+//       });
+//     }
+//   }
+lat 	= -6.11259//parseFloat(result['results'][0]['data'][0]['lat']);
+lng 	= 106.7375//parseFloat(result['results'][0]['data'][0]['lng']);
+map = new google.maps.Map(document.getElementById('googleMap'), {
+	zoom 				: 15,
+	center 				: {lat: lat, lng: lng},
+	mapTypeId 			: google.maps.MapTypeId.ROADMAP,
+});
+
+function placeMarkers(map)
+	$.ajax({
+		url 		: SITE_URL + 'gps/lastlocations/',
+		method		: 'get',
+		dataType	: 'json',
+		async : false,
+	  	cache : false,
+		success		: function(result) {
+			var data = result['results'][0]['data']
+
+
+			function setMarkers(map) {
+		        for (var i = 0; i < data.length; i++) {
+		          var beach = data[i];
+		          var marker = new google.maps.Marker({
+		            position: {lat: beach[1], lng: beach[2]},
+		            map: map,
+		            icon: "/static/assets/build/images/mobil.png",
+		          });
+		        }
+		      }
+		},
+
 	});
-	setMarkers(map);
+placeMarkers(map);
+
 function initMap() {
 	var map = '' 
 	var province = document.getElementById('province').value;

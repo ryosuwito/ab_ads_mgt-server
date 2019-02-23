@@ -175,8 +175,9 @@ if res['response'] == 'OK':
 else:
     print("Get Profile User Failed")
     exit()
+
 max_day = 0
-day = 45
+day = 2
 last_day = day - 1
 now = datetime.now()
 while day > max_day:
@@ -211,7 +212,7 @@ while day > max_day:
             timestamp = location_data['time_second']
             timeformat = datetime.strptime(location_data['time_format'], '%d %b %Y %H:%M:%S')
             last_location, stat = LastLocation.objects.get_or_create(
-                    license_no = license_no,
+                    license_no = license_no.replace(" ","").upper(),
                 )
             #print(gps.timestamp)
             if last_location:
@@ -248,11 +249,11 @@ while day > max_day:
                 timeformat = datetime.strptime(data['time_format'], '%d %b %Y %H:%M:%S')
                 batch_size = 100
                 gps, stat = GpsData.objects.get_or_create(
-                        license_no = license_no,
+                        license_no = license_no.replace(" ","").upper(),
                         timestamp = timestamp
                     )
                 #print(gps.timestamp)
-                print('%s : %s - %s - %s'%(license_no, idx, stat, data['time_format']))
+                print('%s : %s - %s - %s'%(license_no.replace(" ","").upper(), idx, stat, data['time_format']))
                 if gps:
                     gps.data = data
                     gps.created_date = timeformat

@@ -51,19 +51,19 @@ def get_by_license(license_no, **kwargs):
 
 	if end_date:
 		if not start_date:
-			gps = GpsData.objects.filter(license_no=license_no.upper(), created_date__lte=end_date)
+			gps = GpsData.objects.filter(license_no=license_no.upper(), created_date__lte=end_date).order_by('-timestamp')
 		else:
-			gps = GpsData.objects.filter(license_no=license_no.upper(), created_date__gte=start_date, created_date__lte=end_date)
+			gps = GpsData.objects.filter(license_no=license_no.upper(), created_date__gte=start_date, created_date__lte=end_date).order_by('-timestamp')
 	elif start_date:
-		gps = GpsData.objects.filter(license_no=license_no.upper(), created_date__gte=start_date)
+		gps = GpsData.objects.filter(license_no=license_no.upper(), created_date__gte=start_date).order_by('-timestamp')
 	else:
-		gps = GpsData.objects.filter(license_no=license_no.upper())
+		gps = GpsData.objects.filter(license_no=license_no.upper()).order_by('-timestamp')
 
 	data = []
 
 	if gps:
 		for i, g in enumerate(gps):
-			if i%partition:
+			if i%partition == 0:
 				data.append({'lat':gps[i].data['latitude'],
 						'lng':gps[i].data['longitude']})
 

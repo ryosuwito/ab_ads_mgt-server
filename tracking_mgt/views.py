@@ -45,13 +45,13 @@ def get_by_license(license_no, **kwargs):
 
 	if end_date:
 		if not start_date:
-			gps = GpsData.objects.filter(license_no=license_no, created_date__lte=end_date)
+			gps = GpsData.objects.filter(license_no=license_no, created_date__lte=end_date).iterator()
 		else:
-			gps = GpsData.objects.filter(license_no=license_no, created_date__gte=start_date, created_date__lte=end_date)
+			gps = GpsData.objects.filter(license_no=license_no, created_date__gte=start_date, created_date__lte=end_date).iterator()
 	elif start_date:
-		gps = GpsData.objects.filter(license_no=license_no, created_date__gte=start_date)
+		gps = GpsData.objects.filter(license_no=license_no, created_date__gte=start_date).iterator()
 	else:
-		gps = GpsData.objects.filter(license_no=license_no)
+		gps = GpsData.objects.filter(license_no=license_no).iterator()
 
 	data = [{'lat':g.data['latitude'],
 			'lng':g.data['longitude'],

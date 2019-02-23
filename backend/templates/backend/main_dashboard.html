@@ -208,7 +208,7 @@ function placeMarkers(map){
 			var data = result['results'][0]['data']
 	        for (var i = 0; i < data.length; i++) {
 	          var beach = data[i];
-	          var marker = new google.maps.MarkerWithLabel({
+	          var marker = new google.maps.Marker({
     			labelContent: beach[0]+":"+beach[3],    
     			labelClass: "labels", // the CSS class for the label
     			labelInBackground: false,

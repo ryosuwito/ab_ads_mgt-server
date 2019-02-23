@@ -91,6 +91,7 @@ def gps_show_all(request, *args, **kwargs):
 	license_no = request.GET.get('license_no')
 	start_date = request.GET.get('start_date')
 	end_date = request.GET.get('end_date')
+	partition = request.GET.get('partition')
 	if not license_no:
 		licenses = get_all_licences()
 		results = set_results_status(licenses)
@@ -106,7 +107,7 @@ def gps_show_all(request, *args, **kwargs):
 				results['results'].append(get_by_date_range(license, start_date))
 		else:
 			for license in licenses:
-				results['results'].append(get_by_license(license))
+				results['results'].append(get_by_license(license, partition=partition))
 			
 	else:
 		results = set_results_status(license_no)
@@ -118,7 +119,7 @@ def gps_show_all(request, *args, **kwargs):
 		elif start_date:
 			results['results'].append(get_by_date_range(license_no, start_date))
 		else:
-			results['results'].append(get_by_license(license_no))
+			results['results'].append(get_by_license(license_no, partition=partition))
 				
 	return HttpResponse(json.dumps(results), status=200)
 

@@ -38,7 +38,7 @@ def get_by_license(license_no, **kwargs):
 		start_date = ''
 
 	try:
-		start_date = kwargs['partition']
+		partition = kwargs['partition']
 	except Exception as e:
 		print(e)
 		partition = 60

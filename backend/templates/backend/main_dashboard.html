@@ -390,6 +390,10 @@
 					dummy.push(new google.maps.LatLng(
 						parseFloat(data[i]['lat']),
 						parseFloat(data[i]['lng'])));
+					var marker = new google.maps.Marker({
+			            position: {lat: parseFloat(data[i]['lat']), lng: parseFloat(data[i]['lng'])},
+			            map: peta,
+			        });
 		        }
 				
 			  	heatmap = new google.maps.visualization.HeatmapLayer({

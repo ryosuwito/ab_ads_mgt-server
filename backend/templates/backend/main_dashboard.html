@@ -311,10 +311,18 @@
 				success		: function(result) {
 					var driverData = ''
 					var cities = result['results'][0]['cities']
+					var table_cities = ''
 					for (var key in cities){
+						table_cities += "<tr><td>" +
+						key +
+						"</td></tr>"
+						table_cities += "<tr><td>" +
+						cities[key] +
+						"</td></tr>"
 					  console.log( key, cities[key] );
 					}
-					var data = result['results'][0]['data']
+					$('#tableArea').html(table_cities);
+					var data = result['results'][1]['data']
 					$('#totalUnit').text(data.length)
 			        for (var i = 0; i < data.length; i++) {
 			          var beach = data[i];

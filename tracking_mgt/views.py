@@ -139,6 +139,8 @@ def gps_get_all_last_locations(request, *args, **kwargs):
 	for l in last_locations:
 		if l == None:
 			l = "Others"
+		if l == "JKT":
+			l == "Jakarta Pusat"
 		try:
 			city = cities[l]
 			cities[l] += 1

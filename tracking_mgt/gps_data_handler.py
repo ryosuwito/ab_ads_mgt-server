@@ -36,6 +36,19 @@ class GPSHandler():
             data={'response':'NO'}
         return data
 
+    def get_data_last_location(self,lat, lng):
+        url = "https://nominatim.openstreetmap.org/reverse?\
+        format=json&lat=%s&lon=%s&zoom=18&addressdetails=1"\
+        %(lat, lng)
+        response = requests.get(url).text
+        print(response)
+        try:
+            data = json.loads(response)['display_name']
+        except Exception as e:
+            print(e)
+            data = ""
+        return data
+
     def login(self):
         path = 'login'
         url = self.base_url + path
@@ -226,6 +239,13 @@ while day > max_day:
                 last_location.mileage = location_data['mileage']
                 last_location.save()
             print('%s - %s'%(last_location, stat))
+            print('Getting last loaction data of %s'%license_no)
+            last_location_data = gps_handler.get_data_last_location(last_location.latitude, last_location.longitude)
+            if last_location_data:
+                last_location.address = last_location_data
+                last_location.save()
+                print(last_location.address)
+
 
         print('Get history of {}'.format(license_no))
         history = gps_handler.get_history_vehicle(vehicle['terminal'], date_start, date_end)

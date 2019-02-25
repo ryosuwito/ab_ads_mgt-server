@@ -239,7 +239,7 @@ while day > max_day:
                 last_location.mileage = location_data['mileage']
                 last_location.save()
             print('%s - %s'%(last_location, stat))
-            print('Getting last loaction data of %s'%license_no)
+            print('Getting last location data of %s'%license_no)
             last_location_data = gps_handler.get_data_last_location(last_location.latitude, last_location.longitude)
             if last_location_data:
                 last_location.address = last_location_data['display_name']
@@ -260,7 +260,7 @@ while day > max_day:
                 last_location.city = city
                 last_location.postal_code = last_location_data['address']['postcode']
                 last_location.save()
-                print(last_location.address)
+                print(last_location.city)
 
 
         print('Get history of {}'.format(license_no))

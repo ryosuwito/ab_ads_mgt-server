@@ -17,7 +17,7 @@ class GpsData(models.Model):
         return self.license_no
 
 class ImpressionGpsData(models.Model):
-    pos_code = models.CharField(max_length=50, db_index=True, null=True)
+    postal_code = models.CharField(max_length=50, db_index=True, null=True)
     city = models.CharField(max_length=255, db_index=True, null=True)
     address = models.CharField(max_length=500, db_index=True, null=True)
     license_no = models.CharField(max_length=15, db_index=True)
@@ -33,7 +33,7 @@ class ImpressionGpsData(models.Model):
 
 
 class LastLocation(models.Model):
-    pos_code = models.CharField(max_length=50, db_index=True, null=True)
+    postal_code = models.CharField(max_length=50, db_index=True, null=True)
     city = models.CharField(max_length=255, db_index=True, null=True)
     address = models.CharField(max_length=500, db_index=True, null=True)
     license_no = models.CharField(max_length=15, db_index=True)

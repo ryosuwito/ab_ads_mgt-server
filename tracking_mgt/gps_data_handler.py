@@ -243,7 +243,8 @@ while day > max_day:
             last_location_data = gps_handler.get_data_last_location(last_location.latitude, last_location.longitude)
             if last_location_data:
                 last_location.address = last_location_data['display_name']
-                last_location.city = last_location_data['city']
+                last_location.city = last_location_data['address']['city']
+                last_location.postal_code = last_location_data['address']['postal_code']
                 last_location.save()
                 print(last_location.address)
 

@@ -141,7 +141,7 @@ def gps_get_all_last_locations(request, *args, **kwargs):
 		 l.status_vehicle,
 		 l.status_engine,
 		 l.mileage,
-		 "-".join(l.address.split(", "))[:3] if l.address else "-",
+		 l.address if l.address else "-",
 		 l.created_date.strftime("%Y-%m-%d %H:%M:%S")] 
 			for l in licenses]})
 	return HttpResponse(json.dumps(results), status=200)

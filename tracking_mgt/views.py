@@ -137,7 +137,7 @@ def gps_get_all_last_locations(request, *args, **kwargs):
 	last_locations = [l.city for l  in licenses]
 	cities = {}
 	for l in last_locations:
-		if l == null:
+		if l == None:
 			l = "Others"
 		try:
 			city = cities[l]

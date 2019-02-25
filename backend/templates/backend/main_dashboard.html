@@ -73,15 +73,7 @@
 				            <th>Jumlah Unit</th>
 				        </tr>
 				    </thead>
-				    <tbody>
-				        <tr>
-				            <td>Medan</td>
-				            <td>50</td>
-				        </tr>
-				        <tr>
-				            <td>Bekasi</td>
-				            <td>1</td>
-				        </tr>
+				    <tbody id="tableArea">
 				    </tbody>
 				</table>
             </div>
@@ -318,6 +310,10 @@
 			  	cache : false,
 				success		: function(result) {
 					var driverData = ''
+					var cities = result['results'][0]['cities']
+					for (var key in cities){
+					  console.log( key, cities[key] );
+					}
 					var data = result['results'][0]['data']
 					$('#totalUnit').text(data.length)
 			        for (var i = 0; i < data.length; i++) {

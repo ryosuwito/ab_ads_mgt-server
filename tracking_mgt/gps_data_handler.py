@@ -258,7 +258,12 @@ while day > max_day:
                             city = "Other"
 
                 last_location.city = city
-                last_location.postal_code = last_location_data['address']['postcode']
+                try:
+                    postcode = last_location_data['address']['postcode']
+                except Exception as e:
+                    print(e)
+                    postcode = ''
+                last_location.postal_code = postcode
                 last_location.save()
                 print(last_location.city)
 

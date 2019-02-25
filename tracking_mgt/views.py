@@ -145,7 +145,7 @@ def gps_get_all_last_locations(request, *args, **kwargs):
 		except Exception as e:
 			print(e)
 			cities[l] = 1
-
+	cities = {key: value for (key, value) in sorted(cities.items())}
 	results['results'].append({'cities' : cities})
 	results['results'].append({'data' : [
 		[l.license_no, 

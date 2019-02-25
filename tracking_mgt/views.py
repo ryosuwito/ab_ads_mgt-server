@@ -141,7 +141,7 @@ def gps_get_all_last_locations(request, *args, **kwargs):
 			l = "Others"
 		try:
 			city = cities[l]
-			city += 1
+			cities[l] += 1
 		except Exception as e:
 			print(e)
 			cities[l] = 1

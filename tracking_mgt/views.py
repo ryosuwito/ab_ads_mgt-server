@@ -134,6 +134,17 @@ def gps_show_all_license(request, *args, **kwargs):
 def gps_get_all_last_locations(request, *args, **kwargs):
 	licenses = LastLocation.objects.all()
 	results = set_results_status(licenses)
+	last_locations = [l.city for l  in licenses]
+	cities = {}
+	for l in last_locations
+		try:
+			city = cities[l]
+			city += 1
+		except Exception as e:
+			print(e)
+			cities[l] = 1
+			
+	results['results'].append({'cities' : cities})
 	results['results'].append({'data' : [
 		[l.license_no, 
 		 l.latitude, 

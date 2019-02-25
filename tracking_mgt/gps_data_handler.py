@@ -244,7 +244,7 @@ while day > max_day:
             if last_location_data:
                 last_location.address = last_location_data['display_name']
                 last_location.city = last_location_data['address']['city']
-                last_location.postal_code = last_location_data['address']['postal_code']
+                last_location.postal_code = last_location_data['address']['postcode']
                 last_location.save()
                 print(last_location.address)
 

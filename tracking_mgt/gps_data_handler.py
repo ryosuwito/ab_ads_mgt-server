@@ -43,7 +43,7 @@ class GPSHandler():
         response = requests.get(url).text
         print(response)
         try:
-            data = json.loads(response)['display_name']
+            data = json.loads(response)
         except Exception as e:
             print(e)
             data = ""
@@ -242,7 +242,8 @@ while day > max_day:
             print('Getting last loaction data of %s'%license_no)
             last_location_data = gps_handler.get_data_last_location(last_location.latitude, last_location.longitude)
             if last_location_data:
-                last_location.address = last_location_data
+                last_location.address = last_location_data['display_name']
+                last_location.city = last_location_data['city']
                 last_location.save()
                 print(last_location.address)
 

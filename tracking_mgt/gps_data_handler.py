@@ -174,7 +174,7 @@ class GPSHandler():
         return {'response':'NO'}
 
 max_day = 0
-day = 2
+day = 1
 last_day = day - 1
 while True:
     gps_handler = GPSHandler()
@@ -314,7 +314,7 @@ while True:
     day = 1
     last_day = day - 1
 
-    sleep_time = 300
+    sleep_time = 720
     st = 0
     print("sleeping for %s minutes"%(sleep_time))
     while st <= sleep_time:

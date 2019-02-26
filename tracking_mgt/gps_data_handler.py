@@ -193,7 +193,7 @@ max_day = 0
 day = 2
 last_day = day - 1
 now = datetime.now()
-while day > max_day:
+while day >= max_day:
     res = gps_handler.get_all_vehicle()
     if res['response'] == 'OK':
         print("Get all vehicles of {} Success".format(gps_handler.username))

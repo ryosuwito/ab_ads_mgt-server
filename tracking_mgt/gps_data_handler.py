@@ -173,138 +173,143 @@ class GPSHandler():
             print(e)
         return {'response':'NO'}
 
-gps_handler = GPSHandler()
-res = gps_handler.login()
-if res['response'] == 'OK':
-    print("Login as {} Success".format(gps_handler.username))
-    print("Session Key : {}".format(gps_handler.sessionKey))
-    print("Api Key : {}".format(gps_handler.apikey))
-else:
-    print("Login Failed")
-    exit()
-res = gps_handler.get_profile_user()
-if res['response'] == 'OK':
-    print("Get Profile of {} Success".format(gps_handler.username))
-else:
-    print("Get Profile User Failed")
-    exit()
-
-max_day = 0
-day = 2
-last_day = day - 1
-now = datetime.now()
-while day >= max_day:
-    res = gps_handler.get_all_vehicle()
+while True:
+    gps_handler = GPSHandler()
+    res = gps_handler.login()
     if res['response'] == 'OK':
-        print("Get all vehicles of {} Success".format(gps_handler.username))
+        print("Login as {} Success".format(gps_handler.username))
+        print("Session Key : {}".format(gps_handler.sessionKey))
+        print("Api Key : {}".format(gps_handler.apikey))
     else:
-        print("Get all vehicles Failed")
+        print("Login Failed")
         exit()
-    date_start = now - timedelta(days = day)
-    date_now = now - timedelta(days = last_day)
-    date_start = date_start.strftime('%Y-%m-%d %H:%M:%S')
-    date_end = date_now.strftime('%Y-%m-%d %H:%M:%S')
+    res = gps_handler.get_profile_user()
+    if res['response'] == 'OK':
+        print("Get Profile of {} Success".format(gps_handler.username))
+    else:
+        print("Get Profile User Failed")
+        exit()
 
-    day -= 1
+    max_day = 0
+    day = 1
     last_day = day - 1
-    for vehicle in gps_handler.vehicles:
-        history = {}
-        license_no = vehicle['license']
-        print('Get location of {}'.format(license_no))
-        location = gps_handler.get_locate_vehicle(vehicle['terminal'])
-        try:
-            location_data = location['vehicle'][0]
-            #print(json.dumps(track_data, indent=4, sort_keys=True))
-        except Exception as e:
-            location_data = 'NONE'
-            print(e)
-            print(location)
-            continue
-        print(location_data)
-        if location_data:
-            timestamp = location_data['time_second']
-            timeformat = datetime.strptime(location_data['time_format'], '%d %b %Y %H:%M:%S')
-            last_location, stat = LastLocation.objects.get_or_create(
-                    license_no = license_no.replace(" ","").upper(),
-                )
-            #print(gps.timestamp)
-            if last_location:
-                last_location.data = location_data
-                last_location.timestamp = timestamp
-                last_location.created_date = timeformat
-                last_location.latitude = location_data['latitude']
-                last_location.longitude = location_data['longitude']
-                last_location.status_vehicle = location_data['status_vehicle']
-                last_location.status_engine = location_data['status_engine']
-                last_location.mileage = location_data['mileage']
-                last_location.save()
-            print('%s - %s'%(last_location, stat))
-            print('Getting last location data of %s'%license_no)
-            last_location_data = gps_handler.get_data_last_location(last_location.latitude, last_location.longitude)
-            if last_location_data:
-                last_location.address = last_location_data['display_name']
-                try:
-                    city = last_location_data['address']['state_district']
-                except Exception as e:
-                    print(e)
+    now = datetime.now()
+    while day >= max_day:
+        res = gps_handler.get_all_vehicle()
+        if res['response'] == 'OK':
+            print("Get all vehicles of {} Success".format(gps_handler.username))
+        else:
+            print("Get all vehicles Failed")
+            exit()
+        date_start = now - timedelta(days = day)
+        date_now = now - timedelta(days = last_day)
+        date_start = date_start.strftime('%Y-%m-%d %H:%M:%S')
+        date_end = date_now.strftime('%Y-%m-%d %H:%M:%S')
+
+        day -= 1
+        last_day = day - 1
+        for vehicle in gps_handler.vehicles:
+            history = {}
+            license_no = vehicle['license']
+            print('Get location of {}'.format(license_no))
+            location = gps_handler.get_locate_vehicle(vehicle['terminal'])
+            try:
+                location_data = location['vehicle'][0]
+                #print(json.dumps(track_data, indent=4, sort_keys=True))
+            except Exception as e:
+                location_data = 'NONE'
+                print(e)
+                print(location)
+                continue
+            print(location_data)
+            if location_data:
+                timestamp = location_data['time_second']
+                timeformat = datetime.strptime(location_data['time_format'], '%d %b %Y %H:%M:%S')
+                last_location, stat = LastLocation.objects.get_or_create(
+                        license_no = license_no.replace(" ","").upper(),
+                    )
+                #print(gps.timestamp)
+                if last_location:
+                    last_location.data = location_data
+                    last_location.timestamp = timestamp
+                    last_location.created_date = timeformat
+                    last_location.latitude = location_data['latitude']
+                    last_location.longitude = location_data['longitude']
+                    last_location.status_vehicle = location_data['status_vehicle']
+                    last_location.status_engine = location_data['status_engine']
+                    last_location.mileage = location_data['mileage']
+                    last_location.save()
+                print('%s - %s'%(last_location, stat))
+                print('Getting last location data of %s'%license_no)
+                last_location_data = gps_handler.get_data_last_location(last_location.latitude, last_location.longitude)
+                if last_location_data:
+                    last_location.address = last_location_data['display_name']
                     try:
-                        city = last_location_data['address']['state']
+                        city = last_location_data['address']['state_district']
                     except Exception as e:
                         print(e)
                         try:
-                            city = last_location_data['address']['city']
+                            city = last_location_data['address']['state']
                         except Exception as e:
                             print(e)
-                            city = "Other"
+                            try:
+                                city = last_location_data['address']['city']
+                            except Exception as e:
+                                print(e)
+                                city = "Other"
 
-                last_location.city = city
-                try:
-                    postcode = last_location_data['address']['postcode']
-                except Exception as e:
-                    print(e)
-                    postcode = ''
-                last_location.postal_code = postcode
-                last_location.save()
-                print(last_location.city)
-
-
-        print('Get history of {}'.format(license_no))
-        history = gps_handler.get_history_vehicle(vehicle['terminal'], date_start, date_end)
-        try:
-            track_data = history['track']['track_data']
-            #print(json.dumps(track_data, indent=4, sort_keys=True))
-        except Exception as e:
-            track_data = 'NONE'
-            print(e)
-            print(history)
-            continue
-        print(track_data)
-
-        idx=0
-        if track_data:
-            #print(GpsData.objects.all().count())
-            #print([data for data in track_data])
-            for data in track_data:
-                idx += 1
-                timestamp = data['time_second']
-                timeformat = datetime.strptime(data['time_format'], '%d %b %Y %H:%M:%S')
-                batch_size = 100
-                gps, stat = GpsData.objects.get_or_create(
-                        license_no = license_no.replace(" ","").upper(),
-                        timestamp = timestamp
-                    )
-                #print(gps.timestamp)
-                print('%s : %s - %s - %s'%(license_no.replace(" ","").upper(), idx, stat, data['time_format']))
-                if gps:
-                    gps.data = data
-                    gps.created_date = timeformat
-                    gps.save()
+                    last_location.city = city
+                    try:
+                        postcode = last_location_data['address']['postcode']
+                    except Exception as e:
+                        print(e)
+                        postcode = ''
+                    last_location.postal_code = postcode
+                    last_location.save()
+                    print(last_location.city)
 
 
-is_logged_out = gps_handler.logout()
-if is_logged_out['response'] == 'OK':
-    print('DONE')
-    del(gps_handler)
-else :
-    print('LOGOUT ERROR')
-    del(gps_handler)
+            print('Get history of {}'.format(license_no))
+            history = gps_handler.get_history_vehicle(vehicle['terminal'], date_start, date_end)
+            try:
+                track_data = history['track']['track_data']
+                #print(json.dumps(track_data, indent=4, sort_keys=True))
+            except Exception as e:
+                track_data = 'NONE'
+                print(e)
+                print(history)
+                continue
+            print(track_data)
+
+            idx=0
+            if track_data:
+                #print(GpsData.objects.all().count())
+                #print([data for data in track_data])
+                for data in track_data:
+                    idx += 1
+                    timestamp = data['time_second']
+                    timeformat = datetime.strptime(data['time_format'], '%d %b %Y %H:%M:%S')
+                    batch_size = 100
+                    gps, stat = GpsData.objects.get_or_create(
+                            license_no = license_no.replace(" ","").upper(),
+                            timestamp = timestamp
+                        )
+                    #print(gps.timestamp)
+                    print('%s : %s - %s - %s'%(license_no.replace(" ","").upper(), idx, stat, data['time_format']))
+                    if gps:
+                        gps.data = data
+                        gps.created_date = timeformat
+                        gps.save()
+
+
+    is_logged_out = gps_handler.logout()
+    if is_logged_out['response'] == 'OK':
+        print('DONE')
+        del(gps_handler)
+    else :
+        print('LOGOUT ERROR')
+        del(gps_handler)
+
+    sleep_time = 300
+    print("sleeping for %s minutes")
+    time.sleep(sleep_time*60)

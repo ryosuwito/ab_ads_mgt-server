@@ -201,8 +201,8 @@ while True:
         else:
             print("Get all vehicles Failed")
             exit()
-        date_start = now - timedelta(days = day)
-        date_now = now - timedelta(days = last_day)
+        date_start = now - timedelta(days = day) + timedelta(hours = 7)
+        date_now = now - timedelta(days = last_day) + timedelta(hours = 7)
         date_start = date_start.strftime('%Y-%m-%d %H:%M:%S')
         date_end = date_now.strftime('%Y-%m-%d %H:%M:%S')
 
@@ -317,7 +317,7 @@ while True:
     sleep_time = 300
     st = 0
     print("sleeping for %s minutes"%(sleep_time))
-    while st >= sleep_time:
+    while st <= sleep_time:
        st += 1
        print("%s minutes remaining"%(sleep_time-st))
        time.sleep(60)

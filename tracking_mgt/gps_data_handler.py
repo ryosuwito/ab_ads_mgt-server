@@ -173,6 +173,9 @@ class GPSHandler():
             print(e)
         return {'response':'NO'}
 
+max_day = 0
+day = 2
+last_day = day - 1
 while True:
     gps_handler = GPSHandler()
     res = gps_handler.login()
@@ -190,9 +193,6 @@ while True:
         print("Get Profile User Failed")
         exit()
 
-    max_day = 0
-    day = 1
-    last_day = day - 1
     now = datetime.now()
     while day >= max_day:
         res = gps_handler.get_all_vehicle()
@@ -309,6 +309,10 @@ while True:
     else :
         print('LOGOUT ERROR')
         del(gps_handler)
+
+    max_day = 0
+    day = 1
+    last_day = day - 1
 
     sleep_time = 300
     print("sleeping for %s minutes")

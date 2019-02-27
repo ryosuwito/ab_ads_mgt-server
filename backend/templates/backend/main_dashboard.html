@@ -239,12 +239,22 @@
 					$('#totalUnit').text(data.length)
 			        for (var i = 0; i < data.length; i++) {
 			          var beach = data[i];
+			          var icon_path = ""
+			          if(beach[3] == 'Running'){
+			          	icon_path = "/static/assets/build/images/mobil-2.png"
+			          }
+			          else if(beach[3] == 'Lost'){
+			          	icon_path = "/static/assets/build/images/mobil-lost.png"
+			          }
+			          else{
+			          	icon_path = "/static/assets/build/images/mobil-stop.png"
+			          }
 			          var marker = new google.maps.Marker({
 		    			   
 
 			            position: {lat: parseFloat(beach[1]), lng: parseFloat(beach[2])},
 			            map: map,
-			            icon: "/static/assets/build/images/mobil-2.png",
+			            icon: icon_path,
 			          });
 			          markers.push(marker)
 			         driverData +=

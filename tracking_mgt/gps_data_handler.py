@@ -201,7 +201,7 @@ while True:
         else:
             print("Get all vehicles Failed")
             exit()
-        date_start = now - timedelta(days = day) + timedelta(hours = 7)
+        date_start = now - timedelta(days = day) + timedelta(hours = 25)
         date_now = now - timedelta(days = last_day) + timedelta(hours = 7)
         date_start = date_start.strftime('%Y-%m-%d %H:%M:%S')
         date_end = date_now.strftime('%Y-%m-%d %H:%M:%S')
@@ -311,10 +311,10 @@ while True:
         del(gps_handler)
 
     max_day = 0
-    day = 0
+    day = 1
     last_day = day - 1
 
-    sleep_time = 5
+    sleep_time = 20
     st = 0
     print("sleeping for %s minutes"%(sleep_time))
     while st <= sleep_time:

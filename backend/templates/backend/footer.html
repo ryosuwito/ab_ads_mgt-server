@@ -1,4 +1,72 @@
+<!-- table drive -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#drive').DataTable( {
+            "searching" : false,
+            "fixedHeader": true,
+                columnDefs: [ {
+                    scrollX: true,
+                    orderable: false,
+                    className: 'select-checkbox',
+                    targets: 0,
+                    checkboxes: {
+                       selectRow: true
+                    },
+                } ],
+                select: {
+                    style:    'multi',
+                    selector: 'td:first-child'
+                },
+                order: [[ 1, 'asc' ]]
+            } );
 
+            $('#drive2').DataTable( {
+            "searching" : false,
+            "fixedHeader": true,
+                'columnDefs': [
+                {
+                    'targets': 0,
+                    'checkboxes': {
+                       'selectRow': true
+                    }
+                }
+              ],
+              'select': {
+                 'style': 'multi'
+              },
+              'order': [[1, 'asc']]
+            } );
+
+            $('#detail').DataTable( {
+            "searching" : false,
+            "columnDefs": [ {
+                "orderable": true,
+                "scrollX": true
+                } ],
+            } );
+
+            $('#report').DataTable( {
+            "searching" : false,
+            "fixedHeader": true,
+            "columnDefs": [ {
+                "orderable": true,
+                "scrollX": true
+                } ],
+            } );
+
+        } );
+    </script>
+        
+    <script type="text/javascript">
+      $("#addmodal").on("shown", function(event){
+          modalBox.modal('show');
+          $(this).find('.modal-body').css({
+             width: 'auto',
+             height: 'auto',
+             maxheight: '100%'
+          }); 
+      });
+    </script>
     <script src="/static/assets/vendors/jquery/dist/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <!-- Bootstrap -->

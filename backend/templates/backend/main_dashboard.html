@@ -158,8 +158,9 @@
 	lat 	= -6.11259//parseFloat(result['results'][0]['data'][0]['lat']);
 	lng 	= 106.7375//parseFloat(result['results'][0]['data'][0]['lng']);
 	map = new google.maps.Map(document.getElementById('googleMap'), {
-	zoom 				: 5,
+	zoom 				: 12,
 	center 				: {lat: lat, lng: lng},
+	gestureHandling		: 'greedy',
 	mapTypeId 			: google.maps.MapTypeId.ROADMAP,
 	styles				: [
 						  {
@@ -255,8 +256,14 @@
 			            position: {lat: parseFloat(beach[1]), lng: parseFloat(beach[2])},
 			            map: map,
 			            icon: icon_path,
+		            	info: beach[0] +' '+ beach[4],
 			          });
 			          markers.push(marker)
+          			  var infowindow3 = new google.maps.InfoWindow();
+			          google.maps.event.addListener(marker, 'mouseover', function () {
+			         		infowindow3.setContent(this.info);                              
+							infowindow3.open(map, this);  
+			          });
 			         driverData +=
 				        "<tr>"+
 				        	"<td>" + beach[0] + "</td>" +
@@ -324,12 +331,7 @@
 					dummy.push(new google.maps.LatLng(
 						parseFloat(data[i]['lat']),
 						parseFloat(data[i]['lng'])));
-					if(i%4 == 0){
-						var marker = new google.maps.Marker({
-				            position: {lat: parseFloat(data[i]['lat']), lng: parseFloat(data[i]['lng'])},
-				            map: peta,
-				        });
-					}
+					
 		        }
 				
 			  	heatmap = new google.maps.visualization.HeatmapLayer({

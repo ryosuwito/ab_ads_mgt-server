@@ -38,7 +38,74 @@
     <link href="/static/assets/build/css/custom.min.css" rel="stylesheet">
     <!-- pagination -->
     <link href="/static/assets/pagination/pagination.css" rel="stylesheet">
+        <!-- images custom -->
+    <link href="/static/assets/build/css/images.css" rel="stylesheet">
+    <!-- Loading custom -->
+    <link href="/static/assets/loading/loading.css" rel="stylesheet">
     <style type="text/css">
+    /* Search 4 - appear looking glass */
+    .demo-4{
+        overflow: hidden;
+        width: 300px;
+        vertical-align: middle;
+        white-space: nowrap;
+      /* position: relative; */
+    }
+    .demo-4 input#search{
+      width: 285px;
+      height: 50px;
+      background: rgba(0,0,0,0.3);
+      border: none;
+      font-size: 10pt;
+      float: left;
+        color: #ffffff;
+      padding-left: 15px;
+      
+      -webkit-transition: all .55s ease;
+      -moz-transition: all .55s ease;
+      -ms-transition: all .55s ease;
+      -o-transition: all .55s ease;
+      transition: all .55s ease;
+    }
+
+    .demo-4 input#search::-webkit-input-placeholder {
+       color: #ffffff;
+    }
+    .demo-4 input#search:-moz-placeholder { /* Firefox 18- */
+       color: #ffffff;  
+    }
+    .demo-4 input#search::-moz-placeholder {  /* Firefox 19+ */
+       color: #ffffff;  
+    }
+    .demo-4 input#search:-ms-input-placeholder {  
+       color: #ffffff;  
+    }
+
+    .demo-4 button.icon{
+      border: none;
+      background: #E6E6FA;
+      height: 50px;
+      width: 50px;
+      color: #4f5b66;
+      opacity: 0;
+      font-size: 10pt;
+      -webkit-transition: all .55s ease;
+      -moz-transition: all .55s ease;
+      -ms-transition: all .55s ease;
+      -o-transition: all .55s ease;
+      transition: all .55s ease;
+    }
+
+      /* ANIMATION EFFECT SEARCH ENGINE */
+      .demo-4:hover button.icon, .demo-4:active button.icon, .demo-4:focus button.icon{
+        outline:none;
+        opacity: 1;
+        margin-left: -50px;
+      }
+
+    img:hover {
+          box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+        }
         #image-preview{
             display:none;
             width : 100%;
@@ -49,37 +116,20 @@
             width : 300px;
             height : 300px;
         }
-    </style>
-    <style type="text/css">
         #image-preview2{
             display:none;
             width : 100%;
             height : auto;
         }
-    </style>
-    <style type="text/css">
         #image-preview_pp{
             display:none;
             width : 150px;
             height : 150px;
         }
-    </style>
-    <style type="text/css">
-        #image-preview_pp_2{
+        #image-preview_pp{
             display:none;
             width : 150px;
             height : 150px;
         }
-    </style>
-    <style type="text/css">
-        th {
-      border-top: 1px solid #dddddd;
-      border-bottom: 1px solid #dddddd;
-      border-right: 1px solid #dddddd;
-    }
-    .dataTableLayout {
-    table-layout:fixed;
-    width:100%;
-    }
     </style>
   </head>

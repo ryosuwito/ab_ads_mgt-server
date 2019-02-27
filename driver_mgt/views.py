@@ -84,3 +84,9 @@ class DriverBankView(View):
         return render(request, 'driver_mgt/regis.html',
             {'form': self.form,
             'form_messages': self.form_messages})
+
+class DriverMasterDataView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'backend/masterdata.html')            
+    def post(self, request, *args, **kwargs):
+        return render(request, 'backend/masterdata.html')

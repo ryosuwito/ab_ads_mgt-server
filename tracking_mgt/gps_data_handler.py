@@ -314,7 +314,7 @@ while True:
     day = 0
     last_day = day - 1
 
-    sleep_time = 10
+    sleep_time = 5
     st = 0
     print("sleeping for %s minutes"%(sleep_time))
     while st <= sleep_time:

@@ -311,10 +311,10 @@ while True:
         del(gps_handler)
 
     max_day = 0
-    day = 1
+    day = 0
     last_day = day - 1
 
-    sleep_time = 720
+    sleep_time = 120
     st = 0
     print("sleeping for %s minutes"%(sleep_time))
     while st <= sleep_time:

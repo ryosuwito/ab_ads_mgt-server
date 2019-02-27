@@ -196,52 +196,6 @@
 						    ]
 						  },
 						  {
-						    "featureType": "landscape",
-						    "stylers": [
-						      {
-						        "color": "#89ff88"
-						      },
-						      {
-						        "visibility": "simplified"
-						      }
-						    ]
-						  },
-						  {
-						    "featureType": "poi",
-						    "stylers": [
-						      {
-						        "visibility": "off"
-						      }
-						    ]
-						  },
-						  {
-						    "featureType": "poi",
-						    "elementType": "labels.text",
-						    "stylers": [
-						      {
-						        "visibility": "off"
-						      }
-						    ]
-						  },
-						  {
-						    "featureType": "road",
-						    "elementType": "labels",
-						    "stylers": [
-						      {
-						        "visibility": "off"
-						      }
-						    ]
-						  },
-						  {
-						    "featureType": "road",
-						    "elementType": "labels.icon",
-						    "stylers": [
-						      {
-						        "visibility": "off"
-						      }
-						    ]
-						  },
-						  {
 						    "featureType": "road.arterial",
 						    "stylers": [
 						      {
@@ -254,48 +208,6 @@
 						    "stylers": [
 						      {
 						        "visibility": "simplified"
-						      }
-						    ]
-						  },
-						  {
-						    "featureType": "road.local",
-						    "stylers": [
-						      {
-						        "visibility": "simplified"
-						      }
-						    ]
-						  },
-						  {
-						    "featureType": "road.local",
-						    "elementType": "labels",
-						    "stylers": [
-						      {
-						        "visibility": "off"
-						      }
-						    ]
-						  },
-						  {
-						    "featureType": "transit",
-						    "stylers": [
-						      {
-						        "visibility": "off"
-						      }
-						    ]
-						  },
-						  {
-						    "featureType": "water",
-						    "stylers": [
-						      {
-						        "color": "#c5fff9"
-						      }
-						    ]
-						  },
-						  {
-						    "featureType": "water",
-						    "elementType": "labels.text",
-						    "stylers": [
-						      {
-						        "visibility": "off"
 						      }
 						    ]
 						  }
@@ -328,11 +240,11 @@
 			        for (var i = 0; i < data.length; i++) {
 			          var beach = data[i];
 			          var marker = new google.maps.Marker({
-		    			label: beach[0],   
+		    			   
 
 			            position: {lat: parseFloat(beach[1]), lng: parseFloat(beach[2])},
 			            map: map,
-			            icon: "/static/assets/build/images/mobil.png",
+			            icon: "/static/assets/build/images/mobil-2.png",
 			          });
 			         driverData +=
 				        "<tr>"+

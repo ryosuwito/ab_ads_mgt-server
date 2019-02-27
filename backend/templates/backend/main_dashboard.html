@@ -153,7 +153,7 @@
 <script src="/static/assets/vendors/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript">
 	var SITE_URL = "http://dev.abplusscar.com/";
-
+    var markers = [];
 
 	lat 	= -6.11259//parseFloat(result['results'][0]['data'][0]['lat']);
 	lng 	= 106.7375//parseFloat(result['results'][0]['data'][0]['lng']);
@@ -246,6 +246,7 @@
 			            map: map,
 			            icon: "/static/assets/build/images/mobil-2.png",
 			          });
+			          markers.push(marker)
 			         driverData +=
 				        "<tr>"+
 				        	"<td>" + beach[0] + "</td>" +
@@ -276,8 +277,19 @@
 
 			});
 		}
-
-		placeMarkers(map);</script>
+		function deleteMarkers() {
+	        //Loop through all the markers and remove
+	        for (var i = 0; i < markers.length; i++) {
+	            markers[i].setMap(null);
+	        }
+	        markers = [];
+	    };
+		placeMarkers(map);
+		setInterval(function(){ 
+			deleteMarkers();
+			placeMarkers(map);
+		 }, 10000);
+	</script>
 <script type="text/javascript">
 	var SITE_URL = "http://dev.abplusscar.com/";
 	function initHeatMap(license_no) {

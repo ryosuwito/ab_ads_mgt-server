@@ -16,12 +16,12 @@ class GPSHandler():
     fullname = ''
     campaign_name = ''
     id = ''
-    password = 'ABPluss88'
+    password = ''
     phone = ''
     privilege = ''
     remark = ''
     sessionKey = ''
-    username = 'abpluss_phd'
+    username = ''
     
     profile = {}
     vehicles = {}
@@ -173,15 +173,32 @@ class GPSHandler():
         except Exception as e:
             print(e)
         return {'response':'NO'}
+credentials = {
+    'phd' : {
+        'username' : 'abpluss_phd',
+        'password' : 'ABPluss88'
+    },
+    'marugame' : {
+        'username' : 'ABPLUSS_MARUGAMEJKT',
+        'password' : '000000'
+    },
+}
 
 max_day = 0
 day = 1
 last_day = day - 1
 campaign_name = input('Masukan nama campaign:') 
+try:
+    credential = credentials[campaign_name]
+except:
+    print('campaign not found')
+    exit()
 while True:
     gps_handler = GPSHandler()
-    gps_handler.campaign_name = campaign_name
+    gps_handler.username = credential['username']
+    gps_handler.username = credential['password']
     res = gps_handler.login()
+    print('LOGIN TO DATABASE CAMPAIGN : %s'%campaign_name)
     if res['response'] == 'OK':
         print("Login as {} Success".format(gps_handler.username))
         print("Session Key : {}".format(gps_handler.sessionKey))
@@ -233,6 +250,7 @@ while True:
                     )
                 #print(gps.timestamp)
                 if last_location:
+                    last_location.campaign_name = campaign_name
                     last_location.data = location_data
                     last_location.timestamp = timestamp
                     last_location.created_date = timeformat
@@ -294,6 +312,7 @@ while True:
                     timeformat = datetime.strptime(data['time_format'], '%d %b %Y %H:%M:%S')
                     batch_size = 100
                     gps, stat = GpsData.objects.get_or_create(
+                            campaign_name = campaign_name,
                             license_no = license_no.replace(" ","").upper(),
                             timestamp = timestamp
                         )

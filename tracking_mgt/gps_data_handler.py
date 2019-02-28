@@ -190,8 +190,9 @@ last_day = day - 1
 campaign_name = input('Masukan nama campaign:') 
 try:
     day = int(input('Masukan hari:'))
-except:
-    pass
+except Exception as e:
+    print(e)
+    exit()
 try:
     credential = credentials[campaign_name]
 except:

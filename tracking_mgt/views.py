@@ -5,20 +5,39 @@ from datetime import datetime, timedelta
 from .models import GpsData, LastLocation
 import json
 
-def get_all_licences():
-	return [l['license_no'] for l in LastLocation.objects.all().values('license_no').iterator()]
+def get_all_licences(**kwargs):
+	try:
+		campaign_name = kwargs['campaign_name']
+	except:
+		campaign_name = ''
+	if not campaign_name:
+		return [l['license_no'] for l in LastLocation.objects.all().values('license_no').iterator()]
+	else:
+		return [l['license_no'] for l in LastLocation.objects.filter(campaign_name=campaign_name).values('license_no').iterator()]
 
 
 def get_by_range(license_no, start_date, **kwargs):
+	try:
+		campaign_name = kwargs['campaign_name']
+	except:
+		campaign_name = ''
 	now = datetime.now()
 	date_start = now - timedelta(hours = int(start_date))
-	return get_by_license(license_no, start_date=date_start)
+	return get_by_license(license_no, start_date=date_start, campaign_name=campaign_name)
 
 def get_before_range(license_no, end_date, **kwargs):
+	try:
+		campaign_name = kwargs['campaign_name']
+	except:
+		campaign_name = ''
 	date_end = datetime.strptime(end_date, '%Y-%m-%d')
-	return get_by_license(license_no, end_date=date_end)
+	return get_by_license(license_no, end_date=date_end, campaign_name=campaign_name)
 
 def get_by_date_range(license_no, start_date, **kwargs):
+	try:
+		campaign_name = kwargs['campaign_name']
+	except:
+		campaign_name = ''
 	try:
 		end_date = kwargs['end_date']
 	except Exception as e:
@@ -29,9 +48,13 @@ def get_by_date_range(license_no, start_date, **kwargs):
 	date_start = datetime.strptime(start_date, '%Y-%m-%d')
 	if end_date:
 		date_end = datetime.strptime(end_date, '%Y-%m-%d')
-	return get_by_license(license_no, start_date=date_start, end_date=date_end)
+	return get_by_license(license_no, campaign_name=campaign_name, start_date=date_start, end_date=date_end)
 
 def get_by_license(license_no, **kwargs):
+	try:
+		campaign_name = kwargs['campaign_name']
+	except:
+		campaign_name = ''
 	try:
 		start_date = kwargs['start_date']
 	except Exception as e:
@@ -50,16 +73,27 @@ def get_by_license(license_no, **kwargs):
 		print(e)
 		end_date = ''
 
-	if end_date:
-		if not start_date:
-			gps = GpsData.objects.filter(license_no=license_no.upper(), created_date__lte=end_date).order_by('-timestamp')
+	if not campaign_name:
+		if end_date:
+			if not start_date:
+				gps = GpsData.objects.filter(license_no=license_no.upper(), created_date__lte=end_date).order_by('-timestamp')
+			else:
+				gps = GpsData.objects.filter(license_no=license_no.upper(), created_date__gte=start_date, created_date__lte=end_date).order_by('-timestamp')
+		elif start_date:
+			gps = GpsData.objects.filter(license_no=license_no.upper(), created_date__gte=start_date).order_by('-timestamp')
 		else:
-			gps = GpsData.objects.filter(license_no=license_no.upper(), created_date__gte=start_date, created_date__lte=end_date).order_by('-timestamp')
-	elif start_date:
-		gps = GpsData.objects.filter(license_no=license_no.upper(), created_date__gte=start_date).order_by('-timestamp')
+			gps = GpsData.objects.filter(license_no=license_no.upper()).order_by('-timestamp')
 	else:
-		gps = GpsData.objects.filter(license_no=license_no.upper()).order_by('-timestamp')
-
+		if end_date:
+			if not start_date:
+				gps = GpsData.objects.filter(campaign_name=campaign_name, license_no=license_no.upper(), created_date__lte=end_date).order_by('-timestamp')
+			else:
+				gps = GpsData.objects.filter(campaign_name=campaign_name, license_no=license_no.upper(), created_date__gte=start_date, created_date__lte=end_date).order_by('-timestamp')
+		elif start_date:
+			gps = GpsData.objects.filter(campaign_name=campaign_name, license_no=license_no.upper(), created_date__gte=start_date).order_by('-timestamp')
+		else:
+			gps = GpsData.objects.filter(campaign_name=campaign_name, license_no=license_no.upper()).order_by('-timestamp')
+	
 	data = []
 
 	if gps:
@@ -90,6 +124,7 @@ def set_results_status(obj):
 
 def gps_show_all(request, *args, **kwargs):
 	license_no = request.GET.get('license_no')
+	campaign_name = request.GET.get('campaign_name')
 	start_date = request.GET.get('start_date')
 	end_date = request.GET.get('end_date')
 	partition = request.GET.get('partition')
@@ -99,40 +134,45 @@ def gps_show_all(request, *args, **kwargs):
 		if end_date:
 			if start_date:
 				for license in licenses:
-					results['results'].append(get_by_date_range(license, start_date, end_date))
+					results['results'].append(get_by_date_range(license, start_date, end_date, campaign_name=campaign_name))
 			else:
 				for license in licenses:
-					results['results'].append(get_by_date_before(license, end_date))
+					results['results'].append(get_by_date_before(license, end_date, campaign_name=campaign_name))
 		elif start_date:
 			for license in licenses:
-				results['results'].append(get_by_date_range(license, start_date))
+				results['results'].append(get_by_date_range(license, start_date, campaign_name=campaign_name))
 		else:
 			for license in licenses:
-				results['results'].append(get_by_license(license, partition=partition))
+				results['results'].append(get_by_license(license, partition=partition, campaign_name=campaign_name))
 			
 	else:
 		results = set_results_status(license_no)
 		if end_date:
 			if start_date:
-				results['results'].append(get_by_date_range(license_no, start_date, end_date))
+				results['results'].append(get_by_date_range(license_no, start_date, end_date, campaign_name=campaign_name))
 			else:
-				results['results'].append(get_by_date_before(license_no, end_date))
+				results['results'].append(get_by_date_before(license_no, end_date, campaign_name=campaign_name))
 		elif start_date:
-			results['results'].append(get_by_date_range(license_no, start_date))
+			results['results'].append(get_by_date_range(license_no, start_date, campaign_name=campaign_name))
 		else:
-			results['results'].append(get_by_license(license_no, partition=partition))
+			results['results'].append(get_by_license(license_no, partition=partition, campaign_name=campaign_name))
 				
 	return HttpResponse(json.dumps(results), status=200)
 
 def gps_show_all_license(request, *args, **kwargs):
-	licenses = get_all_licences()
+	campaign_name = request.GET.get('campaign_name')
+	licenses = get_all_licences(campaign_name=campaign_name)
 	results = set_results_status(licenses)
 
 	results['results'] = licenses
 	return HttpResponse(json.dumps(results), status=200)
 
 def gps_get_all_last_locations(request, *args, **kwargs):
-	licenses = LastLocation.objects.all()
+	campaign_name = request.GET.get('campaign_name')
+	if not campaign_name:
+		licenses = LastLocation.objects.all()
+	else:
+		licenses = LastLocation.objects.filter(campaign_name=campaign_name)
 	results = set_results_status(licenses)
 	last_locations = [l.city for l  in licenses]
 	cities = {}

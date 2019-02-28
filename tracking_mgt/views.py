@@ -179,14 +179,10 @@ def gps_get_all_last_locations(request, *args, **kwargs):
 	included_cities = ['Jabodetabek', 'Bali', 'Medan', 'Jawa Barat']
 	jabodetabek = ['jakarta', 'depok', 'tangerang', 'bekasi', 'bogor']
 	for l in last_locations:
-		for i in included_cities:
-			if i.lower() in l.address:
-				l.city = i
-				break
-			l.city = 'Others'
-			
 		if l.city == 'JKT':
 			l.city = 'Jabodetabek'
+		if not l.city in included_cities:
+			l.city = 'Others'
 		for j in jabodetabek:
 			if j in l.address.lower():
 				l.city = 'Jabodetabek'

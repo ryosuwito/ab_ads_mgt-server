@@ -3,9 +3,9 @@ from django.views import View
 
 class AdvertisementIndexView(View):
     def get(self, request, *args, **kwargs):
-        return render(request, 'backend/registration/advertisement.html')            
+        return render(request, 'backend/registration/ads.html')            
     def post(self, request, *args, **kwargs):
-        return render(request, 'backend/registration/advertisement.html')
+        return render(request, 'backend/registration/ads.html')
 
 class ReportIndexView(View):
     def get(self, request, *args, **kwargs):

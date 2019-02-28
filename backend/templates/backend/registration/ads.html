@@ -1,0 +1,293 @@
+{% extends 'backend/base_dashboard.html' %}
+{% block sidebar %}
+  {% include 'backend/sidebar.html' %}
+{% endblock %}
+{% block content %}
+<div class="">
+  <div class="page-title">
+    <div class="title_left">
+    </div>
+  </div>
+</div>
+<div class="clearfix"></div>
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Advertisement</h2>
+          <ul class="nav navbar-right panel_toolbox">
+            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                  <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Settings 1</a></li>
+                <li><a href="#">Settings 2</a></li>
+                  </ul>
+              </li>
+              <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+          </ul>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+
+            <form  method="post" id="demo-form" data-parsley-validate>
+              {% csrf_token %}
+              <div class="form-group">
+              <label class="control-label col-md-3 col-sm-3 col-xs-12">Title</label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                  <input type="text" id="title" name="title" required="required" class="form-control" placeholder="Simple Wrap Branding">
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <br>
+
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Gps Type</label>
+                  <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="checkbox" style="padding-right: 45px">
+                      <label>
+                        <input type="checkbox" name="gps_car" > GPS in-car
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="checkbox" style="padding-right: 45px">
+                      <label>
+                        <input type="checkbox" name="gps_hp" > GPS Mobile Phone
+                      </label>
+                    </div>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Agent</label>
+                  <div class="col-md-9 col-sm-9 col-xs-12">
+                    <select class="form-control" name="agent" id="agent">
+                      <option value="ABPluss">ABPluss</option>
+                    </select>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Advertiser</label>
+                  <div class="col-md-9 col-sm-9 col-xs-12">
+                    <input type="text" id="advertiser" name="advertiser" required="required" class="form-control">
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="message">Description</label>
+                  <div class="col-md-9 col-sm-9 col-xs-12">
+                    <textarea id="description" class="form-control" name="description" data-parsley-trigger="keyup" data-parsley-minlength="10" data-parsley-maxlength="100" data-parsley-minlength-message="Come on! You need to enter at least a 10 caracters long comment.." data-parsley-validation-threshold="10" placeholder=" Tag Heuer - Simple Wrap Branding"></textarea>
+                  </div>
+                <div class="clearfix"></div>
+              </div>
+
+              <div class="form-group">
+              <label class="control-label col-md-3 col-sm-3 col-xs-12">Type Space</label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                  <select class="form-control" name="type_ads" id="type_ads">
+                    <option value="full_back_window">Full Back Window</option>
+                    <option value="full_back_body">Full Back Body</option>
+                    <option value="full_half_body">Full Half Body</option>
+                    <option value="half_body">Half Body</option>
+                    <option value="full_body">Full Body</option>
+                  </select>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+
+              <div class="form-group">
+              
+                <div class="form-group">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Area Converage</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12"></div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="ln_solid"></div>
+
+                <div class="form-group">
+                <label class="control-label col-md-3 col-sm-4 col-xs-12">Domisili</label>
+                  <div class="col-md-9 col-sm-8 col-xs-12">
+                    <input type="text" name="domisili" class="form-control">
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+
+                <div class="ln_solid"></div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3 col-sm-4 col-xs-12">Number of Vehicle</label>
+                    <div class="col-md-9 col-sm-8 col-xs-12">
+                      <input type="number" id="number_vehicle" name="number_vehicle" required="required" class="form-control" style="width: 100%">
+                    </div>
+                  <div class="clearfix"></div>
+                </div>
+
+                <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Vehicle Type</label>
+                  <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="checkbox" style="padding-right: 45px">
+                      <label>
+                        <input type="checkbox" name="car" > Car
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="checkbox" style="padding-right: 45px">
+                      <label>
+                        <input type="checkbox" name="motorcycle"> Motorcycle
+                      </label>
+                    </div>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+
+                <div class="ln_solid"></div>
+
+                <div class="form-group">
+                <!-- <label class="control-label col-md-3 col-sm-3 col-xs-12" for="publish">Publish Start-End Date</label>
+                  <div class="col-md-3 col-sm-3 col-xs-12 item has-feedback">
+                    <input type="text" id="pub_start" name="pub_start" required="required" class="form-control col-md-7 col-xs-12 dtpicker has-feedback-left" value="" placeholder="Date" />
+                      <span class="glyphicon glyphicon-calendar form-control-feedback left" aria-hidden="true"></span>
+                  </div>
+
+                    <div class="col-md-3 col-sm-3 col-xs-12 item has-feedback">
+                    <input type="text" id="pub_end" name="pub_end" required="required" class="form-control col-md-7 col-xs-12 dtpicker has-feedback-left" value="" placeholder="Date" />
+                      <span class="glyphicon glyphicon-calendar form-control-feedback left" aria-hidden="true"></span>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+
+                <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="installation">Installation Start-End Date</label>
+                  <div class="col-md-3 col-sm-3 col-xs-12 item has-feedback">
+                    <input type="text" id="ins_start" name="ins_start" required="required" class="form-control col-md-7 col-xs-12 dtpicker has-feedback-left" value="" placeholder="Date" />
+                      <span class="glyphicon glyphicon-calendar form-control-feedback left" aria-hidden="true"></span>
+                  </div>
+
+                    <div class="col-md-3 col-sm-3 col-xs-12 item has-feedback">
+                    <input type="text" id="ins_end" name="ins_end" required="required" class="form-control col-md-7 col-xs-12 dtpicker has-feedback-left" value="" placeholder="Date" />
+                      <span class="glyphicon glyphicon-calendar form-control-feedback left" aria-hidden="true"></span>
+                  </div>
+                  <div class="clearfix"></div>
+                </div> -->
+
+                <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="campaign">Campaign Start-End Date</label>
+                  <div class="col-md-3 col-sm-3 col-xs-12 item has-feedback">
+                    <input type="text" id="cam_start" name="cam_start" required="required" class="form-control col-md-7 col-xs-12 dtpicker has-feedback-left" value="" placeholder="Date" />
+                      <span class="glyphicon glyphicon-calendar form-control-feedback left" aria-hidden="true"></span>
+                  </div>
+
+                    <div class="col-md-3 col-sm-3 col-xs-12 item has-feedback">
+                    <input type="text" id="cam_end" name="cam_end" required="required" class="form-control col-md-7 col-xs-12 dtpicker has-feedback-left" value="" placeholder="Date" />
+                      <span class="glyphicon glyphicon-calendar form-control-feedback left" aria-hidden="true"></span>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3 col-sm-4 col-xs-12" for="min_mileage">Minimum Mileage</label>
+                    <div class="col-md-9 col-sm-8 col-xs-12 form-group has-feedback" id="period2">
+                        <input type="number" class="form-control has-feedback-right" >
+                        <span class="form-control-feedback right" aria-hidden="true">KM</span>
+                    </div>
+
+                    <label class="control-label col-md-3 col-sm-4 col-xs-12" for="min_payment">Minimum Payment</label>
+                      <div class="col-md-9 col-sm-8 col-xs-12 form-group has-feedback" id="period2">
+                          <input type="text" id="min_payment" class="form-control has-feedback-left" >
+                          <span class="form-control-feedback left" aria-hidden="true">Rp</span>
+                      </div>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="ln_solid"></div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3 col-sm-4 col-xs-12" for="model">Model</label>
+                  <div class="col-md-9 col-sm-8 col-xs-12">
+                    <input type="text" class="form-control" name="model">
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+
+                <div class="ln_solid"></div>
+
+                <div class="form-group">
+                <label class="control-label col-md-3 col-sm-4 col-xs-12" for="instal_address">Installation Address</label>
+                  <div class="col-md-9 col-sm-8 col-xs-12">
+                    <textarea id="instal_address" required="required" class="form-control" name="instal_address" data-parsley-trigger="keyup" data-parsley-minlength="10" data-parsley-maxlength="100" data-parsley-minlength-message="Come on! You need to enter at least a 10 caracters long comment.." data-parsley-validation-threshold="10"></textarea>
+                  </div>
+                <div class="clearfix"></div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="instal_address">Picture Sample</label>
+                  <input type="file" name="pic" id="image-source" onchange="previewImage_picture();">
+                  <br>
+                <div class="clearfix"></div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
+                  <img id="image-preview-picture" alt="image preview"/>
+                <div class="clearfix"></div>
+              </div>
+
+              <button type="button" class="btn btn-success">Update Ads</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="<?php echo base_url() ?>assets/select/jquery/jquery-3.3.1.min.js"></script>
+ <script type="text/javascript">
+  function showOption(amount){
+    for (var i = 1; i <= 12; i++) {
+     var ele = document.getElementById('period'+i);
+     ele.classList.add('hidden')
+   }
+   for (var i = 1; i <= amount; i++) {
+     var ele = document.getElementById('period'+i);
+     ele.classList.remove('hidden')
+   }
+ }
+</script>
+<script type="text/javascript">
+  $(document).ready(function(){
+      $('#period_1').maskMoney({thousands:'.', decimal:',', precision:0});
+      $('#period_2').maskMoney({thousands:'.', decimal:',', precision:0});
+      $('#period_3').maskMoney({thousands:'.', decimal:',', precision:0});
+      $('#period_4').maskMoney({thousands:'.', decimal:',', precision:0});
+      $('#period_5').maskMoney({thousands:'.', decimal:',', precision:0});
+      $('#period_6').maskMoney({thousands:'.', decimal:',', precision:0});
+      $('#period_7').maskMoney({thousands:'.', decimal:',', precision:0});
+      $('#period_8').maskMoney({thousands:'.', decimal:',', precision:0});
+      $('#period_9').maskMoney({thousands:'.', decimal:',', precision:0});
+      $('#period_10').maskMoney({thousands:'.', decimal:',', precision:0});
+      $('#period_11').maskMoney({thousands:'.', decimal:',', precision:0});
+      $('#period_12').maskMoney({thousands:'.', decimal:',', precision:0});
+      $('#min_payment').maskMoney({thousands:'.', decimal:',', precision:0});
+    });
+</script>
+<!-- script upload image -->
+<script type="text/javascript">
+  function previewImage_picture() {
+    document.getElementById("image-preview-picture").style.display = "block";
+    var oFReader = new FileReader();
+     oFReader.readAsDataURL(document.getElementById("image-source").files[0]);
+
+    oFReader.onload = function(oFREvent) {
+      document.getElementById("image-preview-picture").src = oFREvent.target.result;
+    };
+  };
+</script>
+{% endblock %}

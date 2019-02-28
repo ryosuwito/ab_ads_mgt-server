@@ -199,6 +199,8 @@ except:
     print('campaign not found')
     exit()
 while True:
+    print('Getting data from the last %s day'%day)
+    time.sleep(3)
     gps_handler = GPSHandler()
     gps_handler.username = credential['username']
     gps_handler.password = credential['password']

@@ -174,19 +174,21 @@ def gps_get_all_last_locations(request, *args, **kwargs):
 	else:
 		licenses = LastLocation.objects.filter(campaign_name=campaign_name)
 	results = set_results_status(licenses)
-	last_locations = [l.city for l  in licenses]
+	last_locations = [l for l  in licenses]
 	cities = {}
+	jabodetabek = ['jakarta', 'depok', 'tangerang', 'bekasi', 'bogor']
 	for l in last_locations:
-		if l == None:
-			l = "Others"
-		if l == "JKT":
-			l = "Jakarta Pusat"
+		if l.city == None:
+			l.city = "Others"
+		for j in jabodetabek:
+			if j in l.address.lower():
+				l.city = 'Jabodetabek'
 		try:
-			city = cities[l]
-			cities[l] += 1
+			city = cities[l.city]
+			cities[l.city] += 1
 		except Exception as e:
 			print(e)
-			cities[l] = 1
+			cities[l.city] = 1
 	cities = {key: value for (key, value) in sorted(cities.items())}
 	results['results'].append({'cities' : cities})
 	results['results'].append({'data' : [

@@ -1,11 +1,11 @@
 <!-- table drive -->
     <script type="text/javascript">
-        $(document).ready(function() {
+        function prepareArea() {
             $('#drive').DataTable( {
-            "searching" : false,
-            "fixedHeader": true,
+            "searching" : true,
+            "fixedHeader": false,
                 columnDefs: [ {
-                    scrollX: true,
+                    scrollX: false,
                     orderable: false,
                     className: 'select-checkbox',
                     targets: 0,
@@ -19,10 +19,11 @@
                 },
                 order: [[ 1, 'asc' ]]
             } );
-
+        }
+        function prepareTable() {
             $('#drive2').DataTable( {
-            "searching" : false,
-            "fixedHeader": true,
+            "searching" : true,
+            "fixedHeader": false,
                 'columnDefs': [
                 {
                     'targets': 0,
@@ -47,14 +48,14 @@
 
             $('#report').DataTable( {
             "searching" : false,
-            "fixedHeader": true,
+            "fixedHeader": false,
             "columnDefs": [ {
                 "orderable": true,
                 "scrollX": true
                 } ],
             } );
 
-        } );
+        }
     </script>
         
     <script type="text/javascript">
@@ -96,6 +97,7 @@
     <script src="/static/assets/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
     <script src="/static/assets/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
     <script src="/static/assets/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="/static/assets/vendors/datatables.net-select/dataTables.select.min.js"></script>
     <script src="/static/assets/vendors/jszip/dist/jszip.min.js"></script>
     <script src="/static/assets/vendors/pdfmake/build/pdfmake.min.js"></script>
     <script src="/static/assets/vendors/pdfmake/build/vfs_fonts.js"></script>
@@ -114,6 +116,8 @@
     <!-- table role management -->
     <script type="text/javascript">
         $(document).ready(function() {
+            getArea();
+            prepareArea();
                 var t = $('#myTable').DataTable( {
                 "searching" : false,
                 "columnDefs": [ {

@@ -233,6 +233,9 @@ while True:
         date_start = date_start.strftime('%Y-%m-%d %H:%M:%S')
         date_end = date_now.strftime('%Y-%m-%d %H:%M:%S')
 
+        print('Getting data from %s'%date_start)
+        print('to %s'%date_date_end)
+        time.sleep(3)
         day -= 1
         last_day = day - 1
         for vehicle in gps_handler.vehicles:

@@ -234,7 +234,7 @@ while True:
         date_end = date_now.strftime('%Y-%m-%d %H:%M:%S')
 
         print('Getting data from %s'%date_start)
-        print('to %s'%date_date_end)
+        print('to %s'%date_end)
         time.sleep(3)
         day -= 1
         last_day = day - 1

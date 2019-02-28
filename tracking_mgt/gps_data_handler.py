@@ -14,6 +14,7 @@ class GPSHandler():
     domain = ''
     email = ''
     fullname = ''
+    campaign_name = ''
     id = ''
     password = 'ABPluss88'
     phone = ''
@@ -176,8 +177,10 @@ class GPSHandler():
 max_day = 0
 day = 1
 last_day = day - 1
+campaign_name = input('Masukan nama campaign:') 
 while True:
     gps_handler = GPSHandler()
+    gps_handler.campaign_name = campaign_name
     res = gps_handler.login()
     if res['response'] == 'OK':
         print("Login as {} Success".format(gps_handler.username))

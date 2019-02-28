@@ -196,7 +196,7 @@ except:
 while True:
     gps_handler = GPSHandler()
     gps_handler.username = credential['username']
-    gps_handler.username = credential['password']
+    gps_handler.password = credential['password']
     res = gps_handler.login()
     print('LOGIN TO DATABASE CAMPAIGN : %s'%campaign_name)
     if res['response'] == 'OK':

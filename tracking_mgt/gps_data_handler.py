@@ -185,9 +185,13 @@ credentials = {
 }
 
 max_day = 0
-day = 12
+day = 2
 last_day = day - 1
 campaign_name = input('Masukan nama campaign:') 
+try:
+    day = int(input('Masukan hari:'))
+except:
+    pass
 try:
     credential = credentials[campaign_name]
 except:
@@ -247,10 +251,10 @@ while True:
                 timeformat = datetime.strptime(location_data['time_format'], '%d %b %Y %H:%M:%S')
                 last_location, stat = LastLocation.objects.get_or_create(
                         license_no = license_no.replace(" ","").upper(),
+                        campaign_name = campaign_name
                     )
                 #print(gps.timestamp)
                 if last_location:
-                    last_location.campaign_name = campaign_name
                     last_location.data = location_data
                     last_location.timestamp = timestamp
                     last_location.created_date = timeformat

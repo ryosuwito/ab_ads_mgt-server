@@ -75,7 +75,9 @@
               <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Advertiser</label>
                   <div class="col-md-9 col-sm-9 col-xs-12">
-                    <input type="text" id="advertiser" name="advertiser" required="required" class="form-control">
+                    <select class="form-control" id="advertiser" name="advertiser" required="required">
+                      <option value="ABPluss">ABPluss</option>
+                    </select>
                   </div>
                   <div class="clearfix"></div>
                 </div>
@@ -83,7 +85,7 @@
               <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="message">Description</label>
                   <div class="col-md-9 col-sm-9 col-xs-12">
-                    <textarea id="description" class="form-control" name="description" data-parsley-trigger="keyup" data-parsley-minlength="10" data-parsley-maxlength="100" data-parsley-minlength-message="Come on! You need to enter at least a 10 caracters long comment.." data-parsley-validation-threshold="10" placeholder=" Tag Heuer - Simple Wrap Branding"></textarea>
+                    <textarea id="description" class="form-control" rows="6" name="description" data-parsley-trigger="keyup" data-parsley-minlength="10" data-parsley-maxlength="100" data-parsley-minlength-message="Come on! You need to enter at least a 10 caracters long comment.." data-parsley-validation-threshold="10" placeholder=" Tag Heuer - Simple Wrap Branding"></textarea>
                   </div>
                 <div class="clearfix"></div>
               </div>
@@ -218,7 +220,7 @@
                 <div class="form-group">
                 <label class="control-label col-md-3 col-sm-4 col-xs-12" for="instal_address">Installation Address</label>
                   <div class="col-md-9 col-sm-8 col-xs-12">
-                    <textarea id="instal_address" required="required" class="form-control" name="instal_address" data-parsley-trigger="keyup" data-parsley-minlength="10" data-parsley-maxlength="100" data-parsley-minlength-message="Come on! You need to enter at least a 10 caracters long comment.." data-parsley-validation-threshold="10"></textarea>
+                    <textarea rows="6" id="instal_address" required="required" class="form-control" name="instal_address" data-parsley-trigger="keyup" data-parsley-minlength="10" data-parsley-maxlength="100" data-parsley-minlength-message="Come on! You need to enter at least a 10 caracters long comment.." data-parsley-validation-threshold="10"></textarea>
                   </div>
                 <div class="clearfix"></div>
               </div>

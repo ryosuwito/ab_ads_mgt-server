@@ -222,11 +222,11 @@ def calculate_driver_mileage(license_no, **kwargs):
 			campaign_name=campaign_name)
 	except:
 		if not campaign_name:
-			start_data = GpsData.objects.filter(license_no=license_no).values('data').first()
-			end_data = GpsData.objects.filter(license_no=license_no).values('data').last()
+			start_data = GpsData.objects.filter(license_no=license_no).order_by('timestamp').values('data').first()
+			end_data = GpsData.objects.filter(license_no=license_no).order_by('timestamp').values('data').last()
 		else:
-			start_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).values('data').first()
-			end_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).values('data').last()
+			start_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).order_by('timestamp').values('data').first()
+			end_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).order_by('timestamp').values('data').last()
 		if start_data and end_data:
 			print('Starting mileage : %s'%start_data['data']['mileage'])
 			print('Ending mileage : %s'%end_data['data']['mileage'])

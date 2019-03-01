@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.forms import model_to_dict
 from datetime import datetime, timedelta
+from backend import settings
 from .models import GpsData, LastLocation
 import json
 

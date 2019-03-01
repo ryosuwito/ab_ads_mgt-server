@@ -224,9 +224,9 @@ def calculate_driver_mileage(license_no, **kwargs):
 		start_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).values('data').first()
 		end_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).values('data').last()
 	if start_data and end_data:
-		print('Starting mileage : %s'%start_data.data['mileage'])
-		print('Ending mileage : %s'%end_data.data['mileage'])
-		total_mileage = int(end_data.data['mileage'])-int(start_data.data['mileage'])
+		print('Starting mileage : %s'%start_data['mileage'])
+		print('Ending mileage : %s'%end_data['mileage'])
+		total_mileage = int(end_data['mileage'])-int(start_data['mileage'])
 		print('Total mileage : %s'%(total_mileage))
 	else:
 		total_mileage = 'Data Kurang'

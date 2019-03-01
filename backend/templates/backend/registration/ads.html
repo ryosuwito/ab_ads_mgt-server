@@ -13,6 +13,7 @@
 
   <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
+      <form method="post" enctype="multipart/form-data">
       <div class="x_panel">
         <div class="x_title">
           <h2>Advertisement</h2>
@@ -101,14 +102,6 @@
                 <div class="clearfix"></div>
               </div>
 
-              <div class="form-group">
-              
-                <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Area Converage</label>
-                    <div class="col-md-9 col-sm-9 col-xs-12"></div>
-                    <div class="clearfix"></div>
-                </div>
-
                 <div class="ln_solid"></div>
 
                 <div class="form-group">
@@ -118,8 +111,6 @@
                   </div>
                   <div class="clearfix"></div>
                 </div>
-
-                <div class="ln_solid"></div>
 
                 <div class="form-group">
                   <label class="control-label col-md-3 col-sm-4 col-xs-12">Number of Vehicle</label>
@@ -144,6 +135,14 @@
                         <input type="checkbox" name="motorcycle"> Motorcycle
                       </label>
                     </div>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3 col-sm-4 col-xs-12" for="model">Vehicle Model</label>
+                  <div class="col-md-9 col-sm-8 col-xs-12">
+                    <input type="text" class="form-control" name="model">
                   </div>
                   <div class="clearfix"></div>
                 </div>
@@ -217,16 +216,6 @@
                 <div class="ln_solid"></div>
 
                 <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-4 col-xs-12" for="model">Model</label>
-                  <div class="col-md-9 col-sm-8 col-xs-12">
-                    <input type="text" class="form-control" name="model">
-                  </div>
-                  <div class="clearfix"></div>
-                </div>
-
-                <div class="ln_solid"></div>
-
-                <div class="form-group">
                 <label class="control-label col-md-3 col-sm-4 col-xs-12" for="instal_address">Installation Address</label>
                   <div class="col-md-9 col-sm-8 col-xs-12">
                     <textarea id="instal_address" required="required" class="form-control" name="instal_address" data-parsley-trigger="keyup" data-parsley-minlength="10" data-parsley-maxlength="100" data-parsley-minlength-message="Come on! You need to enter at least a 10 caracters long comment.." data-parsley-validation-threshold="10"></textarea>
@@ -254,11 +243,12 @@
           </div>
         </div>
       </div>
+      </form>
     </div>
   </div>
 </div>
 
-<script src="<?php echo base_url() ?>assets/select/jquery/jquery-3.3.1.min.js"></script>
+<script src="/static/assets/select/jquery/jquery-3.3.1.min.js"></script>
  <script type="text/javascript">
   function showOption(amount){
     for (var i = 1; i <= 12; i++) {

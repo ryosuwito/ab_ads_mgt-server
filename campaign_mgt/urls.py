@@ -6,6 +6,7 @@ app_name = 'campaign'
 
 urlpatterns = [
     re_path(r'^$', views.AdvertisementIndexView.as_view(), name='show_all'),
+    path('add/', views.AdvertisementAddView.as_view(), name='add'),
     path('report/', views.ReportIndexView.as_view(), name="report"),
 ]
 """

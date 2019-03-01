@@ -218,12 +218,12 @@ def calculate_driver_mileage(license_no, **kwargs):
 		campaign_name = ''
 	if not campaign_name:
 		start_data = GpsData.objects.filter(license_no=l.license_no).order_by('timestamp').first()
-    	end_data = GpsData.objects.filter(license_no=l.license_no).order_by('timestamp').last()
-    else:
-    	start_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=l.license_no).order_by('timestamp').first()
-    	end_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=l.license_no).order_by('timestamp').last()
-    print('Starting mileage : %s'%start_data.data['mileage'])
-    print('Ending mileage : %s'%end_data.data['mileage'])
-    total_mileage = int(end_data.data['mileage'])-int(start_data.data['mileage'])
-    print('Total mileage : %s'%(total_mileage))
-    return total_mileage
+		end_data = GpsData.objects.filter(license_no=l.license_no).order_by('timestamp').last()
+	else:
+		start_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=l.license_no).order_by('timestamp').first()
+		end_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=l.license_no).order_by('timestamp').last()
+	print('Starting mileage : %s'%start_data.data['mileage'])
+	print('Ending mileage : %s'%end_data.data['mileage'])
+	total_mileage = int(end_data.data['mileage'])-int(start_data.data['mileage'])
+	print('Total mileage : %s'%(total_mileage))
+	return total_mileage

@@ -194,19 +194,36 @@ def gps_get_all_last_locations(request, *args, **kwargs):
 			cities[l.city] = 1
 	cities = {key: value for (key, value) in sorted(cities.items())}
 	results['results'].append({'cities' : cities})
-	results['results'].append({'data' : [
-		[l.license_no, 
-		 l.latitude, 
-		 l.longitude,
-		 l.status_vehicle,
-		 l.status_engine,
-		 l.mileage,
-		 l.address if l.address else "-",
-		 l.city if l.city else "-",
-		 l.created_date.strftime("%Y-%m-%d %H:%M:%S")] 
-			for l in licenses]})
+	for l in licenses:
+		results['results'].append({'data' : 
+			[l.license_no, 
+			 l.latitude, 
+			 l.longitude,
+			 l.status_vehicle,
+			 l.status_engine,
+			 calculate_driver_mileage(l.license_no, campaign_name=settings.CAMPAIGN_NAME),
+			 l.address if l.address else "-",
+			 l.city if l.city else "-",
+			 l.created_date.strftime("%Y-%m-%d %H:%M:%S")]})
 	return HttpResponse(json.dumps(results), status=200)
 # def gps_show_by_license(request, license_no, *args, **kwargs):
 # 	results = set_results_status(license_no)
 # 	results['results'].append(get_by_license(license_no))
 # 	return HttpResponse(json.dumps(results), status=200)
+
+def calculate_driver_mileage(license_no, **kwargs):
+	try:
+		campaign_name = kwargs['campaign_name']
+	except:
+		campaign_name = ''
+	if not campaign_name:
+		start_data = GpsData.objects.filter(license_no=l.license_no).order_by('timestamp').first()
+    	end_data = GpsData.objects.filter(license_no=l.license_no).order_by('timestamp').last()
+    else:
+    	start_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=l.license_no).order_by('timestamp').first()
+    	end_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=l.license_no).order_by('timestamp').last()
+    print('Starting mileage : %s'%start_data.data['mileage'])
+    print('Ending mileage : %s'%end_data.data['mileage'])
+    total_mileage = int(end_data.data['mileage'])-int(start_data.data['mileage'])
+    print('Total mileage : %s'%(total_mileage))
+    return total_mileage

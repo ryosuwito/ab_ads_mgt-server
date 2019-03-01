@@ -179,13 +179,16 @@
                 </div> -->
 
                 <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="campaign">Campaign Start-End Date</label>
-                  <div class="col-md-3 col-sm-3 col-xs-12 item has-feedback">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="campaign">Campaign Start Date</label>
+                  <div class="col-md-4 col-sm-4 col-xs-12 item has-feedback">
                     <input type="text" id="cam_start" name="cam_start" required="required" class="form-control col-md-7 col-xs-12 dtpicker has-feedback-left" value="" placeholder="Date" />
                       <span class="glyphicon glyphicon-calendar form-control-feedback left" aria-hidden="true"></span>
                   </div>
+                  <div class="col-md-1 col-sm-1">
+                    <label>End Date</label>
+                  </div>
 
-                    <div class="col-md-3 col-sm-3 col-xs-12 item has-feedback">
+                    <div class="col-md-4 col-sm-4 col-xs-12 item has-feedback">
                     <input type="text" id="cam_end" name="cam_end" required="required" class="form-control col-md-7 col-xs-12 dtpicker has-feedback-left" value="" placeholder="Date" />
                       <span class="glyphicon glyphicon-calendar form-control-feedback left" aria-hidden="true"></span>
                   </div>
@@ -193,16 +196,21 @@
                 </div>
 
                 <div class="form-group">
+                  <label class="control-label col-md-3 col-sm-4 col-xs-12" for="min_mileage">Duration</label>
+                    <div class="col-md-9 col-sm-8 col-xs-12 form-group has-feedback" id="period2">
+                        <input type="number" class="form-control has-feedback-right" >
+                        <span style="width: 15%" class="form-control-feedback right" aria-hidden="true">Month</span>
+                    </div>
                   <label class="control-label col-md-3 col-sm-4 col-xs-12" for="min_mileage">Minimum Mileage</label>
                     <div class="col-md-9 col-sm-8 col-xs-12 form-group has-feedback" id="period2">
                         <input type="number" class="form-control has-feedback-right" >
-                        <span class="form-control-feedback right" aria-hidden="true">KM</span>
+                        <span style="width: 15%" class="form-control-feedback right" aria-hidden="true">KM</span>
                     </div>
 
                     <label class="control-label col-md-3 col-sm-4 col-xs-12" for="min_payment">Minimum Payment</label>
                       <div class="col-md-9 col-sm-8 col-xs-12 form-group has-feedback" id="period2">
                           <input type="text" id="min_payment" class="form-control has-feedback-left" >
-                          <span class="form-control-feedback left" aria-hidden="true">Rp</span>
+                          <span style="width: 15%" class="form-control-feedback left" aria-hidden="true">Rp</span>
                       </div>
                   <div class="clearfix"></div>
                 </div>
@@ -227,9 +235,11 @@
               </div>
 
               <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="instal_address">Picture Sample</label>
+                <label class="control-label col-md-3 col-sm-4 col-xs-12" for="instal_address">Picture Sample</label>
+                <div class="col-md-9 col-sm-8 col-xs-12">
                   <input type="file" name="pic" id="image-source" onchange="previewImage_picture();">
                   <br>
+                </div>
                 <div class="clearfix"></div>
               </div>
 

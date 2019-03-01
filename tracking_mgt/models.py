@@ -13,7 +13,7 @@ class GpsData(models.Model):
     campaign_name = models.CharField(max_length=255, db_index=True, null=True, default="phd")
     license_no = models.CharField(max_length=15, db_index=True)
     created_date = models.DateTimeField(auto_now=False, db_index=True, blank=True, null=True)
-    timestamp = models.CharField(max_length=60, db_index=True)
+    timestamp = models.CharField(max_length=60)
     data = JSONField(null=True)
     def __str__(self):
         return self.license_no
@@ -24,13 +24,13 @@ class ImpressionGpsData(models.Model):
     city = models.CharField(max_length=255, db_index=True, null=True)
     address = models.CharField(max_length=500, db_index=True, null=True)
     license_no = models.CharField(max_length=15, db_index=True)
-    latitude = models.CharField(blank=True, null=True, max_length=55, db_index=True)
-    longitude = models.CharField(blank=True, null=True, max_length=55, db_index=True)
+    latitude = models.CharField(blank=True, null=True, max_length=55)
+    longitude = models.CharField(blank=True, null=True, max_length=55)
     status_vehicle = models.CharField(blank=True, null=True, max_length=55, db_index=True)
     status_engine = models.CharField(blank=True, null=True, max_length=55, db_index=True)
-    mileage = models.CharField(blank=True, null=True, max_length=55, db_index=True)
+    mileage = models.CharField(blank=True, null=True, max_length=55)
     created_date = models.DateTimeField(auto_now=False, db_index=True, blank=True, null=True)
-    timestamp = models.CharField(blank=True, null=True, max_length=60, db_index=True)
+    timestamp = models.CharField(blank=True, null=True, max_length=60)
     def __str__(self):
         return '%s - %s'%(self.license_no, self.timestamp)
 
@@ -41,13 +41,13 @@ class LastLocation(models.Model):
     city = models.CharField(max_length=255, db_index=True, null=True)
     address = models.CharField(max_length=500, db_index=True, null=True)
     license_no = models.CharField(max_length=15, db_index=True)
-    latitude = models.CharField(blank=True, null=True, max_length=55, db_index=True)
-    longitude = models.CharField(blank=True, null=True, max_length=55, db_index=True)
+    latitude = models.CharField(blank=True, null=True, max_length=55)
+    longitude = models.CharField(blank=True, null=True, max_length=55)
     status_vehicle = models.CharField(blank=True, null=True, max_length=55, db_index=True)
     status_engine = models.CharField(blank=True, null=True, max_length=55, db_index=True)
-    mileage = models.CharField(blank=True, null=True, max_length=55, db_index=True)
+    mileage = models.CharField(blank=True, null=True, max_length=55)
     created_date = models.DateTimeField(auto_now=False, db_index=True, blank=True, null=True)
-    timestamp = models.CharField(blank=True, null=True, max_length=60, db_index=True)
+    timestamp = models.CharField(blank=True, null=True, max_length=60)
     data = JSONField(null=True)
     
     def __str__(self):

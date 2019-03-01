@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.forms import model_to_dict
 from datetime import datetime, timedelta
 from backend import settings
-from .models import GpsData, LastLocation
+from .models import GpsData, LastLocation, GpsDailyReport
 import json
 
 def get_all_licences(**kwargs):
@@ -217,17 +217,24 @@ def calculate_driver_mileage(license_no, **kwargs):
 		campaign_name = kwargs['campaign_name']
 	except:
 		campaign_name = 'marugame'
-	if not campaign_name:
-		start_data = GpsData.objects.filter(license_no=license_no).values('data').first()
-		end_data = GpsData.objects.filter(license_no=license_no).values('data').last()
-	else:
-		start_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).values('data').first()
-		end_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).values('data').last()
-	if start_data and end_data:
-		print('Starting mileage : %s'%start_data['data']['mileage'])
-		print('Ending mileage : %s'%end_data['data']['mileage'])
-		total_mileage = int(end_data['data']['mileage'])-int(start_data['data']['mileage'])
-		print('Total mileage : %s'%(total_mileage))
-	else:
-		total_mileage = 'Data Kurang'
+	try:
+		total_mileage = GpsDailyReport.objects.get(license_no = license_no, 
+			campaign_name=campaign_name)
+	except:
+		if not campaign_name:
+			start_data = GpsData.objects.filter(license_no=license_no).values('data').first()
+			end_data = GpsData.objects.filter(license_no=license_no).values('data').last()
+		else:
+			start_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).values('data').first()
+			end_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).values('data').last()
+		if start_data and end_data:
+			print('Starting mileage : %s'%start_data['data']['mileage'])
+			print('Ending mileage : %s'%end_data['data']['mileage'])
+			total_mileage = int(end_data['data']['mileage'])-int(start_data['data']['mileage'])
+			print('Total mileage : %s'%(total_mileage))
+			GpsDailyReport.objects.create(license_no=license_no,
+				campaign_name=campaign_name,
+				created_date=datetime.now())
+		else:
+			total_mileage = 'Data Kurang'
 	return total_mileage

@@ -218,8 +218,8 @@ def calculate_driver_mileage(license_no, **kwargs):
 	except:
 		campaign_name = ''
 	if not campaign_name:
-		start_data = GpsData.objects.filter(license_no=l.license_no).order_by('timestamp').first()
-		end_data = GpsData.objects.filter(license_no=l.license_no).order_by('timestamp').last()
+		start_data = GpsData.objects.filter(license_no=license_no).order_by('timestamp').first()
+		end_data = GpsData.objects.filter(license_no=license_no).order_by('timestamp').last()
 	else:
 		start_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=l.license_no).order_by('timestamp').first()
 		end_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=l.license_no).order_by('timestamp').last()

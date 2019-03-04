@@ -186,7 +186,7 @@
 	lat 	= -6.11259//parseFloat(result['results'][0]['data'][0]['lat']);
 	lng 	= 106.7375//parseFloat(result['results'][0]['data'][0]['lng']);
 	map = new google.maps.Map(document.getElementById('googleMap'), {
-	zoom 				: 4,
+	zoom 				: 6,
 	center 				: {lat: lat, lng: lng},
 	gestureHandling		: 'greedy',
 	mapTypeId 			: google.maps.MapTypeId.ROADMAP,
@@ -375,7 +375,7 @@
 	function initHeatMap(license_no, lati, lngt) {
         var propertiPeta = {
             center:new google.maps.LatLng(lati,lngt),
-            zoom:5,
+            zoom:10,
 			gestureHandling	: 'greedy',
             mapTypeId:google.maps.MapTypeId.ROADMAP
         };

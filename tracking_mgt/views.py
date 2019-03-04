@@ -171,6 +171,7 @@ def gps_show_all_license(request, *args, **kwargs):
 def gps_get_all_last_locations(request, *args, **kwargs):
 	campaign_name = request.GET.get('campaign_name')
 	if not campaign_name:
+		campaign_name = settings.CAMPAIGN_NAME
 		licenses = LastLocation.objects.all()
 	else:
 		licenses = LastLocation.objects.filter(campaign_name=campaign_name)
@@ -201,7 +202,7 @@ def gps_get_all_last_locations(request, *args, **kwargs):
 		 l.longitude,
 		 l.status_vehicle,
 		 l.status_engine,
-		 get_driver_mileage(l.license_no, campaign_name=settings.CAMPAIGN_NAME),
+		 get_driver_mileage(l.license_no, campaign_name=campaign_name),
 		 l.address if l.address else "-",
 		 l.city if l.city else "-",
 		 l.created_date.strftime("%Y-%m-%d %H:%M:%S")])

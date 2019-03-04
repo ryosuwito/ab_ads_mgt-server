@@ -10,7 +10,7 @@ def get_all_licences(**kwargs):
 	try:
 		campaign_name = kwargs['campaign_name']
 	except:
-		campaign_name = ''
+		campaign_name = settings.CAMPAIGN_NAME
 	if not campaign_name:
 		return [l['license_no'] for l in LastLocation.objects.all().values('license_no').iterator()]
 	else:

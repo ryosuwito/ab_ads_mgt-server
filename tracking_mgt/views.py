@@ -222,21 +222,34 @@ def calculate_driver_mileage(license_no, **kwargs):
 			campaign_name=campaign_name)
 		total_mileage = mileage_report.mileage
 	except:
-		if not campaign_name:
-			start_data = GpsData.objects.filter(license_no=license_no).order_by('timestamp').values('data').first()
-			end_data = GpsData.objects.filter(license_no=license_no).order_by('timestamp').values('data').last()
-		else:
-			start_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).order_by('timestamp').values('data').first()
-			end_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).order_by('timestamp').values('data').last()
-		if start_data and end_data:
-			print('Starting mileage : %s'%start_data['data']['mileage'])
-			print('Ending mileage : %s'%end_data['data']['mileage'])
-			total_mileage = (int(end_data['data']['mileage'])-int(start_data['data']['mileage']))/1000
-			print('Total mileage : %s'%(total_mileage))
-			GpsDailyReport.objects.create(license_no=license_no,
-				mileage=total_mileage,
-				campaign_name=campaign_name,
-				created_date=datetime.now())
-		else:
-			total_mileage = 'Data Kurang'
+		total_mileage = 0
 	return total_mileage
+
+# def calculate_driver_mileage(license_no, **kwargs):
+# 	try:
+# 		campaign_name = kwargs['campaign_name']
+# 	except:
+# 		campaign_name = 'marugame'
+# 	try:
+# 		mileage_report = GpsDailyReport.objects.get(license_no = license_no, 
+# 			campaign_name=campaign_name)
+# 		total_mileage = mileage_report.mileage
+# 	except:
+# 		if not campaign_name:
+# 			start_data = GpsData.objects.filter(license_no=license_no).order_by('timestamp').values('data').first()
+# 			end_data = GpsData.objects.filter(license_no=license_no).order_by('timestamp').values('data').last()
+# 		else:
+# 			start_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).order_by('timestamp').values('data').first()
+# 			end_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).order_by('timestamp').values('data').last()
+# 		if start_data and end_data:
+# 			print('Starting mileage : %s'%start_data['data']['mileage'])
+# 			print('Ending mileage : %s'%end_data['data']['mileage'])
+# 			total_mileage = (int(end_data['data']['mileage'])-int(start_data['data']['mileage']))/1000
+# 			print('Total mileage : %s'%(total_mileage))
+# 			GpsDailyReport.objects.create(license_no=license_no,
+# 				mileage=total_mileage,
+# 				campaign_name=campaign_name,
+# 				created_date=datetime.now())
+# 		else:
+# 			total_mileage = 'Data Kurang'
+# 	return total_mileage

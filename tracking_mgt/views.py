@@ -238,17 +238,17 @@ def calculate_mileage(license_no, **kwargs):
 	else:
 		start_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).order_by('pk').values('data').first()
 		end_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).order_by('pk').values('data').last()
-	starting_mileage = start_data['data']['mileage']
-	ending_mileage = end_data['data']['mileage']
+	starting_mileage = int(start_data['data']['mileage'])
+	ending_mileage = int(end_data['data']['mileage'])
 	print('Starting mileage : %s'%starting_mileage)
 	print('Ending mileage : %s'%ending_mileage)
-	total_mileage = (int(ending_mileage)-int(starting_mileage))/1000
+	total_mileage = ending_mileage-starting_mileage
 	print('Total mileage : %s'%(total_mileage))
 			
 	try:
 		mileage_report = GpsDailyReport.objects.get(license_no = license_no, 
 			campaign_name=campaign_name)
-		mileage_report.mileage = total_mileage
+		mileage_report.mileage = total_mileage/1000
 		mileage_report.save()
 	except:
 		if start_data and end_data:
@@ -258,4 +258,4 @@ def calculate_mileage(license_no, **kwargs):
 				created_date=datetime.now())
 		else:
 			total_mileage = 'Data Kurang'
-	return total_mileage
+	return total_mileage/1000

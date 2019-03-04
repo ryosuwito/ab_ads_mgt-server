@@ -233,8 +233,8 @@ def calculate_mileage(license_no, **kwargs):
 	except:
 		campaign_name = 'marugame'
 	if not campaign_name:
-		start_data = GpsData.objects.filter(license_no=license_no).order_by('pk').values('data').first()
-		end_data = GpsData.objects.filter(license_no=license_no).order_by('pk').values('data').last()
+		start_data = GpsData.objects.filter(license_no=license_no).order_by('timestamp').values('data').first()
+		end_data = GpsData.objects.filter(license_no=license_no).order_by('timestamp').values('data').last()
 	else:
 		start_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).order_by('pk').values('data').first()
 		end_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).order_by('pk').values('data').last()

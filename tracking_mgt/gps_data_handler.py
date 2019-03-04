@@ -316,20 +316,20 @@ while True:
             if track_data:
                 #print(GpsData.objects.all().count())
                 #print([data for data in track_data])
+                license_plate = license_no.replace(" ","").upper()
                 for data in track_data:
                     idx += 1
                     timestamp = data['time_second']
                     timeformat = datetime.strptime(data['time_format'], '%d %b %Y %H:%M:%S')
-                    batch_size = 100
                     gps, stat = GpsData.objects.get_or_create(
-                            campaign_name = campaign_name,
-                            license_no = license_no.replace(" ","").upper(),
+                            license_no = license_plate,
                             timestamp = timestamp
                         )
                     #print(gps.timestamp)
                     print('%s : %s - %s - %s'%(license_no.replace(" ","").upper(), idx, stat, data['time_format']))
                     if gps:
                         gps.data = data
+                        gps.campaign_name = campaign_name,
                         gps.created_date = timeformat
                         gps.save()
 

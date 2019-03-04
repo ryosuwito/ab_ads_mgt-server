@@ -66,7 +66,7 @@ def get_by_license(license_no, **kwargs):
 		partition = int(kwargs['partition'])
 	except Exception as e:
 		print(e)
-		partition = 60
+		partition = 1
 
 	try:
 		end_date = kwargs['end_date']
@@ -77,23 +77,23 @@ def get_by_license(license_no, **kwargs):
 	if not campaign_name:
 		if end_date:
 			if not start_date:
-				gps = GpsData.objects.filter(license_no=license_no.upper(), created_date__lte=end_date).order_by('-timestamp')
+				gps = GpsData.objects.filter(license_no=license_no.upper(), created_date__lte=end_date).order_by('-timestamp').iterator()
 			else:
-				gps = GpsData.objects.filter(license_no=license_no.upper(), created_date__gte=start_date, created_date__lte=end_date).order_by('-timestamp')
+				gps = GpsData.objects.filter(license_no=license_no.upper(), created_date__gte=start_date, created_date__lte=end_date).order_by('-timestamp').iterator()
 		elif start_date:
-			gps = GpsData.objects.filter(license_no=license_no.upper(), created_date__gte=start_date).order_by('-timestamp')
+			gps = GpsData.objects.filter(license_no=license_no.upper(), created_date__gte=start_date).order_by('-timestamp').iterator()
 		else:
-			gps = GpsData.objects.filter(license_no=license_no.upper()).order_by('-timestamp')
+			gps = GpsData.objects.filter(license_no=license_no.upper()).order_by('-timestamp').iterator()
 	else:
 		if end_date:
 			if not start_date:
-				gps = GpsData.objects.filter(campaign_name=campaign_name, license_no=license_no.upper(), created_date__lte=end_date).order_by('-timestamp')
+				gps = GpsData.objects.filter(campaign_name=campaign_name, license_no=license_no.upper(), created_date__lte=end_date).order_by('-timestamp').iterator()
 			else:
-				gps = GpsData.objects.filter(campaign_name=campaign_name, license_no=license_no.upper(), created_date__gte=start_date, created_date__lte=end_date).order_by('-timestamp')
+				gps = GpsData.objects.filter(campaign_name=campaign_name, license_no=license_no.upper(), created_date__gte=start_date, created_date__lte=end_date).order_by('-timestamp').iterator()
 		elif start_date:
-			gps = GpsData.objects.filter(campaign_name=campaign_name, license_no=license_no.upper(), created_date__gte=start_date).order_by('-timestamp')
+			gps = GpsData.objects.filter(campaign_name=campaign_name, license_no=license_no.upper(), created_date__gte=start_date).order_by('-timestamp').iterator()
 		else:
-			gps = GpsData.objects.filter(campaign_name=campaign_name, license_no=license_no.upper()).order_by('-timestamp')
+			gps = GpsData.objects.filter(campaign_name=campaign_name, license_no=license_no.upper()).order_by('-timestamp').iterator()
 	
 	data = []
 
@@ -174,7 +174,7 @@ def gps_get_all_last_locations(request, *args, **kwargs):
 		campaign_name = settings.CAMPAIGN_NAME
 		licenses = LastLocation.objects.all()
 	else:
-		licenses = LastLocation.objects.filter(campaign_name=campaign_name)
+		licenses = LastLocation.objects.filter(campaign_name=campaign_name).iterator()
 	results = set_results_status(licenses)
 	last_locations = [l for l  in licenses]
 	cities = {}

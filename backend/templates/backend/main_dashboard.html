@@ -32,7 +32,7 @@
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                   <div class="left icon"><i class="fa fa-tachometer"></i></div>
-                  <div class="count"><h3>124.136 KM</h3></div>
+                  <div class="count"><h3 id="totalMileage">-</h3></div>
                   <h2> Total Jarak Tempuh </h2>
                   <p></p>
                 </div>
@@ -276,6 +276,7 @@
 			  	cache : false,
 				success		: function(result) {
 					var driverData = ''
+					var totalMileage = 0
 					var data = result['results'][1]['data']
 			        for (var i = 0; i < data.length; i++) {
 			          var beach = data[i];
@@ -303,6 +304,7 @@
 			         		infowindow3.setContent(this.info);                              
 							infowindow3.open(map, this);  
 			          });
+			         totalMileage += beach[5]
 			         driverData +=
 				        "<tr>"+
 				        	"<td></td>" +
@@ -337,6 +339,7 @@
 				        "</td></tr>"
 			        }
 			        $('#tableDriver').html(driverData)
+					$('#totalMileage').text(totalMileage)
 				},
 
 			});

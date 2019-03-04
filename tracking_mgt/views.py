@@ -218,8 +218,9 @@ def calculate_driver_mileage(license_no, **kwargs):
 	except:
 		campaign_name = 'marugame'
 	try:
-		total_mileage = GpsDailyReport.objects.get(license_no = license_no, 
+		mileage_report = GpsDailyReport.objects.get(license_no = license_no, 
 			campaign_name=campaign_name)
+		total_mileage = mileage_report.mileage
 	except:
 		if not campaign_name:
 			start_data = GpsData.objects.filter(license_no=license_no).order_by('timestamp').values('data').first()

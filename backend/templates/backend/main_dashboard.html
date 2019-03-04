@@ -186,7 +186,7 @@
 	lat 	= -6.11259//parseFloat(result['results'][0]['data'][0]['lat']);
 	lng 	= 106.7375//parseFloat(result['results'][0]['data'][0]['lng']);
 	map = new google.maps.Map(document.getElementById('googleMap'), {
-	zoom 				: 3,
+	zoom 				: 4,
 	center 				: {lat: lat, lng: lng},
 	gestureHandling		: 'greedy',
 	mapTypeId 			: google.maps.MapTypeId.ROADMAP,
@@ -348,7 +348,9 @@
 		            	"</button></td>" +
 		            "<td>"+
 		            "<button type='button' class='btn btn-info' id='route' data-toggle='modal' " +
-		            	"onclick='" + 'initHeatMap("'+ beach[0] +'")' + "'"+
+		            	"onclick='" + 'initHeatMap("'+ beach[0] +
+		            	',' + parseFloat(beach[1]) + ',' + 
+		            	parseFloat(beach[2]) + '")' + "'"+
 		            	"data-target='#routeModal'>Detail</button>" +
 		        "</td></tr>"
 	        }
@@ -370,10 +372,10 @@
 	</script>
 <script type="text/javascript">
 	var SITE_URL = "http://dev.abplusscar.com/";
-	function initHeatMap(license_no) {
+	function initHeatMap(license_no, lati, lngt) {
         var propertiPeta = {
-            center:new google.maps.LatLng(-6.21462,106.84513),
-            zoom:10,
+            center:new google.maps.LatLng(lati,langt),
+            zoom:5,
 			gestureHandling	: 'greedy',
             mapTypeId:google.maps.MapTypeId.ROADMAP
         };

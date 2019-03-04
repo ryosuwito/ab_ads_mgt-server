@@ -233,11 +233,13 @@ def calculate_mileage(license_no, **kwargs):
 	except:
 		campaign_name = 'marugame'
 	if not campaign_name:
-		start_data = GpsData.objects.filter(license_no=license_no).order_by('timestamp').values('data').first()
-		end_data = GpsData.objects.filter(license_no=license_no).order_by('timestamp').values('data').last()
+		data_query = GpsData.objects.filter(license_no=license_no).order_by('pk').values('data')
+		start_data = data_query[0].get()
+		end_data = data_query[-1].get()
 	else:
-		start_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).order_by('pk').values('data').first()
-		end_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).order_by('pk').values('data').last()
+		data_query = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).order_by('pk').values('data')
+		start_data = data_query[0].get()
+		end_data = data_query[-1].get()
 	starting_mileage = int(start_data['data']['mileage'])
 	ending_mileage = int(end_data['data']['mileage'])
 	print('Starting mileage : %s'%starting_mileage)
@@ -250,7 +252,7 @@ def calculate_mileage(license_no, **kwargs):
 	try:
 		mileage_report = GpsDailyReport.objects.get(license_no = license_no, 
 			campaign_name=campaign_name)
-		mileage_report.mileage = total_mileage/1000
+		mileage_report.mileage = total_mileage
 		mileage_report.save()
 	except:
 		if start_data and end_data:

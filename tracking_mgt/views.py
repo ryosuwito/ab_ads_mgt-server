@@ -205,7 +205,7 @@ def gps_get_all_last_locations(request, *args, **kwargs):
 		 l.address if l.address else "-",
 		 l.city if l.city else "-",
 		 l.created_date.strftime("%Y-%m-%d %H:%M:%S")])
-	results['results'].append({'cities' : cities, 'data':data})
+	results['results'].append({'cities' : cities}, {'data':data})
 
 	return HttpResponse(json.dumps(results), status=200)
 # def gps_show_by_license(request, license_no, *args, **kwargs):

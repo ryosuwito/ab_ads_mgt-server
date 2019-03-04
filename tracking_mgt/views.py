@@ -240,8 +240,8 @@ def calculate_mileage(license_no, **kwargs):
 		end_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).order_by('pk').values('data').last()
 	starting_mileage = start_data['data']['mileage']
 	ending_mileage = end_data['data']['mileage']
-	print('Starting mileage : %s'%start_data['data']['mileage'])
-	print('Ending mileage : %s'%end_data['data']['mileage'])
+	print('Starting mileage : %s'%starting_mileage)
+	print('Ending mileage : %s'%ending_mileage)
 	total_mileage = (int(ending_mileage)-int(starting_mileage))/1000
 	print('Total mileage : %s'%(total_mileage))
 			

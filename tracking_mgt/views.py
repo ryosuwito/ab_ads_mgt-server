@@ -242,7 +242,7 @@ def calculate_mileage(license_no, **kwargs):
 	ending_mileage = end_data['data']['mileage']
 	print('Starting mileage : %s'%start_data['data']['mileage'])
 	print('Ending mileage : %s'%end_data['data']['mileage'])
-	total_mileage = (int(starting_mileage)-int(ending_mileage))/1000
+	total_mileage = (int(ending_mileage)-int(starting_mileage))/1000
 	print('Total mileage : %s'%(total_mileage))
 			
 	try:

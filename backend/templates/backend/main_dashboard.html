@@ -277,17 +277,18 @@
 		function placeMarkers(map){
 			if(lastLocationsData != false){
 				renderMarkers(lastLocationsData)
+			}else{
+				$.ajax({
+					url 		: SITE_URL + 'gps/lastlocations/',
+					method		: 'get',
+					dataType	: 'json',
+					async : false,
+				  	cache : false,
+					success		: function(result) {
+						gpsData = result['results'][1]['data']
+						renderMarkers(gpsData)
+				}});
 			}
-			$.ajax({
-				url 		: SITE_URL + 'gps/lastlocations/',
-				method		: 'get',
-				dataType	: 'json',
-				async : false,
-			  	cache : false,
-				success		: function(result) {
-					gpsData = result['results'][1]['data']
-					renderMarkers(gpsData)
-			}});
 		}
 		function renderMarkers(gpsData){
 			var driverData = ''

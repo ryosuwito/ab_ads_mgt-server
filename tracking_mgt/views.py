@@ -242,8 +242,10 @@ def calculate_mileage(license_no, **kwargs):
 	ending_mileage = int(end_data['data']['mileage'])
 	print('Starting mileage : %s'%starting_mileage)
 	print('Ending mileage : %s'%ending_mileage)
-	total_mileage = ending_mileage-starting_mileage
-	print('Total mileage : %s'%(total_mileage))
+	temp_mileage = ending_mileage-starting_mileage
+	print('Total mileage : %s'%(temp_mileage))
+	total_mileage = temp_mileage/1000.
+	print('Total mileage : %s km'%(total_mileage))
 			
 	try:
 		mileage_report = GpsDailyReport.objects.get(license_no = license_no, 

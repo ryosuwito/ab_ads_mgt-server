@@ -194,18 +194,19 @@ def gps_get_all_last_locations(request, *args, **kwargs):
 			print(e)
 			cities[l.city] = 1
 	cities = {key: value for (key, value) in sorted(cities.items())}
-	results['results'].append({'cities' : cities})
+	data = []
 	for l in licenses:
-		results['results'].append({'data' : 
-			[l.license_no, 
-			 l.latitude, 
-			 l.longitude,
-			 l.status_vehicle,
-			 l.status_engine,
-			 calculate_driver_mileage(l.license_no, campaign_name=settings.CAMPAIGN_NAME),
-			 l.address if l.address else "-",
-			 l.city if l.city else "-",
-			 l.created_date.strftime("%Y-%m-%d %H:%M:%S")]})
+		data.append([l.license_no, 
+		 l.latitude, 
+		 l.longitude,
+		 l.status_vehicle,
+		 l.status_engine,
+		 calculate_driver_mileage(l.license_no, campaign_name=settings.CAMPAIGN_NAME),
+		 l.address if l.address else "-",
+		 l.city if l.city else "-",
+		 l.created_date.strftime("%Y-%m-%d %H:%M:%S")])
+	results['results'].append({'cities' : cities, 'data':data})
+
 	return HttpResponse(json.dumps(results), status=200)
 # def gps_show_by_license(request, license_no, *args, **kwargs):
 # 	results = set_results_status(license_no)

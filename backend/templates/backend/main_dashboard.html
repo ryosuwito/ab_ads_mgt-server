@@ -182,7 +182,7 @@
 <script type="text/javascript">
 	var SITE_URL = "http://dev.abplusscar.com/";
     var markers = [];
-
+    var lastLocationsData = false
 	lat 	= -6.11259//parseFloat(result['results'][0]['data'][0]['lat']);
 	lng 	= 106.7375//parseFloat(result['results'][0]['data'][0]['lng']);
 	map = new google.maps.Map(document.getElementById('googleMap'), {
@@ -252,7 +252,14 @@
 				success		: function(result) {
 					var cities = result['results'][0]['cities']
 					var data = result['results'][1]['data']
+					lastLocationsData = data
+					var totalMileage = 0
+					for (var i = 0; i < data.length; i++) {
+			            var beach = data[i];
+			            totalMileage += parseFloat(beach[5])
+			        }
 					$('#totalUnit').text(data.length)
+					$('#totalMileage').text(totalMileage + ' km')
 					var table_cities = ''
 					for (var key in cities){
 						table_cities += "<tr><td></td><td>" +
@@ -268,6 +275,9 @@
 			});
 		}
 		function placeMarkers(map){
+			if(lastLocationsData != false){
+				renderMarkers(lastLocationsData)
+			}
 			$.ajax({
 				url 		: SITE_URL + 'gps/lastlocations/',
 				method		: 'get',
@@ -275,74 +285,74 @@
 				async : false,
 			  	cache : false,
 				success		: function(result) {
-					var driverData = ''
-					var totalMileage = 0
-					var data = result['results'][1]['data']
-			        for (var i = 0; i < data.length; i++) {
-			          var beach = data[i];
-			          var icon_path = ""
-			          if(beach[3] == 'Running'){
-			          	icon_path = "/static/assets/build/images/mobil-2.png"
-			          }
-			          else if(beach[3] == 'Lost'){
-			          	icon_path = "/static/assets/build/images/mobil-lost.png"
-			          }
-			          else{
-			          	icon_path = "/static/assets/build/images/mobil-stop.png"
-			          }
-			          var marker = new google.maps.Marker({
-		    			   
-
-			            position: {lat: parseFloat(beach[1]), lng: parseFloat(beach[2])},
-			            map: map,
-			            icon: icon_path,
-		            	info: beach[0] +' '+ beach[4],
-			          });
-			          markers.push(marker)
-          			  var infowindow3 = new google.maps.InfoWindow();
-			          google.maps.event.addListener(marker, 'mouseover', function () {
-			         		infowindow3.setContent(this.info);                              
-							infowindow3.open(map, this);  
-			          });
-			         totalMileage += parseFloat(beach[5])
-			         driverData +=
-				        "<tr>"+
-				        	"<td></td>" +
-				        	"<td>" + (i+1) + "</td>" +
-				        	"<td>" + beach[0] + "</td>" +
-				        	"<td>" + "mobil" + "</td>" +
-				        	"<td>" + beach[5] + "</td>" +
-				        	"<td>" + beach[7] + "</td>" +
-				            "<td>" +
-				            	"<button disabled='disabled' type='button'" +
-				            	"class='btn " 
-				    var is_engine_on = false
-				     if(beach[4] == 'ENGINE ON'){
-				         driverData +=
-					    "btn-success'>"
-					    is_engine_on = true
-					}else{
-				         driverData +=
-					    "btn-danger'>"
-					}
-					if(is_engine_on == true){
-						driverData += "Active"
-					}else{
-						driverData += "Inactive"
-					}
-			         driverData +=
-				            	"</button></td>" +
-				            "<td>"+
-				            "<button type='button' class='btn btn-info' id='route' data-toggle='modal' " +
-				            	"onclick='" + 'initHeatMap("'+ beach[0] +'")' + "'"+
-				            	"data-target='#routeModal'>Detail</button>" +
-				        "</td></tr>"
-			        }
-			        $('#tableDriver').html(driverData)
-					$('#totalMileage').text(totalMileage + ' km')
-				},
-
+					gpsData = result['results'][1]['data']
+					renderMarkers(gpsData)
 			});
+		}
+		function renderMarkers(gpsData){
+			var driverData = ''
+			data = gpsData
+	        for (var i = 0; i < data.length; i++) {
+	          var beach = data[i];
+	          var icon_path = ""
+	          if(beach[3] == 'Running'){
+	          	icon_path = "/static/assets/build/images/mobil-2.png"
+	          }
+	          else if(beach[3] == 'Lost'){
+	          	icon_path = "/static/assets/build/images/mobil-lost.png"
+	          }
+	          else{
+	          	icon_path = "/static/assets/build/images/mobil-stop.png"
+	          }
+	          var marker = new google.maps.Marker({
+    			   
+
+	            position: {lat: parseFloat(beach[1]), lng: parseFloat(beach[2])},
+	            map: map,
+	            icon: icon_path,
+            	info: beach[0] +' '+ beach[4],
+	          });
+	          markers.push(marker)
+  			  var infowindow3 = new google.maps.InfoWindow();
+	          google.maps.event.addListener(marker, 'mouseover', function () {
+	         		infowindow3.setContent(this.info);                              
+					infowindow3.open(map, this);  
+	          });
+	         driverData +=
+		        "<tr>"+
+		        	"<td></td>" +
+		        	"<td>" + (i+1) + "</td>" +
+		        	"<td>" + beach[0] + "</td>" +
+		        	"<td>" + "mobil" + "</td>" +
+		        	"<td>" + beach[5] + "</td>" +
+		        	"<td>" + beach[7] + "</td>" +
+		            "<td>" +
+		            	"<button disabled='disabled' type='button'" +
+		            	"class='btn " 
+		    var is_engine_on = false
+		     if(beach[4] == 'ENGINE ON'){
+		         driverData +=
+			    "btn-success'>"
+			    is_engine_on = true
+			}else{
+		         driverData +=
+			    "btn-danger'>"
+			}
+			if(is_engine_on == true){
+				driverData += "Active"
+			}else{
+				driverData += "Inactive"
+			}
+	         driverData +=
+		            	"</button></td>" +
+		            "<td>"+
+		            "<button type='button' class='btn btn-info' id='route' data-toggle='modal' " +
+		            	"onclick='" + 'initHeatMap("'+ beach[0] +'")' + "'"+
+		            	"data-target='#routeModal'>Detail</button>" +
+		        "</td></tr>"
+	        }
+	        $('#tableDriver').html(driverData)
+		}
 		}
 		function deleteMarkers() {
 	        //Loop through all the markers and remove

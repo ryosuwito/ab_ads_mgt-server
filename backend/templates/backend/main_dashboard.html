@@ -287,7 +287,7 @@
 				success		: function(result) {
 					gpsData = result['results'][1]['data']
 					renderMarkers(gpsData)
-			});
+			}});
 		}
 		function renderMarkers(gpsData){
 			var driverData = ''
@@ -352,7 +352,6 @@
 		        "</td></tr>"
 	        }
 	        $('#tableDriver').html(driverData)
-		}
 		}
 		function deleteMarkers() {
 	        //Loop through all the markers and remove

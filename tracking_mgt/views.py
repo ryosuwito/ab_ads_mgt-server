@@ -260,4 +260,4 @@ def calculate_mileage(license_no, **kwargs):
 				created_date=datetime.now())
 		else:
 			total_mileage = 'Data Kurang'
-	return total_mileage/1000
+	return total_mileage

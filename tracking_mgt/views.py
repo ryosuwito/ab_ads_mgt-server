@@ -172,8 +172,7 @@ def gps_get_all_last_locations(request, *args, **kwargs):
 	campaign_name = request.GET.get('campaign_name')
 	if not campaign_name:
 		campaign_name = settings.CAMPAIGN_NAME
-	licenses = LastLocation.objects.filter(campaign_name=campaign_name).iterator()
-
+	licenses = LastLocation.objects.filter(campaign_name=campaign_name)
 	results = set_results_status(licenses)
 	last_locations = [l for l  in licenses]
 	cities = {}

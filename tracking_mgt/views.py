@@ -201,7 +201,7 @@ def gps_get_all_last_locations(request, *args, **kwargs):
 		 l.longitude,
 		 l.status_vehicle,
 		 l.status_engine,
-		 calculate_driver_mileage(l.license_no, campaign_name=settings.CAMPAIGN_NAME),
+		 get_driver_mileage(l.license_no, campaign_name=settings.CAMPAIGN_NAME),
 		 l.address if l.address else "-",
 		 l.city if l.city else "-",
 		 l.created_date.strftime("%Y-%m-%d %H:%M:%S")])
@@ -214,7 +214,7 @@ def gps_get_all_last_locations(request, *args, **kwargs):
 # 	results['results'].append(get_by_license(license_no))
 # 	return HttpResponse(json.dumps(results), status=200)
 
-def calculate_driver_mileage(license_no, **kwargs):
+def get_driver_mileage(license_no, **kwargs):
 	try:
 		campaign_name = kwargs['campaign_name']
 	except:
@@ -227,31 +227,35 @@ def calculate_driver_mileage(license_no, **kwargs):
 		total_mileage = 0
 	return total_mileage
 
-# def calculate_driver_mileage(license_no, **kwargs):
-# 	try:
-# 		campaign_name = kwargs['campaign_name']
-# 	except:
-# 		campaign_name = 'marugame'
-# 	try:
-# 		mileage_report = GpsDailyReport.objects.get(license_no = license_no, 
-# 			campaign_name=campaign_name)
-# 		total_mileage = mileage_report.mileage
-# 	except:
-# 		if not campaign_name:
-# 			start_data = GpsData.objects.filter(license_no=license_no).order_by('timestamp').values('data').first()
-# 			end_data = GpsData.objects.filter(license_no=license_no).order_by('timestamp').values('data').last()
-# 		else:
-# 			start_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).order_by('timestamp').values('data').first()
-# 			end_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).order_by('timestamp').values('data').last()
-# 		if start_data and end_data:
-# 			print('Starting mileage : %s'%start_data['data']['mileage'])
-# 			print('Ending mileage : %s'%end_data['data']['mileage'])
-# 			total_mileage = (int(end_data['data']['mileage'])-int(start_data['data']['mileage']))/1000
-# 			print('Total mileage : %s'%(total_mileage))
-# 			GpsDailyReport.objects.create(license_no=license_no,
-# 				mileage=total_mileage,
-# 				campaign_name=campaign_name,
-# 				created_date=datetime.now())
-# 		else:
-# 			total_mileage = 'Data Kurang'
-# 	return total_mileage
+def calculate_mileage(license_no, **kwargs):
+	try:
+		campaign_name = kwargs['campaign_name']
+	except:
+		campaign_name = 'marugame'
+	if not campaign_name:
+		start_data = GpsData.objects.filter(license_no=license_no).order_by('pk').values('data').first()
+		end_data = GpsData.objects.filter(license_no=license_no).order_by('pk').values('data').last()
+	else:
+		start_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).order_by('pk').values('data').first()
+		end_data = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).order_by('pk').values('data').last()
+	starting_mileage = start_data['data']['mileage']
+	ending_mileage = end_data['data']['mileage']
+	print('Starting mileage : %s'%start_data['data']['mileage'])
+	print('Ending mileage : %s'%end_data['data']['mileage'])
+	total_mileage = (int(starting_mileage)-int(ending_mileage))/1000
+	print('Total mileage : %s'%(total_mileage))
+			
+	try:
+		mileage_report = GpsDailyReport.objects.get(license_no = license_no, 
+			campaign_name=campaign_name)
+		mileage_report.mileage = total_mileage
+		mileage_report.save()
+	except:
+		if start_data and end_data:
+			GpsDailyReport.objects.create(license_no=license_no,
+				mileage=total_mileage,
+				campaign_name=campaign_name,
+				created_date=datetime.now())
+		else:
+			total_mileage = 'Data Kurang'
+	return total_mileage

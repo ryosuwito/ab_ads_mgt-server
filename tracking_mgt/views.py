@@ -237,11 +237,19 @@ def calculate_mileage(license_no, **kwargs):
 		campaign_name = settings.CAMPAIGN_NAME
 
 	data_query = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).order_by('created_date').values('data').iterator()
+	last_data = 0
 	start_data = 0
 	for i, d in enumerate(data_query):
-		if i == 0:
-			start_data = d['data']['mileage']
+		start_data = d['data']['mileage']
+		if int(start_data) == 0:
 			break
+		if i == 0:
+			last_data = start_data
+
+	if int(last_data) != 0 and int(start_data) != 0:
+		start_data = last_data
+
+
 	data_query = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).order_by('-created_date').values('data').iterator()
 	end_data = 0
 	for i, d in enumerate(data_query):
@@ -262,6 +270,7 @@ def calculate_mileage(license_no, **kwargs):
 		mileage_report = GpsDailyReport.objects.get(license_no = license_no, 
 			campaign_name=campaign_name)
 		mileage_report.mileage = total_mileage
+		mileage_report.created_date=datetime.now()
 		mileage_report.save()
 	except:
 		if start_data and end_data:

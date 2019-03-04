@@ -304,7 +304,7 @@
 			         		infowindow3.setContent(this.info);                              
 							infowindow3.open(map, this);  
 			          });
-			         totalMileage += beach[5]
+			         totalMileage += parseFloat(beach[1])
 			         driverData +=
 				        "<tr>"+
 				        	"<td></td>" +
@@ -339,7 +339,7 @@
 				        "</td></tr>"
 			        }
 			        $('#tableDriver').html(driverData)
-					$('#totalMileage').text(totalMileage)
+					$('#totalMileage').text(totalMileage + ' km')
 				},
 
 			});

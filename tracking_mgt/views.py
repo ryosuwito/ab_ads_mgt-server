@@ -226,6 +226,7 @@ def get_driver_mileage(license_no, **kwargs):
 		total_mileage = 0
 	return total_mileage
 
+
 def calculate_mileage(license_no, **kwargs):
 	try:
 		campaign_name = kwargs['campaign_name']
@@ -236,32 +237,15 @@ def calculate_mileage(license_no, **kwargs):
 
 	data_query = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).order_by('created_date').values('data').iterator()
 	last_data = 0
-	start_data = 0
+	current_data = 0
+	temp_mileage = 0
 	for i, d in enumerate(data_query):
 		start_data = d['data']['mileage']
-		if int(start_data) == 0:
-			break
-		if i == 0:
-			last_data = start_data
+		current_data = int(start_data)
+		if current_data > last_data:
+			temp_mileage += (current_data - last_data)
 
-	if int(last_data) != 0 and int(start_data) != 0:
-		start_data = last_data
-
-
-	data_query = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).order_by('-created_date').values('data').iterator()
-	end_data = 0
-	for i, d in enumerate(data_query):
-		if i == 0:
-			end_data = d['data']['mileage']
-			break
-
-	starting_mileage = int(start_data)
-	ending_mileage = int(end_data)
-	print('Starting mileage : %s'%starting_mileage)
-	print('Ending mileage : %s'%ending_mileage)
-	temp_mileage = ending_mileage-starting_mileage
-	print('Total mileage : %s meter'%(temp_mileage))
-	total_mileage = temp_mileage/1000.
+	total_mileage = temp_mileage/1000
 	print('Total mileage : %s km'%(total_mileage))
 			
 	try:
@@ -271,11 +255,8 @@ def calculate_mileage(license_no, **kwargs):
 		mileage_report.created_date=datetime.now()
 		mileage_report.save()
 	except:
-		if start_data and end_data:
-			GpsDailyReport.objects.create(license_no=license_no,
-				mileage=total_mileage,
-				campaign_name=campaign_name,
-				created_date=datetime.now())
-		else:
-			total_mileage = 'Data Kurang'
+		GpsDailyReport.objects.create(license_no=license_no,
+			mileage=total_mileage,
+			campaign_name=campaign_name,
+			created_date=datetime.now())
 	return total_mileage

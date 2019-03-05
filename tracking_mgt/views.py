@@ -245,7 +245,7 @@ def calculate_mileage(license_no, **kwargs):
 		if current_data > last_data and last_data != 0:
 			temp_mileage += (current_data - last_data)
 		last_data = current_data
-
+	print('Mileage in Meter %s' % temp_mileage)
 	total_mileage = temp_mileage/1000
 	print('Total mileage : %s km'%(total_mileage))
 			

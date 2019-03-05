@@ -7,6 +7,7 @@ from django.middleware.csrf import get_token
 from django.shortcuts import render, reverse
 from django.utils.crypto import get_random_string
 from django.views import View
+from backend import settings
 from user_mgt.models import Privilege, UserRole, UserManagement
 from .forms import UserLoginForm, AddBackOfficeForm, AddUserRoleForm
 
@@ -237,9 +238,11 @@ class RoleView(View):
 class DashboardView(View):
     form =  AddBackOfficeForm()
     form_messages = ''
+    web_settings = {'url': settings.MAIN_URL}
     def get(self, request, *args, **kwargs):
         return render(request, 'backend/main_dashboard.html',
             {'form': self.form,
+            'settings': web_settings,
             'form_messages': self.form_messages})            
     def post(self, request, *args, **kwargs):
         self.form = AddBackOfficeForm(request.POST)
@@ -247,6 +250,7 @@ class DashboardView(View):
             return HttpResponse('OK GAN')
         return render(request, 'backend/main_dashboard.html',
             {'form': self.form,
+            'settings': web_settings,
             'form_messages': self.form_messages})
 
 class Login(View):    

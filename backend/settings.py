@@ -165,3 +165,4 @@ CORS_ALLOW_METHODS = (
     'GET',
 )
 CAMPAIGN_NAME = 'phd'
+MAIN_URL = "http://dev.abplusscar.com/"

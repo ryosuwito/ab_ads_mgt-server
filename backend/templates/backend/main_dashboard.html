@@ -180,7 +180,7 @@
 </script>
 <script src="/static/assets/vendors/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript">
-	var SITE_URL = "http://dev.abplusscar.com/";
+	var SITE_URL = {{settings.url}};
     var markers = [];
     var lastLocationsData = false
 	lat 	= -6.11259//parseFloat(result['results'][0]['data'][0]['lat']);
@@ -371,7 +371,7 @@
 		//  }, 300000);
 	</script>
 <script type="text/javascript">
-	var SITE_URL = "http://dev.abplusscar.com/";
+	var SITE_URL = {{settings.url}};
 	function initHeatMap(license_no, lati, lngt) {
         var propertiPeta = {
             center:new google.maps.LatLng(lati,lngt),

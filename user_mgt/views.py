@@ -242,7 +242,7 @@ class DashboardView(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'backend/main_dashboard.html',
             {'form': self.form,
-            'settings': web_settings,
+            'settings': self.web_settings,
             'form_messages': self.form_messages})            
     def post(self, request, *args, **kwargs):
         self.form = AddBackOfficeForm(request.POST)
@@ -250,7 +250,7 @@ class DashboardView(View):
             return HttpResponse('OK GAN')
         return render(request, 'backend/main_dashboard.html',
             {'form': self.form,
-            'settings': web_settings,
+            'settings': self.web_settings,
             'form_messages': self.form_messages})
 
 class Login(View):    

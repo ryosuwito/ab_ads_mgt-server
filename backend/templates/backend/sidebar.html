@@ -6,6 +6,7 @@
       <ul class="nav side-menu col-ms">
         <li><a href="/"><i class="fa fa-home"></i> Dashboard </a></li> 
         <li><a href="{% url 'campaign:report' %}"><i class="fa fa-book"></i> Report </a></li>
+        {% if request.user.is_superuser %}
         <li><a href="#"><i class="fa fa-search"></i> Search Driver </a></li>
         <li><a href="/campaign"><i class="fa fa-money"></i> Advertisement </a></li>
         <li><a><i class="fa fa-paypal"></i> Payment <span class="fa fa-chevron-down"></span></a>
@@ -40,6 +41,7 @@
             </ul>
         </li>
         <li><a href="/role"><i class="fa fa-cog"></i> Role Management </a></li>
+        {% endif %}
       </ul>
   </div>
 </div>

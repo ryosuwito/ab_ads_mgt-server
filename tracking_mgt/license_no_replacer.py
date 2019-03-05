@@ -41,8 +41,8 @@ def find_duplicate():
 				ex = GpsData.objects.get(license_no=d.license_no, 
 				timestamp=d.timestamp, campaign_name = c_name)
 				print('DUPLICATE FOUND !!!')
-				print(' - '.join(ex.license_no, ob.license_no))
-				print(' - '.join(ex.timestamp, ob.timestamp))
+				print(' - '.join([ex.license_no, ob.license_no]))
+				print(' - '.join([ex.timestamp, ob.timestamp]))
 				print(ob.data)
 				print(ex.data)
 				ob.delete()

@@ -190,6 +190,7 @@ last_day = day - 1
 campaign_name = input('Masukan nama campaign:') 
 try:
     day = int(input('Masukan hari:'))
+    last_day = day - 1
 except Exception as e:
     print(e)
     exit()

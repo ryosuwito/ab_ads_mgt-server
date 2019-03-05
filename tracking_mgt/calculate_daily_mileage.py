@@ -1,6 +1,6 @@
 from backend import settings
-from .views import calculate_mileage
-from .models import GpsData, LastLocation, GpsDailyReport
+from tracking_mgt.views import calculate_mileage
+from tracking_mgt.models import GpsData, LastLocation, GpsDailyReport
 
 campaign_name = input('Masukan nama campaign:') 
 if not campaign_name:

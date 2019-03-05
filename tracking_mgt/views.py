@@ -242,6 +242,7 @@ def calculate_mileage(license_no, **kwargs):
 	for i, d in enumerate(data_query):
 		start_data = d['data']['mileage']
 		current_data = int(start_data)
+		print(current_data)
 		if current_data > last_data and last_data != 0:
 			temp_mileage += (current_data - last_data)
 		last_data = current_data

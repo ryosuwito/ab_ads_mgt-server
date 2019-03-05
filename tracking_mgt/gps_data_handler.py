@@ -173,6 +173,7 @@ class GPSHandler():
         except Exception as e:
             print(e)
         return {'response':'NO'}
+
 credentials = {
     'phd' : {
         'username' : 'abpluss_phd',
@@ -222,21 +223,21 @@ while True:
         exit()
 
     now = datetime.now()
-    while day >= max_day:
+    while day > max_day:
         res = gps_handler.get_all_vehicle()
         if res['response'] == 'OK':
             print("Get all vehicles of {} Success".format(gps_handler.username))
         else:
             print("Get all vehicles Failed")
             exit()
-        date_start = now - timedelta(days = day) + timedelta(hours = 25)
+        date_start = now - timedelta(days = day) + timedelta(hours = 7)
         date_now = now - timedelta(days = last_day) + timedelta(hours = 7)
         date_start = date_start.strftime('%Y-%m-%d %H:%M:%S')
         date_end = date_now.strftime('%Y-%m-%d %H:%M:%S')
 
         print('Getting data from %s'%date_start)
         print('to %s'%date_end)
-        time.sleep(3)
+        time.sleep(13)
         day -= 1
         last_day = day - 1
         for vehicle in gps_handler.vehicles:

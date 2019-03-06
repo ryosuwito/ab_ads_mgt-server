@@ -53,3 +53,7 @@ class LastLocation(models.Model):
     
     def __str__(self):
         return self.license_no
+
+class BlackList(models.Model):
+    campaign_name = models.CharField(max_length=255, default='')
+    license_no = models.CharField(max_length=15, db_index=True)

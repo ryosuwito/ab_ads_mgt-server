@@ -243,6 +243,16 @@ while True:
         for vehicle in gps_handler.vehicles:
             history = {}
             license_no = vehicle['license']
+            try:
+                blocked = BlockList.objects.get(
+                    campaign_name = campaign_name,
+                    license_no = license_no
+                    )
+            except:
+                blocked = False
+                pass
+            if blocked:
+                continue
             print('Get location of {}'.format(license_no))
             location = gps_handler.get_locate_vehicle(vehicle['terminal'])
             try:

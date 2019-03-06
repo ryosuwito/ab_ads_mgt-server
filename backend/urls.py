@@ -36,7 +36,7 @@ urlpatterns = [
     path('bo/profile/', login_required(user_view.BackOfficeProfileView.as_view()), name='profile_bo'),
     path('bo/regis/', login_required(user_view.BackOfficeIndexView.as_view()), name='regis_bo'),
     path('bo/edit/', login_required(user_view.BackOfficeEditView.as_view()), name='bo_edit'),
-    path('role/', login_required(user_view.RoleView.as_view(), name='role_management'),  
+    path('role/', login_required(user_view.RoleView.as_view()), name='role_management'),  
     path('role/remove/', login_required(user_view.RoleRemoveView.as_view()), name='role_remove'),  
     path('role/edit/', login_required(user_view.RoleEditView.as_view()), name='role_edit'),  
     path('gps/', include('tracking_mgt.urls')),

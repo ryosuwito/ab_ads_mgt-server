@@ -1,7 +1,7 @@
 import requests
 import json
 from datetime import datetime, timedelta
-from tracking_mgt.models import GpsData, LastLocation
+from tracking_mgt.models import GpsData, LastLocation, BlackList
 import time
 
 class GPSHandler():
@@ -244,7 +244,7 @@ while True:
             history = {}
             license_no = vehicle['license']
             try:
-                blocked = BlockList.objects.get(
+                blocked = BlackList.objects.get(
                     campaign_name = campaign_name,
                     license_no = license_no
                     )

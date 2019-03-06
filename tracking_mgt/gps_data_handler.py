@@ -188,7 +188,7 @@ credentials = {
 max_day = 0
 day = 2
 last_day = day - 1
-campaign_name = input('Masukan nama campaign:') 
+campaign_name = raw_input('Masukan nama campaign:') 
 try:
     day = int(input('Masukan hari:'))
     last_day = day - 1
@@ -328,12 +328,13 @@ while True:
                             timestamp = timestamp
                         )
                     #print(gps.timestamp)
-                    print('%s : %s - %s - %s'%(license_no.replace(" ","").upper(), idx, stat, data['time_format']))
                     if gps:
                         gps.data = data
-                        gps.campaign_name = campaign_name,
+                        gps.campaign_name = campaign_name
                         gps.created_date = timeformat
                         gps.save()
+                    print('%s : %s - %s - %s -%s'%(license_no.replace(" ","").upper(), idx, stat, data['time_format'], gps.campaign_name))
+                    
 
 
     is_logged_out = gps_handler.logout()

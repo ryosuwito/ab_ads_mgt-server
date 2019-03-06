@@ -1,5 +1,5 @@
 from tracking_mgt.models import GpsData, LastLocation
-
+import time
 def replace():
 	idx = 0
 	locations = LastLocation.objects.all().iterator()

@@ -1,13 +1,14 @@
 from django.urls import path, re_path
 from django.views.generic import RedirectView
+from django.contrib.auth.decorators import login_required
 from . import views
 
 app_name = 'campaign'
 
 urlpatterns = [
-    re_path(r'^$', views.AdvertisementIndexView.as_view(), name='show_all'),
-    path('add/', views.AdvertisementAddView.as_view(), name='add'),
-    path('report/', views.ReportIndexView.as_view(), name="report"),
+    re_path(r'^$', login_required(views.AdvertisementIndexView.as_view()), name='show_all'),
+    path('add/', login_required(views.AdvertisementAddView.as_view()), name='add'),
+    path('report/', login_required(views.ReportIndexView.as_view()), name="report"),
 ]
 """
     path('register/<str:referal_code>/', views.register_page, name='register'),

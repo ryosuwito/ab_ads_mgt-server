@@ -5,7 +5,7 @@ from . import views
 app_name = 'membership'
 
 urlpatterns = [
-    path('forgot/', views.ForgotPasswordView.as_view()),
+    path('forgot/', login_required(views.ForgotPasswordView.as_view())),
 ]
 """
     path('register/<str:referal_code>/', views.register_page, name='register'),

@@ -5,6 +5,6 @@ from . import views
 app_name = 'payment'
 
 urlpatterns = [
-    re_path(r'^$', views.AddBankAccount.as_view(), name='show_all'),
-    path('add/', views.AddBankAccount.as_view(), name='add_new'),
+    re_path(r'^$', login_required(views.AddBankAccount.as_view()), name='show_all'),
+    path('add/', login_required(views.AddBankAccount.as_view()), name='add_new'),
 ]

@@ -9,6 +9,7 @@ urlpatterns = [
     re_path(r'^$', login_required(views.AdvertisementIndexView.as_view()), name='show_all'),
     path('add/', login_required(views.AdvertisementAddView.as_view()), name='add'),
     path('report/', login_required(views.ReportIndexView.as_view()), name="report"),
+    path('voc/', views.get_vehicle_on_campaign, name="get_voc"),
 ]
 """
     path('register/<str:referal_code>/', views.register_page, name='register'),

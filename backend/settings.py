@@ -164,5 +164,5 @@ CORS_ORIGIN_WHITELIST = (
 CORS_ALLOW_METHODS = (
     'GET',
 )
-CAMPAIGN_NAME = ''
+CAMPAIGN_NAME = 'phd'
 MAIN_URL = "http://dev.abplusscar.com/"

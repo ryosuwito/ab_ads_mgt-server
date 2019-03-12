@@ -371,6 +371,8 @@
 		//  }, 300000);
 	</script>
 <script type="text/javascript">
+	var coordinates = []
+	var path
 	var SITE_URL = "{{settings.url}}";
 	function initHeatMap(license_no, lati, lngt) {
         var propertiPeta = {
@@ -381,6 +383,7 @@
         };
         
         var peta = new google.maps.Map(document.getElementById("googleHeatMap"), propertiPeta);
+        var data_location
         $.ajax({
 			url 		: SITE_URL + 'gps/?license_no=' + license_no,
 			method		: 'get',
@@ -389,13 +392,13 @@
 		  	cache : false,
 			success		: function(result) {
 				console.log(result)
-				var dummy = [];
+				var dummy = []
+				var data_location = []
 				var data = result['results'][0]['data']
 		        for (var i = 0; i < data.length; i++) {
 					dummy.push(new google.maps.LatLng(
 						parseFloat(data[i]['lat']),
 						parseFloat(data[i]['lng'])));
-					
 		        }
 				
 			  	heatmap = new google.maps.visualization.HeatmapLayer({
@@ -404,10 +407,8 @@
 			          radius: 60,
 			          opacity : 0.75,
 			        });
-			},
 
 		});
 	}
-        
 </script>
 {% endblock %}

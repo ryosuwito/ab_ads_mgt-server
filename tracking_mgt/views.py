@@ -213,18 +213,66 @@ def gps_get_all_last_locations(request, *args, **kwargs):
 # 	results['results'].append(get_by_license(license_no))
 # 	return HttpResponse(json.dumps(results), status=200)
 
+
+def get_driver_last_location(request, license_no):
+	campaign_name = request.GET.get('campaign_name')
+	if not campaign_name:
+		campaign_name = settings.CAMPAIGN_NAME
+	licenses = LastLocation.objects.filter(campaign_name=campaign_name,
+		license_no = license_no)[:1]
+	results = set_results_status(licenses)
+	last_locations = [l for l  in licenses]
+	cities = {}
+	included_cities = ['Jabodetabek', 'Bali', 'Medan', 'Jawa Barat']
+	jabodetabek = ['jakarta', 'depok', 'tangerang', 'bekasi', 'bogor']
+	for l in last_locations:
+		if l.city == 'JKT':
+			l.city = 'Jabodetabek'
+		if not l.city in included_cities:
+			l.city = 'Others'
+		for j in jabodetabek:
+			if j in l.address.lower():
+				l.city = 'Jabodetabek'
+		try:
+			city = cities[l.city]
+			cities[l.city] += 1
+		except Exception as e:
+			print(e)
+			cities[l.city] = 1
+	cities = {key: value for (key, value) in sorted(cities.items())}
+	data = []
+	for l in licenses:
+		data.append([l.license_no, 
+		 l.latitude, 
+		 l.longitude,
+		 l.status_vehicle,
+		 l.status_engine,
+		 get_driver_mileage(l.license_no, campaign_name=campaign_name),
+		 l.address if l.address else "-",
+		 l.city if l.city else "-",
+		 l.created_date.strftime("%Y-%m-%d %H:%M:%S")])
+	results['results'].append({'cities' : cities})
+	results['results'].append({'data':data})
+
+	return HttpResponse(json.dumps(results), status=200)
+
 def get_driver_mileage(license_no, **kwargs):
 	try:
 		campaign_name = kwargs['campaign_name']
 	except:
 		campaign_name = 'marugame'
+	if not campaign_name:
+		campaign_name = settings.CAMPAIGN_NAME
 	try:
 		mileage_report = GpsDailyReport.objects.get(license_no = license_no, 
 			campaign_name=campaign_name)
 		total_mileage = mileage_report.mileage
 	except:
 		total_mileage = 0
-	return total_mileage
+	if total_mileage > 500 or total_mileage < 0.001:
+		return str(int(total_mileage))
+
+
 
 
 def calculate_mileage(license_no, **kwargs):

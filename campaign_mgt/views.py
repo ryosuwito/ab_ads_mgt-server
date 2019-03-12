@@ -23,14 +23,14 @@ class ReportIndexView(View):
     def post(self, request, *args, **kwargs):
         return render(request, 'backend/main_dashboard.html')
 def set_results_status(obj):
-	results = {}
-	if obj:
-		results['status'] = 'OK'
-	else:
-		results['status'] = 'NO'
+    results = {}
+    if obj:
+        results['status'] = 'OK'
+    else:
+        results['status'] = 'NO'
 
-	results['results'] = []
-	return results
+    results['results'] = []
+    return results
 
 def get_vehicle_on_campaign(request, *args, **kwargs):
     campaign_name = request.GET.get('campaign_name')

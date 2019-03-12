@@ -67,12 +67,28 @@ class Campaign(models.Model):
     def __str__(self):
         return self.title
 
+# class VehicleOnCampaign(models.Model):
+#     campaign = models.CharField(max_length=255, null=True)
+#     vehicle_license_no = models.CharField(max_length=255, null=True)
+#     vehicle_model = models.CharField(max_length=255, null=True)
+#     vehicle_domisili = models.CharField(max_length=255, null=True)
+#     gps_installation_schedule = models.DateTimeField(blank=True)
+#     sticker_installation_schedule = models.DateTimeField(blank=True)
+#     installation = models.ForeignKey(CampaignInstallation, on_delete=models.SET_NULL, null=True)
+#     status = models.CharField(max_length=15)
+#     is_active = models.BooleanField(default=True)
+
+#     class Meta:
+#         verbose_name = "Vehicle Campaign"
+#         verbose_name_plural = "Vehicles on Campaign"
+    
+#     def __str__(self):
+#         return self.vehicle.license_no
 class VehicleOnCampaign(models.Model):
-    campaign = models.ForeignKey(Campaign, on_delete=models.SET_NULL, null=True)
-    vehicle = models.ForeignKey(Vehicle, on_delete=models.SET_NULL, null=True)
-    gps_installation_schedule = models.DateTimeField(blank=True)
-    sticker_installation_schedule = models.DateTimeField(blank=True)
-    installation = models.ForeignKey(CampaignInstallation, on_delete=models.SET_NULL, null=True)
+    campaign = models.CharField(max_length=255, null=True)
+    vehicle_license_no = models.CharField(max_length=255, null=True)
+    vehicle_model = models.CharField(max_length=255, null=True)
+    vehicle_domisili = models.CharField(max_length=255, null=True)
     status = models.CharField(max_length=15)
     is_active = models.BooleanField(default=True)
 

@@ -70,6 +70,7 @@ class DriverRegistrationView(View):
             'token': get_token(request),
             'form_messages': self.form_messages})
 
+@csrf_exempt
 def driver_self_regis_view(request, *args, **kwargs):
     form = DriverRegistrationForm()
     form_messages = ''

@@ -79,9 +79,9 @@ def driver_self_regis_view(request, *args, **kwargs):
             
     elif request.method == "POST":
         provinces = Province.objects.all()
-        self.form = DriverRegistrationForm(request.POST, request.FILES)
-        if self.form.is_valid(): 
-            data = self.form.cleaned_data
+        form = DriverRegistrationForm(request.POST, request.FILES)
+        if form.is_valid(): 
+            data = form.cleaned_data
             provinsi = request.POST.get('provinsi')
             kota = request.POST.get('kota')
             kecamatan = request.POST.get('kecamatan')

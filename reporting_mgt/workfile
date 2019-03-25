@@ -1,0 +1,570 @@
+{
+    "2019-02-20": {
+        "A5138ZC": {
+            "city": "Jakarta Pusat",
+            "mileage": 116.144
+        },
+        "AA3285UV": {
+            "city": "Jakarta Pusat",
+            "mileage": 112.189
+        },
+        "AE6331VU": {
+            "city": "Tangerang Kota",
+            "mileage": 15.229
+        },
+        "B10007BMF": {
+            "city": "Tangerang Selatan",
+            "mileage": 65.242
+        },
+        "B1002UIP": {
+            "city": "Jakarta Selatan",
+            "mileage": 176.26
+        },
+        "B1003BWL": {
+            "city": "Jakarta Timur",
+            "mileage": 30.461
+        },
+        "B1007TIU": {
+            "city": "Bekasi Kota",
+            "mileage": 25.401
+        },
+        "B1007UOD": {
+            "city": "Jakarta Utara",
+            "mileage": 16.055
+        },
+        "B1030SIU": {
+            "city": "Jakarta Barat",
+            "mileage": 105.587
+        },
+        "B1039UZW": {
+            "city": "Jakarta Barat",
+            "mileage": 5.757
+        },
+        "B1045FOH": {
+            "city": "Bogor Kabupaten",
+            "mileage": 84.889
+        },
+        "B1187KZD": {
+            "city": "Jakarta Selatan",
+            "mileage": 153.014
+        },
+        "B1252WKY": {
+            "city": "Jakarta Barat",
+            "mileage": 162.679
+        },
+        "B1276BIE": {
+            "city": "Tangerang Kota",
+            "mileage": 200.413
+        },
+        "B1318SZA": {
+            "city": "Bekasi Kota",
+            "mileage": 131.598
+        },
+        "B1369BYT": {
+            "city": "Jakarta Barat",
+            "mileage": 22.864
+        },
+        "B1382FKM": {
+            "city": "Bekasi Kota",
+            "mileage": 173.022
+        },
+        "B1457POO": {
+            "city": "Jakarta Barat",
+            "mileage": 14.442
+        },
+        "B1479PRY": {
+            "city": "Tangerang Kabupaten",
+            "mileage": 128.527
+        },
+        "B1488EOL": {
+            "city": "Jakarta Selatan",
+            "mileage": 155.809
+        },
+        "B1515NOF": {
+            "city": "Tangerang Selatan",
+            "mileage": 66.164
+        },
+        "B1596KZC": {
+            "city": "Jakarta Selatan",
+            "mileage": 190.787
+        },
+        "B1614WKT": {
+            "city": "Tangerang Selatan",
+            "mileage": 77.465
+        },
+        "B1655BYO": {
+            "city": "Jakarta Selatan",
+            "mileage": 39.562
+        },
+        "B1683UIG": {
+            "city": "Jakarta Pusat",
+            "mileage": 96.151
+        },
+        "B1684VKJ": {
+            "city": "Tangerang Selatan",
+            "mileage": 109.679
+        },
+        "B1696PYH": {
+            "city": "Jakarta Pusat",
+            "mileage": 114.046
+        },
+        "B1733BIA": {
+            "city": "Tangerang Kota",
+            "mileage": 65.186
+        },
+        "B17691PRE": {
+            "city": "Jakarta Selatan",
+            "mileage": 110.957
+        },
+        "B1866KZM": {
+            "city": "Bekasi Kota",
+            "mileage": 116.433
+        },
+        "B1985NRS": {
+            "city": "Tangerang Selatan",
+            "mileage": 37.492
+        },
+        "B2117SKP": {
+            "city": "Jakarta Selatan",
+            "mileage": 49.011
+        },
+        "B2126TKB": {
+            "city": "Jakarta Timur",
+            "mileage": 70.885
+        },
+        "B2127BKE": {
+            "city": "Jakarta Barat",
+            "mileage": 176.546
+        },
+        "B2387TOY": {
+            "city": "Bekasi Kota",
+            "mileage": 62.078
+        },
+        "B2415BYJ": {
+            "city": "Jakarta Barat",
+            "mileage": 79.679
+        },
+        "B2442TKY": {
+            "city": "Bogor Kabupaten",
+            "mileage": 116.615
+        },
+        "B2487SOH": {
+            "city": "Jakarta Selatan",
+            "mileage": 70.668
+        },
+        "B2564TFQ": {
+            "city": "Jakarta Timur",
+            "mileage": 53.815
+        },
+        "B2579UFG": {
+            "city": "Jakarta Utara",
+            "mileage": 166.66
+        },
+        "B2644SOK": {
+            "city": "Jakarta Selatan",
+            "mileage": 15.026
+        },
+        "B2653SOI": {
+            "city": "Jakarta Selatan",
+            "mileage": 47.26
+        },
+        "B2782KKE": {
+            "city": "Purbalingga",
+            "mileage": 174.224
+        },
+        "B2862SKC": {
+            "city": "Jakarta Selatan",
+            "mileage": 209.049
+        },
+        "B2881SFJ": {
+            "city": "Tangerang Selatan",
+            "mileage": 30.699
+        },
+        "B2904BKY": {
+            "city": "Jakarta Barat",
+            "mileage": 47.699
+        },
+        "B2990SKU": {
+            "city": "Tangerang Selatan",
+            "mileage": 94.41
+        },
+        "B2996BFC": {
+            "city": "Jakarta Barat",
+            "mileage": 125.74
+        },
+        "B3005EIF": {
+            "city": "Bogor Kabupaten",
+            "mileage": 98.663
+        },
+        "B3021PGA": {
+            "city": "Jakarta Barat",
+            "mileage": 27.985
+        },
+        "B3054CGA": {
+            "city": "Tangerang Kota",
+            "mileage": 28.672
+        },
+        "B3088PAI": {
+            "city": "Jakarta Barat",
+            "mileage": 82.28
+        },
+        "B3093TNC": {
+            "city": "Jakarta Selatan",
+            "mileage": 36.704
+        },
+        "B3106KPV": {
+            "city": "Jakarta Selatan",
+            "mileage": 219.923
+        },
+        "B3142BWY": {
+            "city": "Jakarta Barat",
+            "mileage": 18.503
+        },
+        "B3170EBO": {
+            "city": "Bogor Kabupaten",
+            "mileage": 142.537
+        },
+        "B3178URP": {
+            "city": "Jakarta Pusat",
+            "mileage": 17.549
+        },
+        "B3182SKC": {
+            "city": "Jakarta Selatan",
+            "mileage": 1.323
+        },
+        "B3201EJV": {
+            "city": "Depok",
+            "mileage": 84.142
+        },
+        "B3220EIO": {
+            "city": "Depok",
+            "mileage": 63.838
+        },
+        "B3222PAT": {
+            "city": "Jakarta Barat",
+            "mileage": 77.879
+        },
+        "B3225ENR": {
+            "city": "Depok",
+            "mileage": 4.657
+        },
+        "B3232CIH": {
+            "city": "Tangerang Kota",
+            "mileage": 20.824
+        },
+        "B3290PFR": {
+            "city": "Jakarta Pusat",
+            "mileage": 121.77
+        },
+        "B3296CLW": {
+            "city": "Tangerang Kota",
+            "mileage": 38.954
+        },
+        "B3327TXS": {
+            "city": "Tangerang Kota",
+            "mileage": 18.884
+        },
+        "B3347ENO": {
+            "city": "Jakarta Pusat",
+            "mileage": 83.4
+        },
+        "B3355UNY": {
+            "city": "Jakarta Barat",
+            "mileage": 41.584
+        },
+        "B3356UIS": {
+            "city": "Jakarta Barat",
+            "mileage": 45.103
+        },
+        "B3473EFV": {
+            "city": "Depok",
+            "mileage": 66.519
+        },
+        "B3514FBX": {
+            "city": "Bogor Kabupaten",
+            "mileage": 84.973
+        },
+        "B3562EDA": {
+            "city": "Tangerang Kota",
+            "mileage": 4.1
+        },
+        "B3588SOU": {
+            "city": "Jakarta Selatan",
+            "mileage": 63.726
+        },
+        "B3644CIN": {
+            "city": "Tangerang Kota",
+            "mileage": 65.209
+        },
+        "B3644PCN": {
+            "city": "Jakarta Pusat",
+            "mileage": 64.13
+        },
+        "B3662EKD": {
+            "city": "Jakarta Selatan",
+            "mileage": 44.371
+        },
+        "B3668EKW": {
+            "city": "Bogor Kabupaten",
+            "mileage": 60.576
+        },
+        "B3738CJP": {
+            "city": "Tangerang Kabupaten",
+            "mileage": 64.197
+        },
+        "B3801ECE": {
+            "city": "Bogor Kabupaten",
+            "mileage": 61.496
+        },
+        "B3821EGY": {
+            "city": "Jakarta Selatan",
+            "mileage": 74.51
+        },
+        "B3827EMC": {
+            "city": "Jakarta Barat",
+            "mileage": 80.07
+        },
+        "B3829SSB": {
+            "city": "Jakarta Barat",
+            "mileage": 4.422
+        },
+        "B3858SWV": {
+            "city": "Jakarta Selatan",
+            "mileage": 133.83
+        },
+        "B3867EIJ": {
+            "city": "Depok",
+            "mileage": 76.148
+        },
+        "B3881ECO": {
+            "city": "Tangerang Selatan",
+            "mileage": 32.036
+        },
+        "B3883FVI": {
+            "city": "Jakarta Timur",
+            "mileage": 93.203
+        },
+        "B3934ENC": {
+            "city": "Depok",
+            "mileage": 98.91
+        },
+        "B3937PEC": {
+            "city": "Jakarta Selatan",
+            "mileage": 61.519
+        },
+        "B3978CGZ": {
+            "city": "Tangerang Kota",
+            "mileage": 26.814
+        },
+        "B4052TUH": {
+            "city": "Jakarta Timur",
+            "mileage": 118.2
+        },
+        "B4133KLR": {
+            "city": "Jakarta Pusat",
+            "mileage": 54.466
+        },
+        "B4139FPU": {
+            "city": "Jakarta Pusat",
+            "mileage": 57.643
+        },
+        "B4260SGB": {
+            "city": "Jakarta Selatan",
+            "mileage": 45.543
+        },
+        "B4268NAY": {
+            "city": "Tangerang Kota",
+            "mileage": 5.754
+        },
+        "B4314BJJ": {
+            "city": "Tangerang Selatan",
+            "mileage": 45.133
+        },
+        "B4332BTW": {
+            "city": "Jakarta Utara",
+            "mileage": 110.831
+        },
+        "B4396BBW": {
+            "city": "Tangerang Kota",
+            "mileage": 4.03
+        },
+        "B4450BLL": {
+            "city": "Tangerang Kabupaten",
+            "mileage": 113.906
+        },
+        "B4458SER": {
+            "city": "Tangerang Kota",
+            "mileage": 30.849
+        },
+        "B4478KGP": {
+            "city": "Jakarta Pusat",
+            "mileage": 119.455
+        },
+        "B4500FFN": {
+            "city": "Bekasi Kota",
+            "mileage": 6.672
+        },
+        "B4574BTT": {
+            "city": "Jakarta Barat",
+            "mileage": 45.678
+        },
+        "B4594KEG": {
+            "city": "Tangerang Kota",
+            "mileage": 66.752
+        },
+        "B4604NFP": {
+            "city": "Tangerang Kabupaten",
+            "mileage": 30.175
+        },
+        "B4756PSX": {
+            "city": "Bekasi Kabupaten",
+            "mileage": 20.86
+        },
+        "B4784BMK": {
+            "city": "Tangerang Kota",
+            "mileage": 60.985
+        },
+        "B4796SAS": {
+            "city": "Jakarta Barat",
+            "mileage": 137.163
+        },
+        "B4802BTS": {
+            "city": "Jakarta Barat",
+            "mileage": 80.757
+        },
+        "B4815KIE": {
+            "city": "Bekasi Kota",
+            "mileage": 63.532
+        },
+        "B4856KR": {
+            "city": "Jakarta Pusat",
+            "mileage": 163.639
+        },
+        "B4880BSO": {
+            "city": "Jakarta Pusat",
+            "mileage": 42.785
+        },
+        "B4885SCR": {
+            "city": "Pemalang",
+            "mileage": 3.1
+        },
+        "B4943BPV": {
+            "city": "Bekasi Kota",
+            "mileage": 90.078
+        },
+        "B4980SGC": {
+            "city": "Jakarta Selatan",
+            "mileage": 44.546
+        },
+        "B4991BRJ": {
+            "city": "Tangerang Selatan",
+            "mileage": 9.237
+        },
+        "B6014GUI": {
+            "city": "Tangerang Kota",
+            "mileage": 21.28
+        },
+        "B6121WJI": {
+            "city": "Tangerang Selatan",
+            "mileage": 192.851
+        },
+        "B6143SZG": {
+            "city": "Jakarta Selatan",
+            "mileage": 16.295
+        },
+        "B6179WSC": {
+            "city": "Tangerang Kota",
+            "mileage": 15.009
+        },
+        "B6207WLV": {
+            "city": "Tangerang Kota",
+            "mileage": 16.201
+        },
+        "B6222VNN": {
+            "city": "Tangerang Kota",
+            "mileage": 7.486
+        },
+        "B6273VOF": {
+            "city": "Tangerang Kota",
+            "mileage": 42.31
+        },
+        "B6297VOM": {
+            "city": "Tangerang Kota",
+            "mileage": 49.769
+        },
+        "B6316UVK": {
+            "city": "Jakarta Barat",
+            "mileage": 4.951
+        },
+        "B6349VPU": {
+            "city": "Tangerang Kota",
+            "mileage": 4.209
+        },
+        "B6360COC": {
+            "city": "Tangerang Kota",
+            "mileage": 15.448
+        },
+        "B6421VNS": {
+            "city": "Tangerang Kota",
+            "mileage": 6.661
+        },
+        "B6440VHM": {
+            "city": "Tangerang Kota",
+            "mileage": 27.131
+        },
+        "B6478ZOV": {
+            "city": "Jakarta Selatan",
+            "mileage": 56.623
+        },
+        "B6555ZFR": {
+            "city": "Jakarta Selatan",
+            "mileage": 25.639
+        },
+        "B6573CSV": {
+            "city": "Tangerang Kota",
+            "mileage": 89.242
+        },
+        "B6594WPY": {
+            "city": "Bogor Kabupaten",
+            "mileage": 109.218
+        },
+        "B6610WLD": {
+            "city": "Tangerang Selatan",
+            "mileage": 22.247
+        },
+        "B6638GZG": {
+            "city": "Tangerang Kota",
+            "mileage": 41.072
+        },
+        "B6862VPU": {
+            "city": "Tangerang Kota",
+            "mileage": 53.41
+        },
+        "B6940PVW": {
+            "city": "Jakarta Pusat",
+            "mileage": 91.422
+        },
+        "B8363XB": {
+            "city": "Jakarta Utara",
+            "mileage": 163.76
+        },
+        "BE2928OF": {
+            "city": "Jakarta Barat",
+            "mileage": 35.976
+        },
+        "BE6291OL": {
+            "city": "Bogor Kabupaten",
+            "mileage": 17.189
+        },
+        "D2029JO": {
+            "city": "Bandung Kabupaten",
+            "mileage": 27.932
+        }
+    },
+    "2019-02-23": {
+        "A5138ZC": {
+            "city": "Tangerang Kabupaten",
+            "mileage": 15.078
+        }
+    }
+}

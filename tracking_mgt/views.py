@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.forms import model_to_dict
+from django.db.models import Sum
 from datetime import datetime, timedelta
 from backend import settings
 from .models import GpsData, LastLocation, GpsDailyReport
@@ -254,53 +255,14 @@ def get_driver_mileage(license_no, **kwargs):
 	try:
 		campaign_name = kwargs['campaign_name']
 	except:
-		campaign_name = 'marugame'
-	if not campaign_name:
 		campaign_name = settings.CAMPAIGN_NAME
 	try:
-		mileage_report = GpsDailyReport.objects.get(license_no = license_no, 
-			campaign_name=campaign_name)
-		total_mileage = mileage_report.mileage
+		total_mileage= GpsDailyReport.objects.filter(license_no = license_no, 
+			campaign_name=campaign_name).aggregate(Sum('mileage'))['mileage__sum']	
 	except:
 		total_mileage = 0
-	if total_mileage > 500 or total_mileage < 0.001:
+	if total_mileage:
 		return str(int(total_mileage))
+	else:
+		return "0"
 
-
-
-
-def calculate_mileage(license_no, **kwargs):
-	try:
-		campaign_name = kwargs['campaign_name']
-	except:
-		campaign_name = 'marugame'
-	if not campaign_name:
-		campaign_name = settings.CAMPAIGN_NAME
-
-	data_query = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).order_by('created_date').values('data').iterator()
-	last_data = 0
-	current_data = 0
-	temp_mileage = 0
-	for i, d in enumerate(data_query):
-		start_data = d['data']['mileage']
-		current_data = int(start_data)
-		print(current_data)
-		if current_data > last_data and last_data != 0:
-			temp_mileage += (current_data - last_data)
-		last_data = current_data
-	print('Mileage in Meter %s' % temp_mileage)
-	total_mileage = temp_mileage/1000
-	print('Total mileage : %s km'%(total_mileage))
-			
-	try:
-		mileage_report = GpsDailyReport.objects.get(license_no = license_no, 
-			campaign_name=campaign_name)
-		mileage_report.mileage = total_mileage
-		mileage_report.created_date=datetime.now()
-		mileage_report.save()
-	except:
-		GpsDailyReport.objects.create(license_no=license_no,
-			mileage=total_mileage,
-			campaign_name=campaign_name,
-			created_date=datetime.now())
-	return total_mileage

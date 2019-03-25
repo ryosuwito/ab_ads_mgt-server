@@ -119,10 +119,10 @@ def driver_self_regis_view(request, *args, **kwargs):
                 driver.user.email = email
                 driver.save()
                 driver.user.save()
-                return HttpResponseRedirect(reverse('vehicle:add_new'))
+                return HttpResponseRedirect("http://abplusscar.com/success.html")
             else:
-                return HttpResponse('NOT OK GAN')
-        return HttpResponse("Form Invalid")
+                return HttpResponseRedirect("http://abplusscar.com/failed.html")
+        return HttpResponseRedirect("http://abplusscar.com/success.html")
 
 class DriverBankView(View):
     form = DriverBankForm()

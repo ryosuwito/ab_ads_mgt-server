@@ -2,8 +2,10 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.forms import model_to_dict
 from django.db.models import Sum
+from django.db.models.functions import TruncDate
 from datetime import datetime, timedelta
 from backend import settings
+from campaign_mgt.models import VehicleOnCampaign
 from .models import GpsData, LastLocation, GpsDailyReport
 import json
 
@@ -245,17 +247,15 @@ def get_driver_last_location(request, license_no):
 		 get_driver_mileage(l.license_no, campaign_name=campaign_name),
 		 l.address if l.address else "-",
 		 l.city if l.city else "-",
-		 l.created_date.strftime("%Y-%m-%d %H:%M:%S")]
+		 l.created_date.strftime("%Y-%m-%d %H:%M:%S",
+		 get_driver_viewer(l.license_no))]
 	results['results'].append({'city' : city})
 	results['results'].append({'data':data})
 
 	return HttpResponse(json.dumps(results), status=200)
 
 def get_driver_mileage(license_no, **kwargs):
-	try:
-		campaign_name = kwargs['campaign_name']
-	except:
-		campaign_name = settings.CAMPAIGN_NAME
+	campaign_name = settings.CAMPAIGN_NAME
 	try:
 		total_mileage= GpsDailyReport.objects.filter(license_no = license_no, 
 			campaign_name=campaign_name).aggregate(Sum('mileage'))['mileage__sum']	
@@ -266,3 +266,52 @@ def get_driver_mileage(license_no, **kwargs):
 	else:
 		return "0"
 
+def get_driver_viewer(license_no, **kwargs):
+	campaign_name = settings.CAMPAIGN_NAME
+	try:
+		total_viewer = GpsDailyReport.objects.filter(license_no = license_no, 
+			campaign_name=campaign_name).aggregate(Sum('viewer'))['viewer__sum']	
+	except:
+		total_viewer = 0
+	if total_viewer:
+		return str(int(total_viewer))
+	else:
+		return "0"
+
+def get_daily_report(request, *args, **kwargs):
+	campaign_name = settings.CAMPAIGN_NAME
+	date_list = GpsDailyReport.objects.values('viewer','mileage')\
+		.filter(campaign_name=campaign_name).annotate(date=TruncDate('created_date')).order_by('created_date').iterator()
+	datelist = {}
+	results = set_results_status(date_list)
+	for d in date_list:
+		try:
+			datelist[str(d['date'])]['viewer'] += int(d['viewer'])
+			datelist[str(d['date'])]['mileage'] += int(d['mileage'])
+			print(int(d['mileage']))
+		except Exception as e:
+			datelist[str(d['date'])] = { 'mileage' : int(d['mileage']), 'viewer' : int(d['viewer'])}
+	results['results'].append({'datelist' : datelist})
+	return HttpResponse(json.dumps(results), status=200)
+
+def get_report_by_date(request, date_string, *args, **kwargs):
+	campaign_name = settings.CAMPAIGN_NAME
+	date = datetime.strptime(date_string, "%Y-%m-%d")
+	date_end = date + timedelta(days=1)
+	date_list = GpsDailyReport.objects.values('license_no','viewer','mileage')\
+		.filter(campaign_name=campaign_name, created_date__gte=date, created_date__lte=date_end).iterator()
+	datelist = []
+	results = set_results_status(date_list)
+	for d in date_list:
+		try:
+			unit_model = VehicleOnCampaign.objects.get(vehicle_license_no=d['license_no']).vehicle_model
+		except:
+			unit_model = "mobil"
+		datelist.append({
+			'license_no':d['license_no'],
+			'unit':unit_model,
+			'viewer':d['viewer'],
+			'mileage':int(d['mileage'])
+			})
+	results['results'].append({'reportlist' : datelist})
+	return HttpResponse(json.dumps(results), status=200)

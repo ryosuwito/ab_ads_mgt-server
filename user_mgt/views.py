@@ -237,7 +237,7 @@ class RoleView(View):
 
 class DashboardView(View):
     form =  AddBackOfficeForm()
-    form_messages = ''
+    form_messages = '' 
     web_settings = {'url': settings.MAIN_URL}
     def get(self, request, *args, **kwargs):
         return render(request, 'backend/main_dashboard.html',

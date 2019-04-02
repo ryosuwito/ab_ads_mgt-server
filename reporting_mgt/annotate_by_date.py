@@ -127,7 +127,7 @@ with open('monthly_dump.csv', 'w') as f:
 			for ky, vl in base_impression.items():
 				try:
 					if ky in v['city']:
-						impression = vl
+						impression = random.randint(55,vl)
 						break
 					else:
 						impression = 150
@@ -142,10 +142,12 @@ with open('monthly_dump.csv', 'w') as f:
 					created_date = datetime.datetime.strptime(date_string, "%m/%d/%Y")
 				)
 				mileage_report.mileage = v['mileage']
+				mileage_report.viewer = int(v['mileage'] * impression)
 				mileage_report.save()
 			except:
 				GpsDailyReport.objects.create(license_no=k,
 					mileage=v['mileage'],
+					viewer=int(v['mileage'] * impression),
 					campaign_name=CAMPAIGN_NAME,
 					created_date=datetime.datetime.strptime(date_string, "%m/%d/%Y"))
 

@@ -9,6 +9,7 @@ urlpatterns = [
 	path('dailyreport/', views.get_daily_report),
 	path('datereport/<str:date_string>/', views.get_report_by_date),
 	path('license/', views.gps_show_all_license),
+	path('record/all/', views.gps_all_record),
 	path('record/<str:license_no>/', views.gps_show_record),
 	path('', views.gps_show_all, name='show_all'),
 ]

@@ -103,13 +103,13 @@ def get_by_license(license_no, **kwargs):
 		for i, g in enumerate(gps):
 			if i%partition == 0 or i==0:
 				data.append({
-						'partition':partition,
 						'idx':i,
 						'lat':g.data['latitude'],
 						'lng':g.data['longitude']})
 
 	return {
 			'license_no':license_no,
+			'partition':partition,
 			# 'created_date':g.created_date,
 			# 'timestamp':g.timestamp,
 			'data':data
@@ -326,12 +326,13 @@ def gps_show_record(request, license_no):
 	latest_date = GpsDailyReport.objects.filter(campaign_name=campaign_name,
 		license_no=license_no).order_by('created_date').values('created_date').last()
 
-	prev_date = latest_date['created_date'] - datetime.timedelta(hours=23, minutes=59)
-	end_date = datetime.datetime.strftime(latest_date, '%Y-%m-%d')
-	start_date = datetime.datetime.strftime(prev_date, '%Y-%m-%d')
+	prev_date = latest_date['created_date'] - timedelta(hours=23, minutes=59)
+	end_date = datetime.strftime(latest_date['created_date'] , '%Y-%m-%d')
+	start_date = datetime.strftime(prev_date, '%Y-%m-%d')
 	gps_data = get_by_date_range(license_no, start_date,
 		end_date = end_date)
 	results = set_results_status(gps_data)
+	results['results'].append(gps_data)
 	return HttpResponse(json.dumps(results), status=200)
 
 def get_driver_viewer(license_no, **kwargs):

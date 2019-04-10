@@ -25,6 +25,14 @@ class ReportIndexView(View):
     def post(self, request, *args, **kwargs):
         return render(request, 'backend/main_dashboard.html')
 
+class ReportIndexView(View):
+    def get(self, request, *args, **kwargs):
+        web_settings = {'url': settings.MAIN_URL}   
+        return render(request, 'backend/registration/record.html',
+            {'settings': web_settings})            
+    def post(self, request, *args, **kwargs):
+        return render(request, 'backend/main_dashboard.html')
+
 def advertisement_self_add_view(request, *args, **kwargs):
     form = DriverRegistrationForm()
     form_messages = ''

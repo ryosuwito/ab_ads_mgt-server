@@ -188,7 +188,7 @@ credentials = {
 max_day = 0
 day = 2
 last_day = day - 1
-campaign_name = raw_input('Masukan nama campaign:') 
+campaign_name = input('Masukan nama campaign:') 
 try:
     day = int(input('Masukan hari:'))
     last_day = day - 1
@@ -250,7 +250,7 @@ while True:
                     )
             except:
                 blocked = False
-                pass
+
             if blocked:
                 continue
             print('Get location of {}'.format(license_no))
@@ -343,7 +343,7 @@ while True:
                         gps.campaign_name = campaign_name
                         gps.created_date = timeformat
                         gps.save()
-                    print('%s : %s - %s - %s -%s'%(license_no.replace(" ","").upper(), idx, stat, data['time_format'], gps.campaign_name))
+                    print('%s :: %s : %s - %s - %s -%s'%(gps.campaign_name, license_no.replace(" ","").upper(), idx, stat, data['time_format'], gps.campaign_name))
                     
 
 

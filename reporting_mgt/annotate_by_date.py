@@ -39,7 +39,7 @@ def get_date_list():
 
 def get_gps_by_date(date, license_no):
 	datestart =datetime.datetime.strptime(date, "%Y-%m-%d")
-	dateend = datestart + datetime.timedelta(days=1)
+	dateend = datestart + datetime.timedelta(hours=23, minutes=59)
 	dData = GpsData.objects.filter(license_no=license_no, created_date__gte=datestart, created_date__lte=dateend).values('data').order_by('created_date').iterator()
 	return dData
 
@@ -50,9 +50,11 @@ def calculate_mileage(data_query):
 	for i, d in enumerate(data_query):
 		start_data = d['data']['mileage']
 		current_data = int(start_data)
-		
+		print(last_data)
+		print(current_data)
+		print(current_data - last_data)
 		#print(current_data)
-		if current_data > last_data and last_data != 0:
+		if current_data > last_data and last_data != 0 and ((current_data-last_data) < 500):
 			temp_mileage += (current_data - last_data)
 		last_data = current_data
 	print('Mileage in Meter %s' % temp_mileage)
@@ -61,18 +63,10 @@ def calculate_mileage(data_query):
 
 	return total_mileage
 
-base_impression = {
-	'Jakarta' : 300,
-	'Tangerang' : 250,
-	'Bogor' : 200,
-	'Depok' : 250,
-	'Bekasi' : 200
-
-}
 date_list = get_date_list()
 objects_list = {}
 print(date_list)
-licenses = list(set([l['license_no'] for l in LastLocation.objects.all().values('license_no').iterator()]))
+licenses = list(set([l['license_no'] for l in GpsData.objects.values('license_no').iterator()]))
 with open('workfile', 'w') as f:
 	for l in licenses:
 		input_l = l
@@ -115,10 +109,21 @@ with open('workfile', 'w') as f:
 					sample['data']['longitude'])
 				#t_data['sample']=sample
 				if result_sample:
-					t_data['city']=result_sample['City']
+					try:
+						t_data['city']=result_sample['City']
+					except:
+						t_data['city']="others"
 				t_data['domisili']=domisili
 	f.write(str(json.dumps(objects_list,sort_keys=True, indent=4)))
 
+base_impression = {
+	'Jakarta' : 300,
+	'Tangerang' : 250,
+	'Bogor' : 200,
+	'Depok' : 250,
+	'Bekasi' : 200
+
+}
 with open('monthly_dump.csv', 'w') as f:
 	idx = 1
 	for key, value in objects_list.items():
@@ -150,13 +155,16 @@ with open('monthly_dump.csv', 'w') as f:
 					viewer=int(v['mileage'] * impression),
 					campaign_name=CAMPAIGN_NAME,
 					created_date=datetime.datetime.strptime(date_string, "%m/%d/%Y"))
-
+			try:
+				v_city = v['city']
+			except:
+				v['city'] = 'others'
 			f.writelines("{};{};{};{};{};{};{}\n".format(idx,
 				date_string,
 				k,
 				v['domisili'],
 				v['city'],
 				v['mileage'],
-				int(v['mileage']/24 * impression)
+				int(v['mileage'] * impression)
 				))
 			idx += 1

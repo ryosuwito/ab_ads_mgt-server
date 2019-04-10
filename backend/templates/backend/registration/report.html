@@ -116,6 +116,22 @@
 				"orderable": true,
 				"scrollX": true
 			}],
+	        "dom": 'Bfrtip',
+	        "buttons": [
+		       {
+		           extend: 'csv',
+		           footer: true,
+		           exportOptions: {
+		                columns: [0,1,2]
+		            }
+		       },
+		       {
+		           extend: 'print',
+		           exportOptions: {
+		                columns: [0,1,2]
+		            }
+		       }
+	        ]
 		});
 
 		// $('#detail_table').DataTable({
@@ -138,6 +154,22 @@
 					"orderable": true,
 					"scrollX": true
 				}],
+		        "dom": 'Bfrtip',
+		        "buttons": [
+			       {
+			           extend: 'csv',
+			           footer: true,
+			           exportOptions: {
+			                columns: [0,1,2,3]
+			            }
+			       },
+			       {
+			           extend: 'print',
+			           exportOptions: {
+			                columns: [0,1,2,3]
+			            }
+		       }
+		        ]
 			});
 			table.columns.adjust();
 		});
@@ -180,7 +212,7 @@
 						"<td>" +
 						"<button type='button'" +
 						"onclick='getReport(" + '"' + key + '"' + ")' " +
-						"class='btn btn-info' id='Detail' data-toggle='modal' data-target='#detailModal'><i class='fa fa-search'> Detail </i></button><button type='button' class='btn btn-success' data-toggle='modal' data-target='#myModal'><i class='fa fa-file-excel-o'> Export To CSV </i></button>" +
+						"class='btn btn-info' id='Detail' data-toggle='modal' data-target='#detailModal'><i class='fa fa-search'> Detail </i></button>" +
 						"</td>" +
 						"</tr>"
 				}

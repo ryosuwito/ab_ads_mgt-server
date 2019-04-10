@@ -338,7 +338,7 @@ def gps_show_record(request, license_no, **kwargs):
 def gps_all_record(request, **kwargs):
 	campaign_name = settings.CAMPAIGN_NAME
 	licenses = LastLocation.objects.all().values('license_no','created_date')\
-		order_by('-created_date').distinct()
+		.order_by('-created_date').distinct()
 	results = set_results_status(licenses)
 	results['results'].append(licenses)
 	return HttpResponse(json.dumps(results), status=200)

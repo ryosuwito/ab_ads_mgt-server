@@ -321,7 +321,7 @@ def get_driver_last_location(request, license_no):
 
 	return HttpResponse(json.dumps(results), status=200)
 
-def gps_show_record(request, license_no):
+def gps_show_record(request, license_no, **kwargs):
 	campaign_name = settings.CAMPAIGN_NAME
 	latest_date = GpsDailyReport.objects.filter(campaign_name=campaign_name,
 		license_no=license_no).order_by('created_date').values('created_date').last()
@@ -333,6 +333,14 @@ def gps_show_record(request, license_no):
 		end_date = end_date)
 	results = set_results_status(gps_data)
 	results['results'].append(gps_data)
+	return HttpResponse(json.dumps(results), status=200)
+
+def gps_all_record(request, **kwargs):
+	campaign_name = settings.CAMPAIGN_NAME
+	licenses = LastLocation.objects.all().values('license_no','created_date')\
+		order_by('-created_date').distinct()
+	results = set_results_status(licenses)
+	results['results'].append(licenses)
 	return HttpResponse(json.dumps(results), status=200)
 
 def get_driver_viewer(license_no, **kwargs):

@@ -6,8 +6,9 @@
       <ul class="nav side-menu col-ms">
         <li><a href="/"><i class="fa fa-home"></i> Dashboard </a></li> 
         <li><a href="{% url 'campaign:report' %}"><i class="fa fa-book"></i> 
-        <li><a href="{% url 'campaign:record' %}"><i class="fa fa-video-camera"></i> 
         Report </a></li>
+        <li><a href="{% url 'campaign:record' %}"><i class="fa fa-camera"></i> 
+        Record </a></li>
         {% if request.user.is_superuser %}
         <li><a href="#"><i class="fa fa-search"></i> Search Driver </a></li>
         <li><a href="/campaign"><i class="fa fa-money"></i> Advertisement </a></li>

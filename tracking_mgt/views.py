@@ -5,7 +5,6 @@ from django.db.models import Sum
 from django.db.models.functions import TruncDate
 from datetime import datetime, timedelta
 from backend import settings
-from campaign_mgt.models import VehicleOnCampaign
 from .models import GpsData, LastLocation, GpsDailyReport
 import json
 
@@ -24,7 +23,7 @@ def get_by_range(license_no, start_date, **kwargs):
 	try:
 		campaign_name = kwargs['campaign_name']
 	except:
-		campaign_name = ''
+		campaign_name = settings.CAMPAIGN_NAME
 	now = datetime.now()
 	date_start = now - timedelta(hours = int(start_date))
 	return get_by_license(license_no, start_date=date_start, campaign_name=campaign_name)
@@ -33,7 +32,7 @@ def get_before_range(license_no, end_date, **kwargs):
 	try:
 		campaign_name = kwargs['campaign_name']
 	except:
-		campaign_name = ''
+		campaign_name = settings.CAMPAIGN_NAME
 	date_end = datetime.strptime(end_date, '%Y-%m-%d')
 	return get_by_license(license_no, end_date=date_end, campaign_name=campaign_name)
 
@@ -41,7 +40,7 @@ def get_by_date_range(license_no, start_date, **kwargs):
 	try:
 		campaign_name = kwargs['campaign_name']
 	except:
-		campaign_name = ''
+		campaign_name = settings.CAMPAIGN_NAME
 	try:
 		end_date = kwargs['end_date']
 	except Exception as e:
@@ -58,7 +57,7 @@ def get_by_license(license_no, **kwargs):
 	try:
 		campaign_name = kwargs['campaign_name']
 	except:
-		campaign_name = ''
+		campaign_name = settings.CAMPAIGN_NAME
 	try:
 		start_date = kwargs['start_date']
 	except Exception as e:
@@ -180,12 +179,21 @@ def gps_get_all_last_locations(request, *args, **kwargs):
 	last_locations = [l for l  in licenses]
 	cities = {}
 	included_cities = ['Jabodetabek', 'Bali', 'Medan', 'Jawa Barat']
+	included_provinces = ['Sumut', 'Sumatera Utara']
 	jabodetabek = ['jakarta', 'depok', 'tangerang', 'bekasi', 'bogor']
 	for l in last_locations:
 		if l.city == 'JKT':
 			l.city = 'Jabodetabek'
+		if l.city == 'Jabar':
+			l.city = 'Jawa Barat'
 		if not l.city in included_cities:
-			l.city = 'Others'
+			for p in included_provinces:
+				if p in l.address:
+					l.city = "Medan"
+					break
+			if not l.city:
+				l.city = 'Others'
+
 		for j in jabodetabek:
 			if j in l.address.lower():
 				l.city = 'Jabodetabek'
@@ -206,16 +214,67 @@ def gps_get_all_last_locations(request, *args, **kwargs):
 		 get_driver_mileage(l.license_no, campaign_name=campaign_name),
 		 l.address if l.address else "-",
 		 l.city if l.city else "-",
-		 l.created_date.strftime("%Y-%m-%d %H:%M:%S")])
+		 l.created_date.strftime("%Y-%m-%d %H:%M:%S"),
+		 get_driver_viewer(l.license_no)])
 	results['results'].append({'cities' : cities})
 	results['results'].append({'data':data})
 
 	return HttpResponse(json.dumps(results), status=200)
-# def gps_show_by_license(request, license_no, *args, **kwargs):
-# 	results = set_results_status(license_no)
-# 	results['results'].append(get_by_license(license_no))
-# 	return HttpResponse(json.dumps(results), status=200)
 
+
+def get_driver_mileage(license_no, **kwargs):
+	campaign_name = settings.CAMPAIGN_NAME
+	try:
+		total_mileage= GpsDailyReport.objects.filter(license_no = license_no, 
+			campaign_name=campaign_name).aggregate(Sum('mileage'))['mileage__sum']	
+	except:
+		total_mileage = 0
+	if total_mileage:
+		return str(int(total_mileage))
+	else:
+		return "0"
+
+def calculate_mileage(license_no, **kwargs):
+	try:
+		campaign_name = kwargs['campaign_name']
+	except:
+		campaign_name = 'marugame'
+	if not campaign_name:
+		campaign_name = settings.CAMPAIGN_NAME
+
+	data_query = GpsData.objects.filter(campaign_name=campaign_name,license_no=license_no).order_by('created_date').values('data').iterator()
+	last_data = 0
+	current_data = 0
+	temp_mileage = 0
+	for i, d in enumerate(data_query):
+		start_data = d['data']['mileage']
+		current_data = int(start_data)
+		diff = current_data - last_data
+		if diff > 0:
+			print("%s :: %s"%(current_data, diff))
+		if current_data > last_data: 
+			if (last_data > 0) and (diff < 300):
+				temp_mileage += (current_data - last_data)
+				print(temp_mileage)
+		elif current_data != last_data :
+			temp_mileage += current_data
+		last_data = current_data
+	print('Mileage in Meter %s' % temp_mileage)
+	total_mileage = temp_mileage/1000.
+	print('Total mileage : %s km'%(total_mileage))
+			
+	try:
+		mileage_report = GpsDailyReport.objects.get(license_no = license_no, 
+			campaign_name=campaign_name)
+		mileage_report.mileage = total_mileage
+		mileage_report.created_date=datetime.now()
+		mileage_report.save()
+	except:
+		GpsDailyReport.objects.create(license_no=license_no,
+			mileage=total_mileage,
+			campaign_name=campaign_name,
+			created_date=datetime.now())
+	return total_mileage
 
 def get_driver_last_location(request, license_no):
 	campaign_name = request.GET.get('campaign_name')
@@ -227,12 +286,20 @@ def get_driver_last_location(request, license_no):
 	last_locations = [l for l  in licenses]
 	city = ""
 	included_cities = ['Jabodetabek', 'Bali', 'Medan', 'Jawa Barat']
+	included_provinces = ['Sumut', 'Sumatera Utara']
 	jabodetabek = ['jakarta', 'depok', 'tangerang', 'bekasi', 'bogor']
 	for l in last_locations:
 		if l.city == 'JKT':
 			l.city = 'Jabodetabek'
+		if l.city == 'Jabar':
+			l.city = 'Jawa Barat'
 		if not l.city in included_cities:
-			l.city = 'Others'
+			for p in included_provinces:
+				if p in l.address:
+					l.city = "Medan"
+					break
+			if not l.city:
+				l.city = 'Others'
 		for j in jabodetabek:
 			if j in l.address.lower():
 				l.city = 'Jabodetabek'
@@ -254,17 +321,18 @@ def get_driver_last_location(request, license_no):
 
 	return HttpResponse(json.dumps(results), status=200)
 
-def get_driver_mileage(license_no, **kwargs):
+def gps_show_record(request, license_no):
 	campaign_name = settings.CAMPAIGN_NAME
-	try:
-		total_mileage= GpsDailyReport.objects.filter(license_no = license_no, 
-			campaign_name=campaign_name).aggregate(Sum('mileage'))['mileage__sum']	
-	except:
-		total_mileage = 0
-	if total_mileage:
-		return str(int(total_mileage))
-	else:
-		return "0"
+	latest_date = GpsDailyReport.objects.filter(campaign_name=campaign_name,
+		license_no=license_no).order_by('created_date').values('created_date').last()
+
+	prev_date = latest_date['created_date'] - datetime.timedelta(hours=23, minutes=59)
+	end_date = datetime.datetime.strftime(latest_date, '%Y-%m-%d')
+	start_date = datetime.datetime.strftime(prev_date, '%Y-%m-%d')
+	gps_data = get_by_date_range(license_no, start_date,
+		end_date = end_date)
+	results = set_results_status(gps_data)
+	return HttpResponse(json.dumps(results), status=200)
 
 def get_driver_viewer(license_no, **kwargs):
 	campaign_name = settings.CAMPAIGN_NAME
@@ -278,10 +346,10 @@ def get_driver_viewer(license_no, **kwargs):
 	else:
 		return "0"
 
+
 def get_daily_report(request, *args, **kwargs):
 	campaign_name = settings.CAMPAIGN_NAME
-	date_list = GpsDailyReport.objects.values('viewer','mileage')\
-		.filter(campaign_name=campaign_name).annotate(date=TruncDate('created_date')).order_by('created_date').iterator()
+	date_list = GpsDailyReport.objects.values('viewer','mileage').filter(campaign_name=campaign_name).annotate(date=TruncDate('created_date')).order_by('created_date').iterator()
 	datelist = {}
 	results = set_results_status(date_list)
 	for d in date_list:

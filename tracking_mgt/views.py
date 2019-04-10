@@ -339,10 +339,12 @@ def gps_all_record(request, **kwargs):
 	campaign_name = settings.CAMPAIGN_NAME
 	licenses = LastLocation.objects.all().values('license_no','created_date')\
 		.order_by('-created_date').distinct()
+	res = []
 	for l in licenses:
-		l['created_date'] = datetime.strftime(l['created_date'], '%Y-%m-%d')
-	results = set_results_status(licenses)
-	results['results'].append({'data': licenses})
+		res.append({'created_date':l['created_date'],
+			'license_no':l['license_no']})
+	results = set_results_status(res)
+	results['results'].append({'data': res})
 	return HttpResponse(json.dumps(results), status=200)
 
 def get_driver_viewer(license_no, **kwargs):

@@ -341,7 +341,7 @@ def gps_all_record(request, **kwargs):
 		.order_by('-created_date').distinct()
 	res = []
 	for l in licenses:
-		res.append({'created_date':l['created_date'],
+		res.append({'created_date': datetime.strftime(l['created_date'] , '%Y-%m-%d'),
 			'license_no':l['license_no']})
 	results = set_results_status(res)
 	results['results'].append({'data': res})

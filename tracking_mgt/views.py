@@ -5,7 +5,7 @@ from django.db.models import Sum
 from django.db.models.functions import TruncDate
 from datetime import datetime, timedelta
 from backend import settings
-from .models import GpsData, LastLocation, GpsDailyReport
+from .models import GpsData, LastLocation, GpsDailyReport, DummyGps
 import json
 
 def get_all_licences(**kwargs):
@@ -326,7 +326,7 @@ def gps_show_record(request, license_no, **kwargs):
 	latest_date = GpsDailyReport.objects.filter(campaign_name=campaign_name,
 		license_no=license_no).order_by('created_date').values('created_date').last()
 
-	prev_date = latest_date['created_date'] - timedelta(hours=23, minutes=59)
+	prev_date = latest_date['created_date'] - timedelta(days=2, hours=23, minutes=59)
 	end_date = datetime.strftime(latest_date['created_date'] , '%Y-%m-%d')
 	start_date = datetime.strftime(prev_date, '%Y-%m-%d')
 	gps_data = get_by_date_range(license_no, start_date,
@@ -396,3 +396,15 @@ def get_report_by_date(request, date_string, *args, **kwargs):
 			})
 	results['results'].append({'reportlist' : datelist})
 	return HttpResponse(json.dumps(results), status=200)
+
+def save_gps_data(request, license_no *args, **kwargs):
+	created_date = datetime.now()
+	lat = request.GET.get('lat',"")
+	lng = request.GET.get('lng',"")
+	if lat and lng:
+		dummy = DummyGps.objects.create(license_no=license_no,
+			created_date=created_date, latitude=lat, longitude=lng)
+		return HttpResponse("OK")
+	else:
+		return HttpResponse("NOT OK")
+	

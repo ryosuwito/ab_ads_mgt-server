@@ -10,6 +10,14 @@ class GpsDailyReport(models.Model):
     def __str__(self):
         return "%s / %s / %s"%(self.created_date, self.mileage, self.viewer)
 
+class DummyGps(models.Model):
+    license_no = models.CharField(max_length=15, db_index=True)
+    latitude = models.CharField(blank=True, null=True, max_length=55)
+    longitude = models.CharField(blank=True, null=True, max_length=55)
+    created_date = models.DateTimeField(auto_now=False, db_index=True, blank=True, null=True)
+    def __str__(self):
+        return self.license_no
+
 class GpsData(models.Model):
     campaign_name = models.CharField(max_length=255, db_index=True, null=True, default="phd")
     license_no = models.CharField(max_length=15, db_index=True)

@@ -69,8 +69,9 @@
 								</tbody>
 							</table>
 						</div>
+						<div class="clearfix"></div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<div class="clearfix"></div>
 						</div>
 					</div>
 
@@ -133,48 +134,37 @@
 		       }
 	        ]
 		});
-
-		// $('#detail_table').DataTable({
-		// 	"searching": false,
-		// 	"fixedHeader": false,
-		// 	"pageLength": 10,
-		// 	"DisplayLength": 10,
-		// 	"columnDefs": [{
-		// 		"orderable": true,
-		// 		"scrollX": true
-		// 	}],
-		// });
-		$('#detailModal').on('shown.bs.modal', function () {
-			var table = $('#detail_table').DataTable({
-				"searching": false,
-				"fixedHeader": false,
-				"pageLength": 10,
-				"DisplayLength": 10,
-				"columnDefs": [{
-					"orderable": true,
-					"scrollX": true
-				}],
-		        "dom": 'Bfrtip',
-		        "buttons": [
-			       {
-			           extend: 'csv',
-			           footer: true,
-			           exportOptions: {
-			                columns: [0,1,2,3]
-			            }
-			       },
-			       {
-			           extend: 'print',
-			           exportOptions: {
-			                columns: [0,1,2,3]
-			            }
-		       }
-		        ]
-			});
-			table.columns.adjust();
-		});
 	});
 
+    function prepareTable(){
+    	var table = $('#detail_table').DataTable({
+			"searching": false,
+			"fixedHeader": false,
+			"pageLength": 10,
+			"DisplayLength": 10,
+			"columnDefs": [{
+				"orderable": true,
+				"scrollX": true
+			}],
+	        "dom": 'Bfrtip',
+	        "buttons": [
+		       {
+		           extend: 'csv',
+		           footer: true,
+		           exportOptions: {
+		                columns: [0,1,2,3]
+		            }
+		       },
+		       {
+		           extend: 'print',
+		           exportOptions: {
+		                columns: [0,1,2,3]
+		            }
+	       }
+	        ]
+		});
+		table.columns.adjust();
+    }
 	var SITE_URL = "{{settings.url}}";
 	var global_gps_data;
 
@@ -240,7 +230,9 @@
 						"<td>" + reportlist[i]['viewer'] + "</td>" +
 						"</tr>"
 				}
+				$('#detail_table').DataTable().destroy()
 				$('#tableDetail').html(detail_data);
+				prepareTable()
 			}
 		});
 	}

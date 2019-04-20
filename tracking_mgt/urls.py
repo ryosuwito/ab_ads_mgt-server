@@ -4,7 +4,7 @@ from . import views
 
 
 urlpatterns = [
-	path('save/<str:license_no>/', views.get_driver_last_location),
+	path('save/<str:license_no>/', views.save_gps_data),
 	path('driver/<str:license_no>/', views.get_driver_last_location),
 	path('lastlocations/', views.gps_get_all_last_locations),
 	path('dailyreport/', views.get_daily_report),

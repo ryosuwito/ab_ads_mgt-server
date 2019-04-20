@@ -397,7 +397,7 @@ def get_report_by_date(request, date_string, *args, **kwargs):
 	results['results'].append({'reportlist' : datelist})
 	return HttpResponse(json.dumps(results), status=200)
 
-def save_gps_data(request, license_no *args, **kwargs):
+def save_gps_data(request, license_no, *args, **kwargs):
 	created_date = datetime.now()
 	lat = request.GET.get('lat',"")
 	lng = request.GET.get('lng',"")

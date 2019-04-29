@@ -1,3 +1,4 @@
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.forms import model_to_dict
@@ -397,6 +398,7 @@ def get_report_by_date(request, date_string, *args, **kwargs):
 	results['results'].append({'reportlist' : datelist})
 	return HttpResponse(json.dumps(results), status=200)
 
+@csrf_exempt
 def save_gps_data(request, license_no, *args, **kwargs):
 	created_date = datetime.now()
 	lat = request.GET.get('lat',"")

@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, reverse
 from django.views import View
 from area_db.models import Province,City,Kecamatan,Kelurahan
@@ -150,4 +150,4 @@ class DriverMasterDataView(View):
 def driver_login_view(request, *args, **kwargs):
     plat = request.POST.get("plat", "")
     campaign = request.POST.get("campaign", "")
-    return HttpResponse(plat + " " + campaign)
+    return JsonResponse({"plat":plat, "campaign":campaign})

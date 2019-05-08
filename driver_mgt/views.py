@@ -152,4 +152,4 @@ def driver_login_view(request, *args, **kwargs):
     plat = request.POST.get("plat", "")
     campaign = request.POST.get("campaign", "")
     token = secrets.token_urlsafe(25)
-    return JsonResponse({"plat":plat, "campaign":campaign, "token":20})
+    return JsonResponse({"plat":plat, "campaign":campaign, "token":token})

@@ -19,12 +19,14 @@ from django.urls import include, path, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from user_mgt import views as user_view
+from agent_mgt import views as agent_view
 import area_db.urls as wilayah
-
+ 
 urlpatterns = [
     re_path('^$', login_required(user_view.DashboardView.as_view()), name='dashboard'),
     path('admin/', admin.site.urls),
     path('campaign/', include('campaign_mgt.urls')),
+    path('branding/', login_required(agent_view.ShowBrandPostView.as_view()), name='branding_position'),
     path('driver/', include('driver_mgt.urls')),
     path('payment/', include('payment.urls')),
     path('vehicle/', include('vehicle_mgt.urls')),

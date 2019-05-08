@@ -144,3 +144,10 @@ class DriverMasterDataView(View):
         return render(request, 'backend/masterdata.html')            
     def post(self, request, *args, **kwargs):
         return render(request, 'backend/masterdata.html')
+
+
+@csrf_exempt
+def driver_login_view(request, *args, **kwargs):
+    plat = request.POST.get("plat", "")
+    campaign = request.POST.get("campaign", "")
+    return HttpResponse(plat + " " + campaign)

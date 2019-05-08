@@ -11,4 +11,5 @@ urlpatterns = [
     path('regis/', login_required(views.DriverRegistrationView.as_view()), name='regis_driver'),
     path('self-regis/', login_required(views.driver_self_regis_view)),
     path('bank/', login_required(views.DriverBankView.as_view())),
+    path('login/', views.driver_login_view),
 ]

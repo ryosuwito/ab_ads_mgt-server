@@ -159,4 +159,4 @@ def driver_login_view(request, *args, **kwargs):
 def driver_upload_bukti_tayang(request, license_no, *args, **kwargs):
     files = request.FILES
     token = secrets.token_urlsafe(25)
-    return JsonResponse({"plat":plat, "files":len(files), "token":token})
+    return JsonResponse({"plat":license_no, "files":len(files), "token":token})

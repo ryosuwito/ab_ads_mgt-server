@@ -6,8 +6,9 @@ from area_db.models import Province,City,Kecamatan,Kelurahan
 from django.middleware.csrf import get_token
 from django.views.decorators.csrf import csrf_exempt
 from .forms import DriverRegistrationForm,DriverBankForm
-from .models import Driver
+from .models import Driver, BuktiTayang
 import secrets
+from datetime import datetime
 
 class DriverRegistrationView(View):
     form = DriverRegistrationForm()
@@ -159,4 +160,6 @@ def driver_login_view(request, *args, **kwargs):
 def driver_upload_bukti_tayang(request, license_no, *args, **kwargs):
     files = request.FILES
     token = secrets.token_urlsafe(25)
+    bukti_tayang = BuktiTayang.objects.create(license_no=license_no, photo=FILES[0], created_date=datetime.now())
+    print(len(files))
     return JsonResponse({"plat":license_no, "files":len(files), "token":token})

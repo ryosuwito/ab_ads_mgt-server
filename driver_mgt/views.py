@@ -153,3 +153,10 @@ def driver_login_view(request, *args, **kwargs):
     campaign = request.POST.get("campaign", "")
     token = secrets.token_urlsafe(25)
     return JsonResponse({"plat":plat, "campaign":campaign, "token":token})
+
+
+@csrf_exempt
+def driver_upload_bukti_tayang(request, license_no, *args, **kwargs):
+    files = request.FILES
+    token = secrets.token_urlsafe(25)
+    return JsonResponse({"plat":plat, "files":len(files), "token":token})

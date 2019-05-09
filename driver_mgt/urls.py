@@ -12,4 +12,5 @@ urlpatterns = [
     path('self-regis/', login_required(views.driver_self_regis_view)),
     path('bank/', login_required(views.DriverBankView.as_view())),
     path('login/', views.driver_login_view),
+    path('buktitayang/<str:license_no>/', views.driver_upload_bukti_tayang),
 ]

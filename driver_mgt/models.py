@@ -28,3 +28,8 @@ class Driver(models.Model):
     
     def __str__(self):
         return '%s - %s'%(self.full_name.title(), self.province.name.upper())
+
+class BuktiTayang(models.Model):
+    license_no = models.CharField(max_length=255, default='')
+    photo = models.ImageField(upload_to = 'driver/ktp_photo', blank=True)
+    created_date = models.DateTimeField(auto_now=False, db_index=True, blank=True, null=True)

@@ -159,7 +159,8 @@ def driver_login_view(request, *args, **kwargs):
 @csrf_exempt
 def driver_upload_bukti_tayang(request, license_no, *args, **kwargs):
     files = request.FILES
+    print(files)
     token = secrets.token_urlsafe(25)
-    bukti_tayang = BuktiTayang.objects.create(license_no=license_no, photo=FILES[0], created_date=datetime.now())
+    bukti_tayang = BuktiTayang.objects.create(license_no=license_no, photo=files[0], created_date=datetime.now())
     print(len(files))
     return JsonResponse({"plat":license_no, "files":len(files), "token":token})

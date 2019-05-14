@@ -6,7 +6,8 @@ from django.db.models import Sum
 from django.db.models.functions import TruncDate
 from datetime import datetime, timedelta
 from backend import settings
-from .models import GpsData, LastLocation, GpsDailyReport, DummyGps
+import geopy.distance
+from .models import GpsData, LastLocation, GpsDailyReport, DummyGps, LastDummyGps
 import json
 
 def get_all_licences(**kwargs):
@@ -403,10 +404,39 @@ def save_gps_data(request, license_no, *args, **kwargs):
 	created_date = datetime.now()
 	lat = request.GET.get('lat',"")
 	lng = request.GET.get('lng',"")
+	lastlat = request.GET.get('lastlat',"")
+	lastlng = request.GET.get('lastlng',"")
 	campaign = request.GET.get('cmp',"")
-	if lat and lng:
-		dummy = DummyGps.objects.create(license_no=license_no,
+	try:
+		last_gps = LastDummyGps.objects.get(license_no=license_no)
+	except:
+		last_gps = ""
+
+	if not last_gps:
+		last_gps = LastDummyGps.objects.create(license_no=license_no, mileage=0,
 			campaign_name = campaign, created_date=created_date, latitude=lat, longitude=lng)
+	else:
+		if not lastlat:
+			lastlat = last_gps.latitude
+		if not lastlng:
+			lastlng = last_gps.longitude
+
+
+	if(lastlat and lastlng):
+		coor1 = (float(lat), float(lng))
+		coor2 = (float(lastlat), float(lastlng))
+		distance = repr(int(geopy.distance.vincenty(coor1, coor2).km * 1000))
+	else:
+		distance = 0
+	#distance = 0;
+
+	if lat and lng:
+		dummy = DummyGps.objects.create(license_no=license_no, mileage=distance,
+			campaign_name = campaign, created_date=created_date, latitude=lat, longitude=lng)
+		last_gps.latitude = lat
+		last_gps.longitude = lng
+		last_gps.created_date = created_date
+		last_gps.save()
 		return HttpResponse("OK")
 	else:
 		return HttpResponse("NOT OK")

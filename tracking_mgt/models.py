@@ -14,6 +14,17 @@ class DummyGps(models.Model):
     license_no = models.CharField(max_length=15, db_index=True)
     latitude = models.CharField(blank=True, null=True, max_length=55)
     longitude = models.CharField(blank=True, null=True, max_length=55)
+    mileage = models.CharField(blank=True, null=True, max_length=55)
+    created_date = models.DateTimeField(auto_now=False, db_index=True, blank=True, null=True)
+    campaign_name = models.CharField(max_length=15, db_index=True, default="")
+    def __str__(self):
+        return self.license_no
+
+class LastDummyGps(models.Model):
+    license_no = models.CharField(max_length=15, db_index=True)
+    latitude = models.CharField(blank=True, null=True, max_length=55)
+    longitude = models.CharField(blank=True, null=True, max_length=55)
+    mileage = models.CharField(blank=True, null=True, max_length=55)
     created_date = models.DateTimeField(auto_now=False, db_index=True, blank=True, null=True)
     campaign_name = models.CharField(max_length=15, db_index=True, default="")
     def __str__(self):

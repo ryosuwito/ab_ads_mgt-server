@@ -406,6 +406,7 @@ def save_gps_data(request, license_no, *args, **kwargs):
 	lng = request.GET.get('lng',"")
 	lastlat = request.GET.get('lastlat',"")
 	lastlng = request.GET.get('lastlng',"")
+	lastmileage = 0
 	campaign = request.GET.get('cmp',"")
 	try:
 		last_gps = LastDummyGps.objects.get(license_no=license_no)
@@ -416,6 +417,7 @@ def save_gps_data(request, license_no, *args, **kwargs):
 		last_gps = LastDummyGps.objects.create(license_no=license_no, mileage=0,
 			campaign_name = campaign, created_date=created_date, latitude=lat, longitude=lng)
 	else:
+		lastmileage = int(last_gps.mileage)
 		if not lastlat:
 			lastlat = last_gps.latitude
 		if not lastlng:
@@ -425,9 +427,9 @@ def save_gps_data(request, license_no, *args, **kwargs):
 	if(lastlat and lastlng):
 		coor1 = (float(lat), float(lng))
 		coor2 = (float(lastlat), float(lastlng))
-		distance = repr(int(geopy.distance.vincenty(coor1, coor2).km * 1000))
+		distance = repr(lastmileage + (int(geopy.distance.vincenty(coor1, coor2).km * 1000)))
 	else:
-		distance = 0
+		distance = lastmileage + 0
 	#distance = 0;
 
 	if lat and lng:
@@ -435,6 +437,7 @@ def save_gps_data(request, license_no, *args, **kwargs):
 			campaign_name = campaign, created_date=created_date, latitude=lat, longitude=lng)
 		last_gps.latitude = lat
 		last_gps.longitude = lng
+		last_gps.mileage = distance
 		last_gps.created_date = created_date
 		last_gps.save()
 		return HttpResponse("OK")

@@ -403,9 +403,10 @@ def save_gps_data(request, license_no, *args, **kwargs):
 	created_date = datetime.now()
 	lat = request.GET.get('lat',"")
 	lng = request.GET.get('lng',"")
+	campaign = request.GET.get('cmp',"")
 	if lat and lng:
 		dummy = DummyGps.objects.create(license_no=license_no,
-			created_date=created_date, latitude=lat, longitude=lng)
+			campaign_name = campaign, created_date=created_date, latitude=lat, longitude=lng)
 		return HttpResponse("OK")
 	else:
 		return HttpResponse("NOT OK")

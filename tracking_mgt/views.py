@@ -296,16 +296,19 @@ def get_driver_last_location(request, license_no):
 			l.city = 'Jabodetabek'
 		if l.city == 'Jabar':
 			l.city = 'Jawa Barat'
-		if not l.city in included_cities:
-			for p in included_provinces:
-				if p in l.address:
-					l.city = "Medan"
-					break
-			if not l.city:
-				l.city = 'Others'
-		for j in jabodetabek:
-			if j in l.address.lower():
-				l.city = 'Jabodetabek'
+		try:
+			if not l.city in included_cities:
+				for p in included_provinces:
+					if p in l.address:
+						l.city = "Medan"
+						break
+				if not l.city:
+					l.city = 'Others'
+			for j in jabodetabek:
+				if j in l.address.lower():
+					l.city = 'Jabodetabek'
+		except:
+			l.city = 'Others'
 		city = l.city
 	data = []
 	for l in licenses:

@@ -363,19 +363,6 @@ def get_driver_viewer(license_no, **kwargs):
 		return "0"
 
 
-def get_data_last_location(lat, lng):
-	url = "https://nominatim.openstreetmap.org/reverse?\
-		format=json&lat=%s&lon=%s&zoom=18&addressdetails=1"\
-		%(lat, lng)
-	response = requests.get(url).text
-	print(response)
-	try:
-		data = json.loads(response)
-	except Exception as e:
-		print(e)
-	data = ""
-	return data
-
 def get_daily_report(request, *args, **kwargs):
 	campaign_name = settings.CAMPAIGN_NAME
 	date_list = GpsDailyReport.objects.values('viewer','mileage').filter(campaign_name=campaign_name).annotate(date=TruncDate('created_date')).order_by('created_date').iterator()
@@ -412,6 +399,18 @@ def get_report_by_date(request, date_string, *args, **kwargs):
 			})
 	results['results'].append({'reportlist' : datelist})
 	return HttpResponse(json.dumps(results), status=200)
+
+
+def get_data_last_location(lat, lng):
+	url = "https://nominatim.openstreetmap.org/reverse?format=json&lat=%s&lon=%s&zoom=18&addressdetails=1"%(lat, lng)
+	response = requests.get(url).text
+	print(response)
+	try:
+		data = json.loads(response)
+	except Exception as e:
+		print(e)
+	data = ""
+	return data
 
 @csrf_exempt
 def save_gps_data(request, license_no, *args, **kwargs):

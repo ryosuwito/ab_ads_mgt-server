@@ -448,8 +448,8 @@ def save_gps_data(request, license_no, *args, **kwargs):
 		last_gps.created_date = created_date
 		last_gps.save()
 		last_location, stat = LastLocation.objects.get_or_create(
-				license_no = license_no.replace(" ","").upper(),
-				campaign_name = campaign_name
+				license_no = license_no,
+				campaign_name = campaign
 			)
 		if last_location:
 			last_location.data = {"latitude":lat,"longitude":lng, 

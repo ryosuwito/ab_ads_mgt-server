@@ -400,18 +400,6 @@ def get_report_by_date(request, date_string, *args, **kwargs):
 	results['results'].append({'reportlist' : datelist})
 	return HttpResponse(json.dumps(results), status=200)
 
-
-def get_data_last_location(lat, lng):
-	url = "https://nominatim.openstreetmap.org/reverse?format=json&lat=%s&lon=%s&zoom=18&addressdetails=1"%(lat, lng)
-	response = requests.get(url).text
-	print(response)
-	try:
-		data = json.loads(response)
-	except Exception as e:
-		print(e)
-	data = ""
-	return data
-
 @csrf_exempt
 def save_gps_data(request, license_no, *args, **kwargs):
 	created_date = datetime.now()
@@ -456,58 +444,17 @@ def save_gps_data(request, license_no, *args, **kwargs):
 		last_gps.longitude = lng
 		last_gps.created_date = created_date
 		last_gps.save()
-		last_location, stat = LastLocation.objects.get_or_create(
-			license_no = license_no,
-			campaign_name = campaign
+		gps, stat = GpsData.objects.get_or_create(
+				license_no = license_no,
+				timestamp = datetime.now().timestamp()
 			)
-			#print(gps.timestamp)
-		if last_location:
-			last_location.data = {"latitude":lat,"longitude":lng, 
-					"timestamp":datetime.now().timestamp() , "timeformat":created_date.strftime('%Y-%m-%d %H:%M:%S')}
-			last_location.timestamp = datetime.now().timestamp()
-			last_location.created_date = created_date
-			last_location.latitude = lat
-			last_location.longitude = lng
-			last_location.status_vehicle = "ACTIVE"
-			last_location.status_engine = "ON"
-			last_location.mileage = distance
-			last_location.save()
-			last_location_data = get_data_last_location(last_location.latitude, last_location.longitude)
-			if last_location_data:
-				last_location.address = last_location_data['display_name']
-			try:
-				city = last_location_data['address']['state_district']
-			except Exception as e:
-				print(e)
-				try:
-					city = last_location_data['address']['state']
-				except Exception as e:
-					print(e)
-					try:
-						city = last_location_data['address']['city']
-					except Exception as e:
-						print(e)
-						city = "Other"
-
-			last_location.city = city
-			try:
-				postcode = last_location_data['address']['postcode']
-			except Exception as e:
-				print(e)
-				postcode = ''
-			last_location.postal_code = postcode
-			last_location.save()
-			gps, stat = GpsData.objects.get_or_create(
-					license_no = license_no,
-					timestamp = datetime.now().timestamp()
-				)
-			#print(gps.timestamp)
-			if gps:
-				gps.data = {"latitude":lat,"longitude":lng, 
-					"timestamp":datetime.now().timestamp() , "timeformat":created_date.strftime('%Y-%m-%d %H:%M:%S')}
-				gps.campaign_name = campaign
-				gps.created_date = created_date.strftime('%Y-%m-%d %H:%M:%S')
-				gps.save()
+		#print(gps.timestamp)
+		if gps:
+			gps.data = {"latitude":lat,"longitude":lng, 
+				"timestamp":datetime.now().timestamp() , "timeformat":created_date.strftime('%Y-%m-%d %H:%M:%S')}
+			gps.campaign_name = campaign
+			gps.created_date = created_date.strftime('%Y-%m-%d %H:%M:%S')
+			gps.save()
 		return HttpResponse("OK")
 	else:
 		return HttpResponse("NOT OK")

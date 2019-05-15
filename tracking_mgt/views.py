@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 from backend import settings
 import geopy.distance
 from .models import GpsData, LastLocation, GpsDailyReport, DummyGps, LastDummyGps
+import requests
 import json
 
 def get_all_licences(**kwargs):
@@ -362,6 +363,19 @@ def get_driver_viewer(license_no, **kwargs):
 		return "0"
 
 
+def get_data_last_location(lat, lng):
+	url = "https://nominatim.openstreetmap.org/reverse?\
+		format=json&lat=%s&lon=%s&zoom=18&addressdetails=1"\
+		%(lat, lng)
+	response = requests.get(url).text
+	print(response)
+	try:
+		data = json.loads(response)
+	except Exception as e:
+		print(e)
+	data = ""
+	return data
+
 def get_daily_report(request, *args, **kwargs):
 	campaign_name = settings.CAMPAIGN_NAME
 	date_list = GpsDailyReport.objects.values('viewer','mileage').filter(campaign_name=campaign_name).annotate(date=TruncDate('created_date')).order_by('created_date').iterator()
@@ -409,7 +423,7 @@ def save_gps_data(request, license_no, *args, **kwargs):
 	campaign = request.GET.get('cmp',"")
 	campaign = campaign.lower()
 	campaign = "".join([c for c in campaign if c.isalnum()])
-	license_no = license_no.lower()
+	license_no = license_no.replace(" ","").lower()
 	license_no = "".join([l for l in license_no if l.isalnum()])
 	if campaign != settings.CAMPAIGN_NAME and campaign != "":
 		return HttpResponseRedirect("http://"+campaign+".abplusscar.com/gps/save/"+license_no+"/?lat="+lat+"&lng="+lng+"&cmp="+campaign)
@@ -444,12 +458,13 @@ def save_gps_data(request, license_no, *args, **kwargs):
 		last_gps.created_date = created_date
 		last_gps.save()
 		last_location, stat = LastLocation.objects.get_or_create(
-			license_no = license_no.replace(" ","").lower(),
+			license_no = license_no,
 			campaign_name = campaign
 			)
 			#print(gps.timestamp)
 		if last_location:
-			last_location.data = location_data
+			last_location.data = {"latitude":lat,"longitude":lng, 
+					"timestamp":datetime.now().timestamp() , "timeformat":created_date.strftime('%Y-%m-%d %H:%M:%S')}
 			last_location.timestamp = datetime.now().timestamp()
 			last_location.created_date = created_date
 			last_location.latitude = lat
@@ -484,29 +499,16 @@ def save_gps_data(request, license_no, *args, **kwargs):
 			last_location.postal_code = postcode
 			last_location.save()
 			gps, stat = GpsData.objects.get_or_create(
-					license_no = license_no.lower(),
+					license_no = license_no,
 					timestamp = datetime.now().timestamp()
 				)
 			#print(gps.timestamp)
 			if gps:
 				gps.data = {"latitude":lat,"longitude":lng, 
-					"timestamp":datetime.now().timestamp() , "timeformat":created_date}
+					"timestamp":datetime.now().timestamp() , "timeformat":created_date.strftime('%Y-%m-%d %H:%M:%S')}
 				gps.campaign_name = campaign
-				gps.created_date = timeformat
+				gps.created_date = created_date.strftime('%Y-%m-%d %H:%M:%S')
 				gps.save()
 		return HttpResponse("OK")
 	else:
 		return HttpResponse("NOT OK")
-	
-	def get_data_last_location(self,lat, lng):
-		url = "https://nominatim.openstreetmap.org/reverse?\
-			format=json&lat=%s&lon=%s&zoom=18&addressdetails=1"\
-			%(lat, lng)
-		response = requests.get(url).text
-		print(response)
-		try:
-			data = json.loads(response)
-		except Exception as e:
-			print(e)
-		data = ""
-		return data

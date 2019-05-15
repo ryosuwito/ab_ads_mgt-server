@@ -408,7 +408,7 @@ def save_gps_data(request, license_no, *args, **kwargs):
 	lastlng = request.GET.get('lastlng',"")
 	campaign = request.GET.get('cmp',"")
 	campaign = campaign.lower()
-	license_no = campaign.lower()
+	license_no = license_no.lower()
 	campaign = "".join([c for c in campaign if c.isalnum()])
 	license_no = "".join([l for l in license_no if l.isalnum()])
 	if campaign != settings.CAMPAIGN_NAME and campaign != "":

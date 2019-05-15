@@ -452,7 +452,7 @@ def save_gps_data(request, license_no, *args, **kwargs):
 				campaign_name = campaign
 			)
 		if last_location:
-			last_location.data = {"latitude":lat,"longitude":lng, 
+			last_location.data = {"latitude":lat,"longitude":lng, "mileage":distance, 
 				"timestamp":datetime.now().timestamp() , "timeformat":created_date.strftime('%Y-%m-%d %H:%M:%S')}
 			last_location.timestamp = datetime.now().timestamp()
 			last_location.created_date = created_date.strftime('%Y-%m-%d %H:%M:%S')
@@ -475,7 +475,7 @@ def save_gps_data(request, license_no, *args, **kwargs):
 			)
 		#print(gps.timestamp)
 		if gps:
-			gps.data = {"latitude":lat,"longitude":lng, 
+			gps.data = {"latitude":lat,"longitude":lng, "mileage":distance,
 				"timestamp":datetime.now().timestamp() , "timeformat":created_date.strftime('%Y-%m-%d %H:%M:%S')}
 			gps.campaign_name = campaign
 			gps.created_date = created_date.strftime('%Y-%m-%d %H:%M:%S')

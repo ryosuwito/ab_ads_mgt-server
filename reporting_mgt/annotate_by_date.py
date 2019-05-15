@@ -54,7 +54,7 @@ def calculate_mileage(data_query):
 		print(current_data)
 		print(current_data - last_data)
 		#print(current_data)
-		if current_data > last_data and last_data != 0 and ((current_data-last_data) < 500):
+		if current_data > last_data and last_data != 0 and ((current_data-last_data) < 120):
 			temp_mileage += (current_data - last_data)
 		last_data = current_data
 	print('Mileage in Meter %s' % temp_mileage)

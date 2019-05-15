@@ -412,7 +412,7 @@ def save_gps_data(request, license_no, *args, **kwargs):
 	license_no = license_no.lower()
 	license_no = "".join([l for l in license_no if l.isalnum()])
 	if campaign != settings.CAMPAIGN_NAME and campaign != "":
-		return HttpResponseRedirect("http://"+campaign+".abplusscar.com/gps/save/"+license_no+"/?lat="+lat+"&lng="+lng+"&cmp="+campaign)
+		return HttpResponseRedirect("http://"+campaign+".abplusscar.com/gps/save/"+"/?lat="+lat+"&lng="+lng+"&cmp="+campaign)
 	try:
 		last_gps = LastDummyGps.objects.get(license_no=license_no)
 	except:

@@ -1,6 +1,6 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.forms import model_to_dict
 from django.db.models import Sum
 from django.db.models.functions import TruncDate
@@ -407,6 +407,10 @@ def save_gps_data(request, license_no, *args, **kwargs):
 	lastlat = request.GET.get('lastlat',"")
 	lastlng = request.GET.get('lastlng',"")
 	campaign = request.GET.get('cmp',"")
+	if campaign != settings.CAMPAIGN_NAME and campaign != "":
+		campaign = campaign.lower()
+		temp = [c for c in campaign if c.is_alpha()]
+		return HttpResponseRedirect("http://"+campaign+".abplusscar.com/gps/save/?lat="+lat+"&lng="+lng+"&cmp="+campaign)
 	try:
 		last_gps = LastDummyGps.objects.get(license_no=license_no)
 	except:

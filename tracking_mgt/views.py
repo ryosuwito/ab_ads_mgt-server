@@ -447,6 +447,28 @@ def save_gps_data(request, license_no, *args, **kwargs):
 		last_gps.longitude = lng
 		last_gps.created_date = created_date
 		last_gps.save()
+		last_location, stat = LastLocation.objects.get_or_create(
+				license_no = license_no.replace(" ","").upper(),
+				campaign_name = campaign_name
+			)
+		if last_location:
+			last_location.data = {"latitude":lat,"longitude":lng, 
+				"timestamp":datetime.now().timestamp() , "timeformat":created_date.strftime('%Y-%m-%d %H:%M:%S')}
+			last_location.timestamp = datetime.now().timestamp()
+			last_location.created_date = created_date.strftime('%Y-%m-%d %H:%M:%S')
+			last_location.latitude = lat
+			last_location.longitude = lng
+			last_location.status_vehicle = "ACTIVE"
+			last_location.status_engine = "ON"
+			last_location.mileage = distance
+			last_location.address = "None"
+			city = "Other"
+
+			last_location.city = city
+			postcode = ''
+			last_location.postal_code = postcode
+			last_location.save()
+
 		gps, stat = GpsData.objects.get_or_create(
 				license_no = license_no,
 				timestamp = datetime.now().timestamp()

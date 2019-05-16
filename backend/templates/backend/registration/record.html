@@ -55,9 +55,10 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Route</h4>
+                <progress style="width: 100%" id="progressBar" max="100" value="0"></progress>
             </div>
             <div class="modal-body">
-                <div id="googleHeatMap" style="width:100%;height:700px;"></div>
+                <div id="googleHeatMap" style="width:100%;height:500px;"></div>
             </div>
             <div class="modal-footer">
                 <div class="clearfix"></div>
@@ -152,6 +153,7 @@
 </script>
 <script>
     function iterateRecord(){
+        $("#progressBar").val(currentIndex/allRecordData.length*100);
         var beach = allRecordData[currentIndex] 
         mapCenter = {
             lat: parseFloat(beach['lat']),

@@ -141,7 +141,6 @@
                     }
                 }
                 clearTimeout(iterateTimeout)
-                deleteMarkers()
                 allRecordData = data
                 map.setCenter(mapCenter)
                 placeMarker()
@@ -159,17 +158,16 @@
             lng: parseFloat(beach['lng'])
         };
         console.log(mapCenter)
-        deleteMarkers()
         map.setCenter(mapCenter)
-        placeMarker()
+        posMarker()
         currentIndex += 1;
         if(currentIndex < allRecordData.length){
             iterateTimeout = setTimeout(function(){iterateRecord()}, 100);
         }
     }
-    function deleteMarkers() {
-        marker.setMap(null);
-    };
+    function posMarker(){
+        marker.setPosition(mapCenter)
+    }
     function placeMarker(){
         marker = new google.maps.Marker({
             position: mapCenter,

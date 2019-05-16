@@ -138,7 +138,7 @@ with open('monthly_dump.csv', 'w') as f:
 
 			date_string = "/".join([d[1],d[2],d[0]])
 			try:
-				mileage_report = GpsDailyReport.objects.get(license_no = k, 
+				mileage_report = GpsDailyReport.objects.get(license_no = k.upper(), 
 					campaign_name=CAMPAIGN_NAME,
 					created_date = datetime.datetime.strptime(date_string, "%m/%d/%Y")
 				)
@@ -146,7 +146,7 @@ with open('monthly_dump.csv', 'w') as f:
 				mileage_report.viewer = int(v['mileage'] * impression)
 				mileage_report.save()
 			except:
-				GpsDailyReport.objects.create(license_no=k,
+				GpsDailyReport.objects.create(license_no=k.upper(),
 					mileage=v['mileage'],
 					viewer=int(v['mileage'] * impression),
 					campaign_name=CAMPAIGN_NAME,

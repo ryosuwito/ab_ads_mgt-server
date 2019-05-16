@@ -158,7 +158,9 @@
             lng: parseFloat(beach['lng'])
         };
         console.log(mapCenter)
-        map.setCenter(mapCenter)
+        if(!map.getBounds().contains(marker.getPosition())){
+            map.setCenter(mapCenter)
+        }
         posMarker()
         currentIndex += 1;
         if(currentIndex < allRecordData.length){

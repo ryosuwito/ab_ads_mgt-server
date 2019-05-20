@@ -40,7 +40,7 @@ def get_date_list():
 def get_gps_by_date(date, license_no):
 	datestart =datetime.datetime.strptime(date, "%Y-%m-%d")
 	dateend = datestart + datetime.timedelta(hours=23, minutes=59)
-	dData = GpsData.objects.filter(license_no=license_no, created_date__gte=datestart, created_date__lte=dateend).values('data').order_by('created_date').iterator()
+	dData = GpsData.objects.filter(license_no=license_no.upper(), created_date__gte=datestart, created_date__lte=dateend).values('data').order_by('created_date').iterator()
 	return dData
 
 def calculate_mileage(data_query):

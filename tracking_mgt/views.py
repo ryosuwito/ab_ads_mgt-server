@@ -384,7 +384,7 @@ def get_daily_report(request, *args, **kwargs):
 def get_report_by_date(request, date_string, *args, **kwargs):
 	campaign_name = settings.CAMPAIGN_NAME
 	date = datetime.strptime(date_string, "%Y-%m-%d")
-	date_end = date + timedelta(days=1)
+	date_end = date + timedelta(hours=23, minutes=59)
 	date_list = GpsDailyReport.objects.values('license_no','viewer','mileage')\
 		.filter(campaign_name=campaign_name, created_date__gte=date, created_date__lte=date_end).iterator()
 	datelist = []

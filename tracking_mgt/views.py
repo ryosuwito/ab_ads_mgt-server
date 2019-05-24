@@ -329,11 +329,14 @@ def get_driver_last_location(request, license_no):
 
 def gps_show_record(request, license_no, **kwargs):
 	campaign_name = settings.CAMPAIGN_NAME
-	latest_date = GpsDailyReport.objects.filter(campaign_name=campaign_name,
-		license_no=license_no).order_by('created_date').values('created_date').last()
+	# latest_date = GpsDailyReport.objects.filter(campaign_name=campaign_name,
+	# 	license_no=license_no).order_by('created_date').values('created_date').last()
 
-	prev_date = latest_date['created_date'] - timedelta(days=2, hours=23, minutes=59)
-	end_date = datetime.strftime(latest_date['created_date'] , '%Y-%m-%d')
+	# prev_date = latest_date['created_date'] - timedelta(days=2, hours=23, minutes=59)
+	# end_date = datetime.strftime(latest_date['created_date'] , '%Y-%m-%d')
+	# start_date = datetime.strftime(prev_date, '%Y-%m-%d')
+	prev_date = datetime.now()- timedelta(days=2, hours=23, minutes=59)
+	end_date = datetime.strftime(datetime.now() , '%Y-%m-%d')
 	start_date = datetime.strftime(prev_date, '%Y-%m-%d')
 	gps_data = get_by_date_range(license_no, start_date,
 		end_date = end_date)

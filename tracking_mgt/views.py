@@ -334,6 +334,7 @@ def gps_show_record(request, license_no, **kwargs):
 	start_date = datetime.strftime(prev_date, '%Y-%m-%d')
 	gps_data = get_by_date_range(license_no, start_date,
 		end_date = end_date)
+	gps_data['data'] = gps_data['data'][::-1]
 	results = set_results_status(gps_data)
 	results['results'].append(gps_data)
 	return HttpResponse(json.dumps(results), status=200)

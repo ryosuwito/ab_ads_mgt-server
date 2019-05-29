@@ -44,6 +44,7 @@ def get_gps_by_date(date, license_no):
 	return dData
 
 def calculate_mileage(data_query):
+	last_data = 0
 	current_data = 0
 	temp_mileage = 0
 	for i, d in enumerate(data_query):
@@ -51,8 +52,11 @@ def calculate_mileage(data_query):
 		current_data = int(start_data)
 		print(current_data)
 		#print(current_data)
-		if current_data < 270 and current_data > 27:
+		if ((current_data - last_data) > 100) and ((current_data - last_data) < 5):
+			pass
+		elif current_data < 270 and current_data > 27:
 			temp_mileage += current_data
+		last_data = current_data
 	print('Mileage in Meter %s' % temp_mileage)
 	total_mileage = temp_mileage/1000
 	print('Total mileage : %s km'%(total_mileage))

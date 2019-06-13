@@ -52,7 +52,7 @@ def calculate_mileage(data_query):
 		current_data = int(start_data)
 		print(current_data)
 		#print(current_data)
-		if ((current_data - last_data) > 100) and ((current_data - last_data) < 5):
+		if ((current_data - last_data) > 100) or ((current_data - last_data) < 5):
 			pass
 		elif current_data < 270 and current_data > 27:
 			temp_mileage += current_data

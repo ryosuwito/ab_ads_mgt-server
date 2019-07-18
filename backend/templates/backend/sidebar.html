@@ -7,7 +7,9 @@
         <li><a href="/"><i class="fa fa-home"></i> Dashboard </a></li> 
         <li><a href="{% url 'campaign:report' %}"><i class="fa fa-book"></i> 
         Report </a></li>
-        <li><a href="{% url 'campaign:record' %}"><i class="fa fa-camera"></i> 
+        <li><a href="{% url 'campaign:photo_report' %}"><i class="fa fa-camera"></i> 
+        Photo Report </a></li>
+        <li><a href="{% url 'campaign:record' %}"><i class="fa fa-video"></i> 
         Record </a></li>
         {% if request.user.is_superuser %}
         <li><a href="#"><i class="fa fa-search"></i> Search Driver </a></li>

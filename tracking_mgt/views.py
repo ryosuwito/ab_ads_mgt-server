@@ -288,7 +288,7 @@ def get_driver_last_location(request, license_no):
 	results = set_results_status(licenses)
 	last_locations = [l for l  in licenses]
 	city = ""
-	included_cities = ['Jabodetabek', 'Bali', 'Medan', 'Jawa Barat']
+	included_cities = ['Jabodetabek', 'Bali', 'Medan', 'Jawa Barat', "Surabaya", "Bandung"]
 	included_provinces = ['Sumut', 'Sumatera Utara']
 	jabodetabek = ['jakarta', 'depok', 'tangerang', 'bekasi', 'bogor']
 	for l in last_locations:

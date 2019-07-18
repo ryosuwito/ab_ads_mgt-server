@@ -25,6 +25,14 @@ class ReportIndexView(View):
     def post(self, request, *args, **kwargs):
         return render(request, 'backend/main_dashboard.html')
 
+class ReportIndexView(View):
+    def get(self, request, *args, **kwargs):
+        web_settings = {'url': settings.MAIN_URL, 'CAMPAIGN_NAME':settings.CAMPAIGN_NAME}   
+        return render(request, 'backend/registration/photo_report.html',
+            {'settings': web_settings})            
+    def post(self, request, *args, **kwargs):
+        return render(request, 'backend/main_dashboard.html')
+
 class RecordIndexView(View):
     def get(self, request, *args, **kwargs):
         web_settings = {'url': settings.MAIN_URL}   
